@@ -7,6 +7,10 @@
 # _without_svgalib      - without svgalib module
 # _with_alsa9	- use alsa 0.9 not 0.5
 #
+
+%define	_without_alsa	1
+%define	_without_arts	1
+
 %ifarch sparc sparc64
 %define	_without_alsa	1
 %endif

@@ -5,7 +5,7 @@
 Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.6
+Version:	4.1.7
 Release:	1
 License:	Giftware
 Group:		Libraries
@@ -209,6 +209,25 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera modu³ do wykorzystania z vga.
 
+%package alsa9
+Summary:	A game programming library - ALSA 0.9 modules
+Summary(pl):	Biblioteka do programowania gier - modu³y dla ALSA 0.9
+Group:		Libraries
+PreReq:		%{name} = %{version}
+
+%description alsa9
+Allegro is a cross-platform library intended for use in computer games
+and other types of multimedia programming.
+
+This package contains modules for use with ALSA 0.9 sound library.
+
+%description alsa9 -l pl
+Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
+
+Ten pakiet zawiera modu³y do wykorzystania z bibliotek± d¼wiêkow±
+ALSA 0.9.
+
 %package alsa
 Summary:	A game programming library - ALSA modules
 Summary(pl):	Biblioteka do programowania gier - modu³y dla ALSA
@@ -250,10 +269,11 @@ Ten pakiet zawiera narzêdzia.
 %setup  -q
 %patch0 -p1
 %patch1 -p1
-#%patch2 -p1
+%patch2 -p1
 
 %build
 %{__aclocal}
+%{__autoheader} configure.in include/allegro/platform/alunixac.hin
 %{__autoconf}
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
 %configure \
@@ -268,7 +288,6 @@ Ten pakiet zawiera narzêdzia.
 	--disable-asm
 %endif
 
-	
 %{__make} \
 	MAKEINFO=makeinfo \
 	CFLAGS="%{rpmcflags} `artsc-config --cflags` -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall \
@@ -360,12 +379,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/allegro/4.1/alleg-vga.so
 
-%if %{?_without_alsa:0}%{!?_without_alsa:1}
 %ifnarch sparc sparc64
+%if %{!?_without_alsa:1}%{?_without_alsa:0}
+%if %{!?_with_alsa9:1}%{?_with_alsa9:0}
 %files alsa
 %defattr(644,root,root,755)
 %{_libdir}/allegro/4.1/alleg-alsadigi.so
 %{_libdir}/allegro/4.1/alleg-alsamidi.so
+%else
+%files alsa9
+%defattr(644,root,root,755)
+%{_libdir}/allegro/4.1/alleg-alsa9digi.so
+%{_libdir}/allegro/4.1/alleg-alsa9midi.so
+%endif
 %endif
 %endif
 

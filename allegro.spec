@@ -151,7 +151,7 @@ ALSA.
 
 %build
 aclocal
-autoconf
+%{__autoconf}
 %configure \
 	--enable-static \
 	--enable-dbglib \

@@ -15,12 +15,12 @@ Summary(fr):	Une librairie de programmation de jeux
 Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.15
+Version:	4.1.17
 Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	e125d7665d359f2392b6330c741bdbc6
+# Source0-md5:	46a73066105e379ec2ec18ddee8d7c63
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -552,7 +552,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/grabber
 %attr(755,root,root) %{_bindir}/pat2dat
 %attr(755,root,root) %{_bindir}/setup-allegro
-%attr(755,root,root) %{_bindir}/keyconf
 
 %files tests
 %defattr(644,root,root,755)

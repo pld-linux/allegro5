@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_without	alsa	# without ALSA modules
 %bcond_without	arts	# without aRts module
+%bcond_without	jack	# without JACK module
 %bcond_without	dbglib	# don't build debug versions of library
 %bcond_without	proflib	# don't debug profiling versions of library
 %bcond_without	svga	# without svgalib module
@@ -17,12 +18,12 @@ Summary(fr):	Une librairie de programmation de jeux
 Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.13
+Version:	4.1.14
 Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	2a96046717cfe2ea6159cf76e11bf622
+# Source0-md5:	f91225cfd2429b8f0ba01f026981b681
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -33,9 +34,10 @@ URL:		http://alleg.sourceforge.net/
 BuildRequires:	XFree86-devel
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_arts:BuildRequires:	arts-devel}
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	esound-devel
+%{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
 %{?with_svga:BuildRequires:	svgalib-devel}
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -306,6 +308,25 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 Ten pakiet zawiera modu³y do wykorzystania z bibliotek± d¼wiêkow±
 ALSA.
 
+%package jack
+Summary:	A game programming library - JACK module
+Summary(pl):	Biblioteka do programowania gier - modu³ dla JACK
+Group:		Libraries
+PreReq:		%{name} = %{version}-%{release}
+
+%description jack
+Allegro is a cross-platform library intended for use in computer games
+and other types of multimedia programming.
+
+This package contains module for use with JACK sound library.
+
+%description alsa -l pl
+Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
+
+Ten pakiet zawiera modu³ do wykorzystania z bibliotek± d¼wiêkow±
+JACK.
+
 %package tools
 Summary:	A game programming library - tools
 Summary(de):	Zusätzliche Hilfprogramme für die Allegro Bibliothek
@@ -509,6 +530,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsadigi.so
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsamidi.so
+%endif
+
+%if %{with jack}
+%files jack
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-jackdigi.so
 %endif
 
 %files tools

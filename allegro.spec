@@ -1,30 +1,37 @@
 #
 # Conditional build:
-# --without alsa
+# _without_alsa		- without alsa modules
+# _without_arts		- without arts module
+# _without_dbglib	- don't build debug versions of library
+# _without_proflib	- don't debug profiling versions of library
+# _with_alsa9	- use alsa 0.9 not 0.5
 #
+%ifarch sparc sparc64
+%define	_without_alsa	1
+%endif
+%{!?_without_alsa:%{!?_with_alsa9:%define _with_alsa5 1}}
 Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.7
+Version:	4.1.9
 Release:	1
 License:	Giftware
 Group:		Libraries
-Source0:	http://belnet.dl.sourceforge.net/sourceforge/alleg/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-alsa9.patch
-URL:		http://alleg.sourceforge.net
+Patch3:		%{name}-opt.patch
+URL:		http://alleg.sourceforge.net/
 BuildRequires:	XFree86-devel
+%{!?_without_alsa:BuildRequires:	alsa-lib-devel}
+%{!?_without_arts:BuildRequires:	arts-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel
-%ifnarch sparc sparc64
-BuildRequires:	alsa-lib-devel
-%endif
 %ifarch %{ix86} alpha
 BuildRequires:	svgalib-devel
 %endif
-BuildRequires:	arts-devel
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -56,31 +63,6 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 Ten pakiet zawiera pliki nag³ówkowe niezbêdne do kompilowania
 aplikacji wykorzystuj±cych bibliotekê allegro.
 
-%package tests
-Summary:	A game programming library - test programs
-Summary(pl):	Biblioteka do programowania gier - programy testuj±ce
-Group:		Development/Libraries
-Requires:	%{name} = %{version}
-
-%description tests
-This package contains programs for testing allegro library.
-
-%description tests -l pl
-Pakiet zawiera programy testuj±ce bibliotekê allegro.
-
-%package examples
-Summary:	A game programming library - examples
-Summary(pl):	Biblioteka do programowania gier - programy przyk³adowe
-Group:		Development/Libraries
-Requires:	%{name} = %{version}
-
-%description examples
-This package contains example programs which are showing
-allegro features.
-
-%description examples -l pl
-Pakiet zawiera programy przyk³adowe demonstruj±ce mo?liwo¶ci biblioteki allegro.
-
 %package static
 Summary:	A game programming library - static libraries
 Summary(pl):	Biblioteka do programowania gier - biblioteki statyczne
@@ -100,6 +82,59 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera biblioteki statyczne do linkowania z aplikacjami
 wykorzystuj±cymi allegro.
+
+%package debug
+Summary:	liballd - debug version of shared allegro library
+Summary(pl):	liballd - wersja debug dzielonej biblioteki allegro
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}
+
+%description debug
+liballd - debug version of shared allegro library (contains debugging
+symbols and other information).
+
+%description debug -l pl
+liballd - wersja debug dzielonej biblioteki allegro (zawieraj±ca
+symbole i inne informacje potrzebne przy odpluskwianiu).
+
+%package debug-static
+Summary:	liballd - debug version of static allegro library
+Summary(pl):	liballd - wersja debug statycznej biblioteki allegro
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}
+
+%description debug-static
+liballd - debug version of static allegro library (contains debugging
+symbols and other information).
+
+%description debug-static -l pl
+liballd - wersja debug statycznej biblioteki allegro (zawieraj±ca
+symbole i inne informacje potrzebne przy odpluskwianiu).
+
+%package profile
+Summary:	liballp - profiling version of shared allegro library
+Summary(pl):	liballp - wersja dzielonej biblioteki allegro s³u¿±ca do profilowania
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}
+
+%description profile
+liballp - profiling version of shared allegro library.
+
+%description profile -l pl
+liballp - wersja dzielonej biblioteki allegro s³u¿±ca do profilowania.
+
+%package profile-static
+Summary:	liballp - profiling version of static allegro library
+Summary(pl):	liballp - wersja statycznej biblioteki allegro s³u¿±ca do profilowania
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}
+
+%description profile-static
+liballp - profiling version of static allegro library.
+
+%description debug-static -l pl
+liballp - wersja statycznej biblioteki allegro s³u¿±ca do
+profilowania.
 
 %package svgalib
 Summary:	A game programming library - svgalib module
@@ -265,36 +300,58 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera narzêdzia.
 
+%package tests
+Summary:	A game programming library - test programs
+Summary(pl):	Biblioteka do programowania gier - programy testuj±ce
+Group:		Development/Libraries
+Requires:	%{name} = %{version}
+
+%description tests
+This package contains programs for testing allegro library.
+
+%description tests -l pl
+Pakiet zawiera programy testuj±ce bibliotekê allegro.
+
+%package examples
+Summary:	A game programming library - examples
+Summary(pl):	Biblioteka do programowania gier - programy przyk³adowe
+Group:		Development/Libraries
+Requires:	%{name} = %{version}
+
+%description examples
+This package contains example programs which are showing
+allegro features.
+
+%description examples -l pl
+Pakiet zawiera programy przyk³adowe demonstruj±ce mo?liwo¶ci biblioteki allegro.
+
 %prep
 %setup  -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__aclocal}
 %{__autoheader} configure.in include/allegro/platform/alunixac.hin
 %{__autoconf}
+TARGET_ARCH="%{rpmcflags}"; export TARGET_ARCH
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
 %configure \
 	--enable-static \
-	--enable-dbglib \
+	%{!?_without_dbglib:--enable-dbglib} \
 %ifnarch %{ix86} alpha
     	--disable-vga \
 	--disable-linux \
 %endif
-	--enable-proflib \
+	%{!?_without_proflib:--enable-proflib} \
 %ifnarch %{ix86}
 	--disable-asm
 %endif
 
 %{__make} \
-	MAKEINFO=makeinfo \
-	CFLAGS="%{rpmcflags} `artsc-config --cflags` -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall \
-%ifnarch %{ix86}
-	-DALLEGRO_USE_C \
-%endif
-	-DALLEGRO_LIB_BUILD"
+	MAKEINFO=makeinfo
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -302,35 +359,102 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install install-man install-info install-lib \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/4.1/
+install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/4.1
 
 mv $RPM_BUILD_ROOT%{_bindir}/demo{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/play{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/setup{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/test{,-allegro}
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
-
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS CHANGES THANKS
 %attr(755,root,root) %{_libdir}/liballeg-%{version}.so
-%dir %{_libdir}/allegro/
+%dir %{_libdir}/allegro
+%dir %{_libdir}/allegro/4.1
 %{_libdir}/allegro/4.1/modules.lst
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liballd-%{version}.so
-%attr(755,root,root) %{_libdir}/liballp-%{version}.so
-%{_includedir}/*
 %attr(755,root,root) %{_bindir}/allegro-config
+%{_libdir}/liballeg_unsharable.a
+%{_includedir}/*
 %{_mandir}/man3/*
-%{_infodir}/*
-%{_libdir}/*_unsharable.a
+%{_infodir}/*.info*
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/liballeg.a
+
+%if 0%{!?_without_dbglib:1}
+%files debug
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/liballd-%{version}.so
+%{_libdir}/liballd_unsharable.a
+
+%files debug-static
+%defattr(644,root,root,755)
+%{_libdir}/liballd.a
+%endif
+
+%if 0%{!?_without_proflib:1}
+%files profile
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/liballp-%{version}.so
+%{_libdir}/liballp_unsharable.a
+
+%files profile-static
+%defattr(644,root,root,755)
+%{_libdir}/liballp.a
+%endif
+
+%ifarch %{ix86} alpha
+%files svgalib
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-svgalib.so
+%endif
+
+%files dga2
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-dga2.so
+
+%files esd
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-esddigi.so
+
+%if 0%{!?_without_arts:1}
+%files arts
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-artsdigi.so
+%endif
+
+%files fbcon
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-fbcon.so
+
+%files vga
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-vga.so
+
+%if 0%{?_with_alsa5:1}
+%files alsa
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsadigi.so
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsamidi.so
+%endif
+
+%if 0%{?_with_alsa9:1}
+%files alsa9
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsa9digi.so
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsa9midi.so
+%endif
 
 %files tools
 %defattr(644,root,root,755)
@@ -346,54 +470,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pat2dat
 %attr(755,root,root) %{_bindir}/setup-allegro
 %attr(755,root,root) %{_bindir}/keyconf
-
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/liballd.a
-%{_libdir}/liballeg.a
-%{_libdir}/liballp.a
-
-%ifarch %{ix86} alpha
-%files svgalib
-%defattr(644,root,root,755)
-%{_libdir}/allegro/4.1/alleg-svgalib.so
-%endif
-
-%files dga2
-%defattr(644,root,root,755)
-%{_libdir}/allegro/4.1/alleg-dga2.so
-
-%files esd
-%defattr(644,root,root,755)
-%{_libdir}/allegro/4.1/alleg-esddigi.so
-
-%files arts
-%defattr(644,root,root,755)
-%{_libdir}/allegro/4.1/alleg-artsdigi.so
-
-%files fbcon
-%defattr(644,root,root,755)
-%{_libdir}/allegro/4.1/alleg-fbcon.so
-
-%files vga
-%defattr(644,root,root,755)
-%{_libdir}/allegro/4.1/alleg-vga.so
-
-%ifnarch sparc sparc64
-%if %{!?_without_alsa:1}%{?_without_alsa:0}
-%if %{!?_with_alsa9:1}%{?_with_alsa9:0}
-%files alsa
-%defattr(644,root,root,755)
-%{_libdir}/allegro/4.1/alleg-alsadigi.so
-%{_libdir}/allegro/4.1/alleg-alsamidi.so
-%else
-%files alsa9
-%defattr(644,root,root,755)
-%{_libdir}/allegro/4.1/alleg-alsa9digi.so
-%{_libdir}/allegro/4.1/alleg-alsa9midi.so
-%endif
-%endif
-%endif
 
 %files tests
 %defattr(644,root,root,755)

@@ -1,0 +1,28 @@
+--- allegro-4.1.9/configure.in.orig	Thu Jan 30 00:04:22 2003
++++ allegro-4.1.9/configure.in	Thu Jan 30 00:04:47 2003
+@@ -177,6 +177,7 @@
+   else
+     WFLAGS="-Wall"
+   fi
++  if test "$TARGET_ARCH" = "" ; then
+   if test "$allegro_cv_support_asm" = i386; then
+     if test "$allegro_exclusive_optimizations" != none; then
+       TARGET_ARCH="-march=$allegro_exclusive_optimizations"
+@@ -186,13 +187,14 @@
+   else
+     TARGET_ARCH=
+   fi
++  fi
+   if test "X$allegro_cv_support_fomit_frame_pointer" = "Xyes"; then
+-    CFLAGS="$TARGET_ARCH -O2 -funroll-loops -ffast-math -fomit-frame-pointer $WFLAGS"
++    CFLAGS="$TARGET_ARCH -funroll-loops -ffast-math -fomit-frame-pointer $WFLAGS"
+   else
+-    CFLAGS="$TARGET_ARCH -O2 -funroll-loops -ffast-math $WFLAGS"
++    CFLAGS="$TARGET_ARCH -funroll-loops -ffast-math $WFLAGS"
+   fi
+   ALLEGRO_DEBUG_CFLAGS="-g $WFLAGS -DDEBUGMODE"
+-  ALLEGRO_PROFILE_CFLAGS="-pg $TARGET_ARCH -O2 -funroll-loops -ffast-math $WFLAGS"
++  ALLEGRO_PROFILE_CFLAGS="-pg $TARGET_ARCH -funroll-loops -ffast-math $WFLAGS"
+   if test "X$allegro_cv_can_use_pipe" = "Xyes"; then
+     CFLAGS="-pipe $CFLAGS"
+     ALLEGRO_DEBUG_CFLAGS="-pipe $ALLEGRO_DEBUG_CFLAGS"

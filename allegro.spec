@@ -28,6 +28,7 @@ Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
 Patch3:		%{name}-ldflags.patch
 Patch4:		%{name}-frame-pointer.patch
+Patch5:		%{name}-alsa-1_0.patch
 URL:		http://alleg.sourceforge.net/
 BuildRequires:	XFree86-devel
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
@@ -384,6 +385,7 @@ biblioteki allegro.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__aclocal}

@@ -7,8 +7,6 @@
 %bcond_without	svga	# without svgalib module
 %bcond_without	sse	# build without sse (valgrind doesn't support it yet)
 #
-# still needed??? let's check...
-#%%undefine	with_arts
 %ifnarch %{ix86} alpha
 %undefine	with_svga
 %endif
@@ -20,14 +18,13 @@ Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
 Version:	4.1.12
-Release:	1
+Release:	2
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
 # Source0-md5:	93c215aab32b086dcfd8a74c1d383abc
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
-#Patch2:		%{name}-alsa9.patch
 Patch2:		%{name}-opt.patch
 Patch3:		%{name}-ldflags.patch
 Patch4:		%{name}-frame-pointer.patch
@@ -392,7 +389,7 @@ biblioteki allegro.
 %{__aclocal}
 %{__autoheader} configure.in > include/allegro/platform/alunixac.hin
 %{__autoconf}
-TARGET_ARCH="%{rpmcflags} %{?with_arts:-I/usr/include/artsc}" export TARGET_ARCH
+TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
 %configure \
 	--enable-static \
@@ -407,11 +404,6 @@ TARGET_ARCH="%{rpmcflags} %{?with_arts:-I/usr/include/artsc}" export TARGET_ARCH
 	--disable-mmx \
 	--disable-sse
 %endif
-# shouldn't be needed, let's check
-#%ifnarch %{ix86}
-#	--disable-vga \
-#	--disable-linux
-#%endif
 
 %{__make} \
 	MAKEINFO=makeinfo
@@ -504,9 +496,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-fbcon.so
 
+%ifarch %{ix86}
 %files vga
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-vga.so
+%endif
 
 %if %{with alsa}
 %files alsa

@@ -2,7 +2,7 @@ Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
 Version:	4.0.1
-Release:	1
+Release:	2
 License:	Giftware
 Group:		X11/Libraries
 Source0:	http://prdownloads.sourceforge.net/alleg/%{name}-%{version}.tar.gz
@@ -218,7 +218,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/allegro/4.0/alleg-esddigi.so
 
-%ifarch %{ix86}
+%ifnarch sparc sparc64
 %files alsa
 %defattr(644,root,root,755)
 %{_libdir}/allegro/4.0/alleg-alsadigi.so

@@ -1,11 +1,12 @@
---- allegro-4.0.1/docs/src/allegro._tx~	Fri Nov 23 07:03:08 2001
-+++ allegro-4.0.1/docs/src/allegro._tx	Fri Nov 23 07:03:08 2001
-@@ -24,7 +24,8 @@
+--- allegro-4.1.12/docs/src/allegro._tx~	Fri Nov 23 07:03:08 2001
++++ allegro-4.1.12/docs/src/allegro._tx	Fri Nov 23 07:03:08 2001
+@@ -24,8 +24,8 @@
  @$
  @$@ifinfo
- @$@direntry
--@$* Allegro: (allegro). The Allegro game programming library.
+-@$@dircategory Libraries
 +@$@dircategory Libraries:
+ @$@direntry
+-@$* Allegro: (allegro).			The Allegro game programming library.
 +@$* Allegro: (allegro).			The Allegro game programming library
  @$@end direntry
  @$This is the Info version of the Allegro manual

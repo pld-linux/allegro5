@@ -1,7 +1,6 @@
-diff -ruN allegro-4.1.11./configure.in allegro-4.1.11/configure.in
---- allegro-4.1.11./configure.in	2003-06-30 01:27:00.000000000 +0200
-+++ allegro-4.1.11/configure.in	2003-08-25 00:23:10.000000000 +0200
-@@ -613,43 +613,20 @@
+--- allegro-4.1.12/configure.in.orig	2003-11-11 21:59:10.385928944 +0100
++++ allegro-4.1.12/configure.in	2003-11-11 22:02:54.074923048 +0100
+@@ -645,41 +645,16 @@
  AC_CHECK_FUNCS(memcmp mkstemp stricmp strlwr strupr)
  
  dnl Tweak header files for library build
@@ -15,7 +14,7 @@ diff -ruN allegro-4.1.11./configure.in allegro-4.1.11/configure.in
 -  else
 -    WFLAGS="-Wall -Wno-unused"
 -  fi
--  if test "$allegro_cv_support_asm" = i386; then
+-  if test "X$allegro_cv_processor_type" = "Xi386"; then
 -    if test "$allegro_exclusive_optimizations" != none; then
 -      TARGET_ARCH="-march=$allegro_exclusive_optimizations"
 -    else
@@ -27,17 +26,12 @@ diff -ruN allegro-4.1.11./configure.in allegro-4.1.11/configure.in
 -  if test "X$allegro_cv_can_use_pipe" = "Xyes"; then
 -    CFLAGS="$CFLAGS -pipe"
 -  fi
-+  WFLAGS="-Wall -Wno-unused"
-+
-   if test "$allegro_cv_support_asm" != i386; then
-     CFLAGS="$CFLAGS -DALLEGRO_USE_C"
-   fi
 -  dnl Allow to specify additional flags.
 -  CFLAGS="$CFLAGS $XCFLAGS"
 -  WFLAGS="$WFLAGS $WCFLAGS"
 -  dnl In this order...
 -  ALLEGRO_DEBUG_CFLAGS="$CFLAGS -g $WFLAGS -DDEBUGMODE"
-+
++  WFLAGS="-Wall -Wno-unused"
 +  ALLEGRO_DEBUG_CFLAGS="-g $WFLAGS -DDEBUGMODE"
    if test "X$allegro_debug_with_fortify" = "Xyes"; then
       ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DFORTIFY"

@@ -8,9 +8,6 @@
 %bcond_without	svga	# without svgalib module
 %bcond_without	sse	# build without sse (valgrind doesn't support it yet)
 #
-%ifnarch %{ix86} alpha
-%undefine	with_svga
-%endif
 Summary:	A game programming library
 Summary(de):	Eine Bibliothek zur Programmierung von Spielen
 Summary(es):	Una libreria de programacion de juegos

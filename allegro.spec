@@ -155,7 +155,11 @@ aclocal
 %configure \
 	--enable-static \
 	--enable-dbglib \
-	--enable-proflib
+	--enable-proflib \
+%ifnarch %{ix86}
+    	--disable-vga \
+	--disable-linux
+%endif
 	
 %{__make} MAKEINFO=makeinfo
 
@@ -201,9 +205,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/*.a
 
+%ifarch %{ix86}
 %files svgalib
 %defattr(644,root,root,755)
 %{_libdir}/allegro/4.0/alleg-svgalib.so
+%endif
 
 %files dga2
 %defattr(644,root,root,755)

@@ -10,7 +10,7 @@
 #
 Summary:	A game programming library
 Summary(de):	Eine Bibliothek zur Programmierung von Spielen
-Summary(es):	Una libreria de programacion de juegos
+Summary(es):	Una biblioteca de programación de juegos
 Summary(fr):	Une librairie de programmation de jeux
 Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
@@ -66,6 +66,7 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 %package devel
 Summary:	A game programming library - header files
+Summary(es):	Archivos de inclusión
 Summary(pl):	Biblioteka do programowania gier - pliki nag³ówkowe
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}

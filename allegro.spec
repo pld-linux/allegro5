@@ -215,10 +215,11 @@ aclocal
 	
 %{__make} \
 	MAKEINFO=makeinfo \
-	CFLAGS="%{optflags} -I/usr/X11R6/include/artsc -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall -DALLEGRO_LIB_BUILD \
+	CFLAGS="%{optflags} -I/usr/X11R6/include/artsc -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall 
 %ifnarch %{ix86}
-	-DALLEGRO_USE_C"
+	-DALLEGRO_USE_C \
 %endif
+	-DALLEGRO_LIB_BUILD"
 
 %install
 rm -rf $RPM_BUILD_ROOT

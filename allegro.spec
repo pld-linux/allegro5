@@ -15,18 +15,19 @@ Summary(fr):	Une librairie de programmation de jeux
 Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.14
+Version:	4.1.15
 Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	f91225cfd2429b8f0ba01f026981b681
+# Source0-md5:	e125d7665d359f2392b6330c741bdbc6
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
 Patch3:		%{name}-ldflags.patch
 Patch4:		%{name}-frame-pointer.patch
 Patch5:		%{name}-alsa-1_0.patch
+Patch6:		%{name}-am18.patch
 URL:		http://alleg.sourceforge.net/
 BuildRequires:	XFree86-devel
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
@@ -404,6 +405,7 @@ biblioteki allegro.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 %{__aclocal}
@@ -463,6 +465,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/allegro-config
 %{_libdir}/liballeg_unsharable.a
 %{_includedir}/*
+%{_aclocaldir}/allegro.m4
 %{_mandir}/man3/*
 %{_infodir}/*.info*
 

@@ -10,9 +10,6 @@
 #
 %define	_without_arts	1
 
-%ifarch sparc sparc64
-%define	_without_alsa	1
-%endif
 %{!?_without_alsa:%{!?_with_alsa5:%define _with_alsa9 1}}
 Summary:	A game programming library
 Summary(de):	Eine Bibliothek zur Programmierung von Spielen

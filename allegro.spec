@@ -128,7 +128,7 @@ applications.
 Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera biblioteki statyczne do linkowania z aplikacjami
+Ten pakiet zawiera biblioteki statyczne do konsolidacji z aplikacjami
 wykorzystuj±cymi allegro.
 
 %package debug

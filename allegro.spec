@@ -16,7 +16,7 @@ BuildRequires:	esound-devel
 %ifnarch sparc sparc64
 BuildRequires:	alsa-lib-devel
 %endif
-%ifarch %{ix86}
+%ifarch %{ix86} alpha
 BuildRequires:	svgalib-devel
 %endif
 BuildRequires:	texinfo
@@ -185,7 +185,7 @@ aclocal
 	--enable-static \
 	--enable-dbglib \
 	--enable-proflib \
-%ifnarch %{ix86}
+%ifnarch %{ix86} alpha
     	--disable-vga \
 	--disable-linux
 %endif
@@ -233,7 +233,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/*.a
 
-%ifarch %{ix86}
+%ifarch %{ix86} alpha
 %files svgalib
 %defattr(644,root,root,755)
 %{_libdir}/allegro/4.0/alleg-svgalib.so

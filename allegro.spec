@@ -2,7 +2,7 @@ Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
 Version:	4.1.1
-Release:	1
+Release:	2
 License:	Giftware
 Group:		X11/Libraries
 Source0:	http://belnet.dl.sourceforge.net/sourceforge/alleg/%{name}-%{version}.tar.gz
@@ -203,15 +203,22 @@ aclocal
 %configure \
 	--enable-static \
 	--enable-dbglib \
-	--enable-proflib \
 %ifnarch %{ix86} alpha
     	--disable-vga \
-	--disable-linux
+	--disable-linux \
 %endif
+	--enable-proflib \
+%ifnarch %{ix86}
+	--disable-asm
+%endif
+
 	
 %{__make} \
 	MAKEINFO=makeinfo \
-	CFLAGS="%{optflags} -I/usr/X11R6/include/artsc -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall -DALLEGRO_LIB_BUILD"
+	CFLAGS="%{optflags} -I/usr/X11R6/include/artsc -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall -DALLEGRO_LIB_BUILD \
+%ifnarch %{ix86}
+	-DALLEGRO_USE_C"
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT

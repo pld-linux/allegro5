@@ -3,7 +3,7 @@ Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
 Version:	3.9.40
 Release:	1
-License:	giftware
+License:	Giftware
 Group:		X11/Libraries
 Source0:	http://prdownloads.sourceforge.net/alleg/%{name}-%{version}.tar.gz
 Patch0:		%{name}-makefile.patch

@@ -1,11 +1,11 @@
 Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.0.2
+Version:	4.1.0
 Release:	0.1
 License:	Giftware
 Group:		X11/Libraries
-Source0:	http://belnet.dl.sourceforge.net/sourceforge/alleg/%{name}-%{version}-rc2.tar.gz
+Source0:	http://belnet.dl.sourceforge.net/sourceforge/alleg/%{name}-%{version}.tar.gz
 Patch0:		%{name}-makefile.patch
 Patch1:		%{name}-info.patch
 #Patch2:	%{name}-alsa9.patch
@@ -171,12 +171,30 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 Ten pakiet zawiera modu³y do wykorzystania z bibliotek± d¼wiêkow±
 ALSA.
 
+%package tools
+Summary:	A game programming library - tools
+Summary(pl):	Biblioteka do programowania gier - narzêdzia
+Group:		X11/Libraries
+PreReq:		%{name} = %{version}
+
+%description tools
+Allegro is a cross-platform library intended for use in computer games
+and other types of multimedia programming.
+
+This package contains tools.
+
+%description tools -l pl
+Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
+
+Ten pakiet zawiera narzêdzia.
+
 %prep
 %setup  -q
+%patch3 -p1
 %patch0 -p1
 %patch1 -p1
 #%patch2 -p1
-%patch3 -p1
 
 %build
 aclocal
@@ -195,11 +213,11 @@ aclocal
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install install-man install-info \
+%{__make} install install-man install-info install-lib \
 	DESTDIR=$RPM_BUILD_ROOT
 
 echo -e "# List of modules to be loaded by the Unix version of Allegro.\n" \
-	> $RPM_BUILD_ROOT%{_libdir}/allegro/4.0/modules.lst
+	> $RPM_BUILD_ROOT%{_libdir}/allegro/4.1/modules.lst
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -209,7 +227,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS CHANGES THANKS
 %attr(755,root,root) %{_libdir}/liballeg-%{version}.so
 %dir %{_libdir}/allegro/
-%{_libdir}/allegro/4.0/modules.lst
+%{_libdir}/allegro/4.1/modules.lst
 
 %files devel
 %defattr(644,root,root,755)
@@ -217,6 +235,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/liballp-%{version}.so
 %{_includedir}/*
 %attr(755,root,root) %{_bindir}/allegro-config
+%{_mandir}/man3/*
+%{_infodir}/*
+%{_libdir}/*_unsharable.a
+
+%files tools
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/colormap
 %attr(755,root,root) %{_bindir}/exedat
 %attr(755,root,root) %{_bindir}/pack
@@ -226,32 +250,34 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/dat2s
 %attr(755,root,root) %{_bindir}/grabber
 %attr(755,root,root) %{_bindir}/pat2dat
-%{_mandir}/man3/*
-%{_infodir}/*
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/*.a
+%{_libdir}/liballd.a
+%{_libdir}/liballeg.a
+%{_libdir}/liballp.a
 
 %ifarch %{ix86} alpha
 %files svgalib
 %defattr(644,root,root,755)
-%{_libdir}/allegro/4.0/alleg-svgalib.so
+%{_libdir}/allegro/4.1/alleg-svgalib.so
 %endif
 
 %files dga2
 %defattr(644,root,root,755)
-%{_libdir}/allegro/4.0/alleg-dga2.so
+%{_libdir}/allegro/4.1/alleg-dga2.so
 
 %files esd
 %defattr(644,root,root,755)
-%{_libdir}/allegro/4.0/alleg-esddigi.so
+%{_libdir}/allegro/4.1/alleg-esddigi.so
 
+%if %{?_without_alsa:0}%{!?_without_alsa:1}
 %ifnarch sparc sparc64
 %files alsa
 %defattr(644,root,root,755)
-%{_libdir}/allegro/4.0/alleg-alsadigi.so
-%{_libdir}/allegro/4.0/alleg-alsamidi.so
+%{_libdir}/allegro/4.1/alleg-alsadigi.so
+%{_libdir}/allegro/4.1/alleg-alsamidi.so
+%endif
 %endif
 
 %files tests

@@ -5,13 +5,14 @@
 Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.5
+Version:	4.1.6
 Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://belnet.dl.sourceforge.net/sourceforge/alleg/%{name}-%{version}.tar.gz
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
+Patch2:		%{name}-alsa9.patch
 URL:		http://alleg.sourceforge.net
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
@@ -23,6 +24,7 @@ BuildRequires:	alsa-lib-devel
 %ifarch %{ix86} alpha
 BuildRequires:	svgalib-devel
 %endif
+BuildRequires:	arts-devel
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -153,6 +155,60 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera modu³ do wykorzystania z demonem ESound.
 
+%package arts
+Summary:	A game programming library - aRts module
+Summary(pl):	Biblioteka do programowania gier - modu³ dla aRts
+Group:		Libraries
+PreReq:		%{name} = %{version}
+
+%description arts
+Allegro is a cross-platform library intended for use in computer games
+and other types of multimedia programming.
+
+This package contains a esound module for use with aRts.
+
+%description arts -l pl
+Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
+
+Ten pakiet zawiera modu³ do wykorzystania z aRts.
+
+%package fbcon
+Summary:	A game programming library - framebuffer module
+Summary(pl):	Biblioteka do programowania gier - modu³ dla framebuffera
+Group:		Libraries
+PreReq:		%{name} = %{version}
+
+%description fbcon
+Allegro is a cross-platform library intended for use in computer games
+and other types of multimedia programming.
+
+This package contains a esound module for use with framebuffer.
+
+%description fbcon -l pl
+Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
+
+Ten pakiet zawiera modu³ do wykorzystania z framebufferem.
+
+%package vga
+Summary:	A game programming library - vga module
+Summary(pl):	Biblioteka do programowania gier - modu³ dla vga
+Group:		Libraries
+PreReq:		%{name} = %{version}
+
+%description vga
+Allegro is a cross-platform library intended for use in computer games
+and other types of multimedia programming.
+
+This package contains a esound module for use with vga.
+
+%description vga -l pl
+Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
+
+Ten pakiet zawiera modu³ do wykorzystania z vga.
+
 %package alsa
 Summary:	A game programming library - ALSA modules
 Summary(pl):	Biblioteka do programowania gier - modu³y dla ALSA
@@ -194,6 +250,7 @@ Ten pakiet zawiera narzêdzia.
 %setup  -q
 %patch0 -p1
 %patch1 -p1
+#%patch2 -p1
 
 %build
 %{__aclocal}
@@ -214,7 +271,7 @@ Ten pakiet zawiera narzêdzia.
 	
 %{__make} \
 	MAKEINFO=makeinfo \
-	CFLAGS="%{rpmcflags} -I/usr/X11R6/include/artsc -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall \
+	CFLAGS="%{rpmcflags} `artsc-config --cflags` -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall \
 %ifnarch %{ix86}
 	-DALLEGRO_USE_C \
 %endif
@@ -290,6 +347,18 @@ rm -rf $RPM_BUILD_ROOT
 %files esd
 %defattr(644,root,root,755)
 %{_libdir}/allegro/4.1/alleg-esddigi.so
+
+%files arts
+%defattr(644,root,root,755)
+%{_libdir}/allegro/4.1/alleg-artsdigi.so
+
+%files fbcon
+%defattr(644,root,root,755)
+%{_libdir}/allegro/4.1/alleg-fbcon.so
+
+%files vga
+%defattr(644,root,root,755)
+%{_libdir}/allegro/4.1/alleg-vga.so
 
 %if %{?_without_alsa:0}%{!?_without_alsa:1}
 %ifnarch sparc sparc64

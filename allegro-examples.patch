@@ -3,14 +3,14 @@
 @@ -392,8 +392,9 @@
  
  install-programs: programs
- 	$(mkinstalldirs) $(bindir)
+ 	$(mkinstalldirs) $(DESTDIR)$(bindir)
 -	@for prog in $(ALLEGRO_LIB_EXES) $(ALLEGRO_DATAFILE_EXES); do \
 -	  if test "X`echo $$prog | sed -e s,tools/.\*,,`" = X; then \
 +	@for prog in $(ALLEGRO_LIB_EXES) $(ALLEGRO_DATAFILE_EXES) \
 +	  $(ALLEGRO_EXAMPLE_EXES) ; do \
 +	  if test "X`echo $$prog | sed -e s,.*/.\*,,`" = X; then \
- 	    echo Installing $$prog to $(bindir); \
- 	    $(INSTALL_PROGRAM) $$prog $(bindir); \
+ 	    echo Installing $$prog to $(DESTDIR)$(bindir); \
+ 	    $(INSTALL_PROGRAM) $$prog $(DESTDIR)$(bindir); \
  	  fi; \
 @@ -465,9 +466,10 @@
  	rm -rf $(includedir)/allegro

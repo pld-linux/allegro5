@@ -392,7 +392,7 @@ biblioteki allegro.
 %{__aclocal}
 %{__autoheader} configure.in > include/allegro/platform/alunixac.hin
 %{__autoconf}
-TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
+TARGET_ARCH="%{rpmcflags} %{?with_arts:-I/usr/include/artsc}" export TARGET_ARCH
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
 %configure \
 	--enable-static \

@@ -18,16 +18,17 @@ Summary(fr):	Une librairie de programmation de jeux
 Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.9
+Version:	4.1.11
 Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	d4423486f7aed064e10071a19fd06b1e
+# Source0-md5:	61568ff088fd074eaad8b5cc23ac40ff
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-alsa9.patch
 Patch3:		%{name}-opt.patch
+Patch4:		%{name}-ldflags.patch
 URL:		http://alleg.sourceforge.net/
 BuildRequires:	XFree86-devel
 %{!?_without_alsa:BuildRequires:	alsa-lib-devel}
@@ -400,14 +401,15 @@ Pakiet zawiera programy przyk³adowe demonstruj±ce mo?liwo¶ci biblioteki allegro.
 %setup  -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1	# you want it, you do it
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__aclocal}
-%{__autoheader} configure.in include/allegro/platform/alunixac.hin
+%{__autoheader} configure.in > include/allegro/platform/alunixac.hin
 %{__autoconf}
-TARGET_ARCH="%{rpmcflags}"; export TARGET_ARCH
+TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
 %configure \
 	--enable-static \
@@ -418,8 +420,11 @@ TARGET_ARCH="%{rpmcflags}"; export TARGET_ARCH
 	--disable-linux \
 %endif
 	%{!?_without_proflib:--enable-proflib} \
+	%{?_without_arts:--disable-artsdigi} \
 %ifnarch %{ix86}
-	--disable-asm
+	--disable-asm \
+	--disable-mmx \
+	--disable-sse
 %endif
 
 %{__make} \

@@ -1,58 +1,79 @@
 Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	3.9.38
+Version:	3.9.40
 Release:	1
 License:	giftware
-Group:		Libraries
-Group(de):	Libraries
-Group(es):	Bibliotecas
-Group(fr):	Librairies
-Group(pl):	Biblioteki
-Group(pt_BR):	Bibliotecas
-Group(ru):	‚…¬Ã…œ‘≈À…
-Group(uk):	‚¶¬Ã¶œ‘≈À…
+Group:		X11/Libraries
+Group(de):	X11/Libraries
+Group(es):	X11/Bibliotecas
+Group(fr):	X11/Librairies
+Group(pl):	X11/Biblioteki
+Group(pt_BR):	X11/Bibliotecas
+Group(ru):	X11/‚…¬Ã…œ‘≈À…
+Group(uk):	X11/‚¶¬Ã¶œ‘≈À…
 Source0:	http://prdownloads.sourceforge.net/alleg/%{name}-%{version}.tar.gz
 Patch0:		%{name}-makefile.patch
+Patch1:		%{name}-info.patch
 URL:		http://www.talula.demon.co.uk/allegro/
-BuildRequires:	esound-devel
-BuildRequires:	alsa-lib-devel
-BuildRequires:	svgalib-devel
 BuildRequires:	XFree86-devel
+BuildRequires:	esound-devel
+%ifnarch sparc sparc64
+BuildRequires:	alsa-lib-devel
+%endif
+BuildRequires:	svgalib-devel
+BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_prefix		/usr/X11R6
+%define		_mandir		%{_prefix}/man
 
 %description
 Allegro is a cross-platform library intended for use in computer games
 and other types of multimedia programming.
 
 %description -l pl
-Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w grach
-komputerowych i innych rodzajach oprogramowania multimedialnego.
+Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 %package devel
 Summary:	A game programming library - header files
 Summary(pl):	Biblioteka do programowania gier - pliki nag≥Ûwkowe
-Group:		Development/Libraries
+Group:		X11/Development/Libraries
+Group(de):	X11/Entwicklung/Libraries
+Group(es):	X11/Desarrollo/Bibliotecas
+Group(fr):	X11/Development/Librairies
+Group(pl):	X11/Programowanie/Biblioteki
+Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
+Group(ru):	X11/Ú¡⁄“¡¬œ‘À¡/‚…¬Ã…œ‘≈À…
+Group(uk):	X11/Úœ⁄“œ¬À¡/‚¶¬Ã¶œ‘≈À…
 Requires:	%{name} = %{version}
 
 %description devel
 Allegro is a cross-platform library intended for use in computer games
 and other types of multimedia programming.
 
-This package contains header files neccessary for compiling applications
-using allegro library.
+This package contains header files neccessary for compiling
+applications using allegro library.
 
 %description devel -l pl
-Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w grach
-komputerowych i innych rodzajach oprogramowania multimedialnego.
+Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera pliki nag≥Ûwkowe niezbÍdne do kompilowania aplikacji
-wykorzystuj±cych bibliotekÍ allegro.
+Ten pakiet zawiera pliki nag≥Ûwkowe niezbÍdne do kompilowania
+aplikacji wykorzystuj±cych bibliotekÍ allegro.
 
 %package static
 Summary:	A game programming library - static libraries
 Summary(pl):	Biblioteka do programowania gier - biblioteki statyczne
-Group:		Development/Libraries
+Group:		X11/Development/Libraries
+Group(de):	X11/Entwicklung/Libraries
+Group(es):	X11/Desarrollo/Bibliotecas
+Group(fr):	X11/Development/Librairies
+Group(pl):	X11/Programowanie/Biblioteki
+Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
+Group(ru):	X11/Ú¡⁄“¡¬œ‘À¡/‚…¬Ã…œ‘≈À…
+Group(uk):	X11/Úœ⁄“œ¬À¡/‚¶¬Ã¶œ‘≈À…
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -63,8 +84,8 @@ This package contains static libraries for linking with allegro
 applications.
 
 %description static -l pl
-Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w grach
-komputerowych i innych rodzajach oprogramowania multimedialnego.
+Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera biblioteki statyczne do linkowania z aplikacjami
 wykorzystuj±cymi allegro.
@@ -72,7 +93,14 @@ wykorzystuj±cymi allegro.
 %package svgalib
 Summary:	A game programming library - svgalib module
 Summary(pl):	Biblioteka do programowania gier - modu≥ dla svgalib
-Group:		Libraries
+Group:		X11/Libraries
+Group(de):	X11/Libraries
+Group(es):	X11/Bibliotecas
+Group(fr):	X11/Librairies
+Group(pl):	X11/Biblioteki
+Group(pt_BR):	X11/Bibliotecas
+Group(ru):	X11/‚…¬Ã…œ‘≈À…
+Group(uk):	X11/‚¶¬Ã¶œ‘≈À…
 PreReq:		%{name} = %{version}
 
 %description svgalib
@@ -82,15 +110,22 @@ and other types of multimedia programming.
 This package contains module for use with allegro and svgalib.
 
 %description svgalib -l pl
-Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w grach
-komputerowych i innych rodzajach oprogramowania multimedialnego.
+Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera modu≥ do wykorzystania allegro z svgalibem.
 
 %package dga2
 Summary:	A game programming library - DGA2 module
 Summary(pl):	Biblioteka do programowania gier - modu≥ dla DGA2
-Group:		Libraries
+Group:		X11/Libraries
+Group(de):	X11/Libraries
+Group(es):	X11/Bibliotecas
+Group(fr):	X11/Librairies
+Group(pl):	X11/Biblioteki
+Group(pt_BR):	X11/Bibliotecas
+Group(ru):	X11/‚…¬Ã…œ‘≈À…
+Group(uk):	X11/‚¶¬Ã¶œ‘≈À…
 PreReq:		%{name} = %{version}
 
 %description dga2
@@ -100,15 +135,22 @@ and other types of multimedia programming.
 This package contains module for use with DGA.
 
 %description dga2 -l pl
-Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w grach
-komputerowych i innych rodzajach oprogramowania multimedialnego.
+Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera modu≥ do wykorzystania z DGA.
 
 %package esd
 Summary:	A game programming library - esound module
 Summary(pl):	Biblioteka do programowania gier - modu≥ dla esound
-Group:		Libraries
+Group:		X11/Libraries
+Group(de):	X11/Libraries
+Group(es):	X11/Bibliotecas
+Group(fr):	X11/Librairies
+Group(pl):	X11/Biblioteki
+Group(pt_BR):	X11/Bibliotecas
+Group(ru):	X11/‚…¬Ã…œ‘≈À…
+Group(uk):	X11/‚¶¬Ã¶œ‘≈À…
 PreReq:		%{name} = %{version}
 
 %description esd
@@ -118,15 +160,22 @@ and other types of multimedia programming.
 This package contains a esound module for use with ESound daemon.
 
 %description esd -l pl
-Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w grach
-komputerowych i innych rodzajach oprogramowania multimedialnego.
+Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera modu≥ do wykorzystania z demonem ESound.
 
 %package alsa
 Summary:	A game programming library - ALSA modules
 Summary(pl):	Biblioteka do programowania gier - modu≥y dla ALSA
-Group:		Libraries
+Group:		X11/Libraries
+Group(de):	X11/Libraries
+Group(es):	X11/Bibliotecas
+Group(fr):	X11/Librairies
+Group(pl):	X11/Biblioteki
+Group(pt_BR):	X11/Bibliotecas
+Group(ru):	X11/‚…¬Ã…œ‘≈À…
+Group(uk):	X11/‚¶¬Ã¶œ‘≈À…
 PreReq:		%{name} = %{version}
 
 %description alsa
@@ -136,30 +185,29 @@ and other types of multimedia programming.
 This package contains modules for use with ALSA sound library.
 
 %description alsa -l pl
-Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w grach
-komputerowych i innych rodzajach oprogramowania multimedialnego.
+Allegro jest przeno∂n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera modu≥y do wykorzystania z bibliotek± dºwiÍkow± ALSA.
+Ten pakiet zawiera modu≥y do wykorzystania z bibliotek± dºwiÍkow±
+ALSA.
 
 %prep
 %setup  -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 aclocal
 autoconf
 %configure \
 	--enable-static
-%{__make}
+%{__make} MAKEINFO=makeinfo
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} \
-	DESTDIR=$RPM_BUILD_ROOT \
-	install \
-	install-man \
-	install-info
+%{__make} install install-man install-info \
+	DESTDIR=$RPM_BUILD_ROOT
 
 gzip -9nf AUTHORS CHANGES THANKS
 
@@ -207,7 +255,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/allegro/alleg-esddigi-%{version}.so
 
+%ifnarch sparc sparc64
 %files alsa
 %defattr(644,root,root,755)
 %{_libdir}/allegro/alleg-alsadigi-%{version}.so
 %{_libdir}/allegro/alleg-alsamidi-%{version}.so
+%endif

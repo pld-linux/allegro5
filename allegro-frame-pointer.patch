@@ -10,9 +10,9 @@
    PLUGIN_LIB=lib/unix/libapdat.a
    allegro_build_profiling_library=yes
 @@ -654,7 +654,7 @@
-   if test "X$allegro_debug_with_fortify" = "Xyes"; then
       ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DFORTIFY"
    fi
+   CFLAGS="$CFLAGS $TARGET_ARCH"
 -  ALLEGRO_PROFILE_CFLAGS="$CFLAGS -pg $WFLAGS"
 +  ALLEGRO_PROFILE_CFLAGS="$CFLAGS -fno-omit-frame-pointer -pg $WFLAGS"
    ALLEGRO_SFLAGS="-x assembler-with-cpp"

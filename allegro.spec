@@ -1,8 +1,12 @@
+#
+# Conditional build:
+# --without alsa
+#
 Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.1
-Release:	4
+Version:	4.1.5
+Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://belnet.dl.sourceforge.net/sourceforge/alleg/%{name}-%{version}.tar.gz

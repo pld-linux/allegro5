@@ -2,13 +2,12 @@ Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
 Version:	4.1.1
-Release:	3
+Release:	4
 License:	Giftware
 Group:		Libraries
 Source0:	http://belnet.dl.sourceforge.net/sourceforge/alleg/%{name}-%{version}.tar.gz
 Patch0:		%{name}-info.patch
-#Patch1:	%{name}-alsa9.patch
-Patch2:		%{name}-examples.patch
+Patch1:		%{name}-examples.patch
 URL:		http://alleg.sourceforge.net
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
@@ -190,8 +189,7 @@ Ten pakiet zawiera narzêdzia.
 %prep
 %setup  -q
 %patch0 -p1
-%patch2 -p1
-#%patch1 -p1
+%patch1 -p1
 
 %build
 %{__aclocal}

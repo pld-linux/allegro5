@@ -14,7 +14,9 @@ BuildRequires:	esound-devel
 %ifnarch sparc sparc64
 BuildRequires:	alsa-lib-devel
 %endif
+%ifarch %{ix86}
 BuildRequires:	svgalib-devel
+%endif
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -211,7 +213,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/allegro/4.0/alleg-esddigi.so
 
-%ifnarch sparc sparc64
+%ifarch %{ix86}
 %files alsa
 %defattr(644,root,root,755)
 %{_libdir}/allegro/4.0/alleg-alsadigi.so

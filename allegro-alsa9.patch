@@ -1,0 +1,958 @@
+--- allegro/include/allegro/platform/alunix.h.orig	Sun Dec  8 20:11:31 2002
++++ allegro/include/allegro/platform/alunix.h	Sun Jan 26 13:29:31 2003
+@@ -157,6 +157,37 @@
+ 
+ #endif /* ALLEGRO_WITH_ALSAMIDI */
+ 
++#ifdef ALLEGRO_WITH_ALSA9DIGI
++
++#define DIGI_ALSA9             AL_ID('A','L','S','9')
++
++#ifndef ALLEGRO_WITH_MODULES
++
++AL_VAR(DIGI_DRIVER, digi_alsa9);
++
++#define DIGI_DRIVER_ALSA9                                         \
++      {  DIGI_ALSA9,       &digi_alsa9,           TRUE  },
++
++#endif
++      
++#endif /* ALLEGRO_WITH_ALSA9DIGI */
++
++
++#ifdef ALLEGRO_WITH_ALSA9MIDI
++
++#define MIDI_ALSA9              AL_ID('A','M','I','9')
++
++#ifndef ALLEGRO_WITH_MODULES
++
++AL_VAR(MIDI_DRIVER, midi_alsa9);
++
++#define MIDI_DRIVER_ALSA9                                          \
++      {  MIDI_ALSA9,        &midi_alsa9,            TRUE  },
++
++#endif
++
++#endif /* ALLEGRO_WITH_ALSA9MIDI */
++
+ 
+ 
+ /************************************/
+diff -uNr allegro-4.1.6.old/acconfig.h allegro-4.1.6/acconfig.h
+--- allegro-4.1.6.old/acconfig.h	Sat Nov 30 12:13:21 2002
++++ allegro-4.1.6/acconfig.h	Fri Dec  6 17:40:10 2002
+@@ -79,6 +79,12 @@
+ /* Define if ALSA MIDI driver is supported.  */
+ #undef ALLEGRO_WITH_ALSAMIDI
+ 
++/* Define if ALSA9 DIGI driver is supported.  */
++#undef ALLEGRO_WITH_ALSA9DIGI
++
++/* Define if ALSA9 MIDI driver is supported.  */
++#undef ALLEGRO_WITH_ALSA9MIDI
++
+ /* Define if ESD DIGI driver is supported.  */
+ #undef ALLEGRO_WITH_ESDDIGI
+ 
+diff -uNr allegro-4.1.6.old/aclocal.m4 allegro-4.1.6/aclocal.m4
+--- allegro-4.1.6.old/aclocal.m4	Sat Nov 30 12:13:21 2002
++++ allegro-4.1.6/aclocal.m4	Fri Dec  6 17:40:10 2002
+@@ -363,6 +363,60 @@
+ fi])
+ 
+ dnl
++dnl Test for ALSA9 DIGI driver.
++dnl
++dnl Variables:
++dnl  allegro_enable_alsa9digi=(yes|)
++dnl  allegro_cv_support_alsa9digi=(yes|)
++dnl
++AC_DEFUN(ALLEGRO_ACTEST_ALSA9DIGI,
++[AC_ARG_ENABLE(alsa9digi,
++[  --enable-alsa9digi[=x]   enable building ALSA9 DIGI driver [default=yes]],
++test "X$enableval" != "Xno" && allegro_enable_alsa9digi=yes,
++allegro_enable_alsa9digi=yes)
++ 
++if test -n "$allegro_enable_alsa9digi"; then
++  AC_CACHE_CHECK(for supported ALSA9 version for digital sound,
++  allegro_cv_support_alsa9digi,
++  AC_TRY_RUN([#include <alsa/asoundlib.h>
++    int main (void) { return SND_LIB_MAJOR != 0 || SND_LIB_MINOR != 9; }],
++  allegro_cv_support_alsa9digi=yes,
++  allegro_cv_support_alsa9digi=no,
++  allegro_cv_support_alsa9digi=no))
++  if test "X$allegro_cv_support_alsa9digi" = "Xyes" && 
++     test -z "$allegro_support_modules"; then
++    LIBS="-lasound $LIBS"
++  fi
++fi])
++
++dnl
++dnl Test for ALSA9 MIDI driver.
++dnl
++dnl Variables:
++dnl  allegro_enable_alsa9midi=(yes|)
++dnl  allegro_support_alsa9midi=(yes|)
++dnl
++AC_DEFUN(ALLEGRO_ACTEST_ALSA9MIDI,
++[AC_ARG_ENABLE(alsa9midi,
++[  --enable-alsa9midi[=x]   enable building ALSA9 MIDI driver [default=yes]],
++test "X$enableval" != "Xno" && allegro_enable_alsa9midi=yes,
++allegro_enable_alsa9midi=yes)
++
++if test -n "$allegro_enable_alsa9midi"; then
++  AC_CACHE_CHECK(for supported ALSA9 version for MIDI,
++  allegro_cv_support_alsa9midi,
++  AC_TRY_RUN([#include <alsa/asoundlib.h>
++    int main (void) { return SND_LIB_MAJOR != 0 || SND_LIB_MINOR != 9; }],
++  allegro_cv_support_alsa9midi=yes,
++  allegro_cv_support_alsa9midi=no,
++  allegro_cv_support_alsa9midi=no))
++  if test "X$allegro_cv_support_alsa9midi" = "Xyes" &&
++     test -z "$allegro_support_modules"; then
++    LIBS="-lasound $LIBS"
++  fi
++fi])
++
++dnl
+ dnl Test for ESD DIGI driver.
+ dnl
+ dnl Variables:
+diff -uNr allegro-4.1.6.old/allegro.mft allegro-4.1.6/allegro.mft
+--- allegro-4.1.6.old/allegro.mft	Sat Nov 30 12:18:28 2002
++++ allegro-4.1.6/allegro.mft	Fri Dec  6 17:40:10 2002
+@@ -685,6 +685,8 @@
+ allegro/src/unix/
+ allegro/src/unix/alsa.c
+ allegro/src/unix/alsamidi.c
++allegro/src/unix/alsa9.c
++allegro/src/unix/alsa9midi.c
+ allegro/src/unix/arts.c
+ allegro/src/unix/sgial.c
+ allegro/src/unix/udjgpp.c
+diff -uNr allegro-4.1.6.old/configure.in allegro-4.1.6/configure.in
+--- allegro-4.1.6.old/configure.in	Sat Nov 30 12:13:21 2002
++++ allegro-4.1.6/configure.in	Fri Dec  6 17:40:10 2002
+@@ -304,6 +304,17 @@
+   AC_DEFINE(ALLEGRO_WITH_ALSAMIDI)
+ fi
+ 
++dnl Test for ALSA9 drivers.
++ALLEGRO_ACTEST_ALSA9DIGI
++if test "$allegro_cv_support_alsa9digi" = yes; then
++  AC_DEFINE(ALLEGRO_WITH_ALSA9DIGI)
++fi
++
++ALLEGRO_ACTEST_ALSA9MIDI
++if test "$allegro_cv_support_alsa9midi" = yes; then
++  AC_DEFINE(ALLEGRO_WITH_ALSA9MIDI)
++fi
++
+ dnl Test for ESD drivers.
+ ALLEGRO_ACTEST_ESDDIGI
+ if test -n "$allegro_support_esddigi"; then
+@@ -478,6 +489,16 @@
+     ALLEGRO_MODULE_TARGETS="$ALLEGRO_MODULE_TARGETS lib/unix/alleg-alsamidi.so"
+   fi
+ 
++  dnl ALSA9 DIGI.
++  if test "X$allegro_cv_support_alsa9digi" = "Xyes"; then
++    ALLEGRO_MODULE_TARGETS="$ALLEGRO_MODULE_TARGETS lib/unix/alleg-alsa9digi.so"
++  fi
++
++  dnl ALSA9 MIDI.
++  if test "X$allegro_cv_support_alsa9midi" = "Xyes"; then
++    ALLEGRO_MODULE_TARGETS="$ALLEGRO_MODULE_TARGETS lib/unix/alleg-alsa9midi.so"
++  fi
++
+   dnl ESD DIGI.
+   if test "X$allegro_support_esddigi" = "Xyes"; then
+     ALLEGRO_MODULE_TARGETS="$ALLEGRO_MODULE_TARGETS lib/unix/alleg-esddigi.so"
+diff -uNr allegro-4.1.6.old/makefile.in allegro-4.1.6/makefile.in
+--- allegro-4.1.6.old/makefile.in	Fri Dec  6 17:39:38 2002
++++ allegro-4.1.6/makefile.in	Fri Dec  6 17:40:10 2002
+@@ -526,6 +526,8 @@
+ 	$(SHELL) -c 'cd $(srcdir) && misc/depmod.sh dga2 -lXxf86dga $(ALLEGRO_MODULE_DGA2_FILES)' >> makefile.dep
+ 	$(SHELL) -c 'cd $(srcdir) && misc/depmod.sh alsadigi -lasound $(ALLEGRO_MODULE_ALSADIGI_FILES)' >>makefile.dep
+ 	$(SHELL) -c 'cd $(srcdir) && misc/depmod.sh alsamidi -lasound $(ALLEGRO_MODULE_ALSAMIDI_FILES)' >>makefile.dep
++	$(SHELL) -c 'cd $(srcdir) && misc/depmod.sh alsa9digi -lasound $(ALLEGRO_MODULE_ALSA9DIGI_FILES)' >>makefile.dep
++	$(SHELL) -c 'cd $(srcdir) && misc/depmod.sh alsa9midi -lasound $(ALLEGRO_MODULE_ALSA9MIDI_FILES)' >>makefile.dep
+ 	$(SHELL) -c 'cd $(srcdir) && misc/depmod.sh esddigi "\`esd-config --libs\`" $(ALLEGRO_MODULE_ESD_FILES)' >>makefile.dep
+ 	$(SHELL) -c 'cd $(srcdir) && misc/depmod.sh artsdigi "\`artsc-config --libs\`" $(ALLEGRO_MODULE_ARTS_FILES)' >>makefile.dep
+ 	$(SHELL) -c 'cd $(srcdir) && misc/depmod.sh sgialdigi -laudio $(ALLEGRO_MODULE_SGIAL_FILES)' >>makefile.dep
+diff -uNr allegro-4.1.6.old/makefile.lst allegro-4.1.6/makefile.lst
+--- allegro-4.1.6.old/makefile.lst	Sat Nov 30 12:13:21 2002
++++ allegro-4.1.6/makefile.lst	Fri Dec  6 17:40:10 2002
+@@ -268,6 +268,8 @@
+ ALLEGRO_SRC_UNIX_FILES = \
+ 	src/unix/alsa.c \
+ 	src/unix/alsamidi.c \
++	src/unix/alsa9.c \
++	src/unix/alsa9midi.c \
+ 	src/unix/arts.c \
+ 	src/unix/sgial.c \
+ 	src/unix/udjgpp.c \
+@@ -350,6 +352,12 @@
+ ALLEGRO_MODULE_ALSAMIDI_FILES = \
+ 	src/unix/alsamidi.c
+ 
++ALLEGRO_MODULE_ALSA9DIGI_FILES = \
++	src/unix/alsa9.c
++
++ALLEGRO_MODULE_ALSA9MIDI_FILES = \
++	src/unix/alsa9midi.c
++
+ ALLEGRO_MODULE_ESD_FILES = \
+ 	src/unix/uesd.c
+ 
+diff -uNr allegro-4.1.6.old/modules.lst allegro-4.1.6/modules.lst
+--- allegro-4.1.6.old/modules.lst	Sat Nov 30 12:13:21 2002
++++ allegro-4.1.6/modules.lst	Fri Dec  6 17:40:10 2002
+@@ -9,3 +9,5 @@
+ alleg-sgialdigi.so
+ alleg-alsadigi.so
+ alleg-alsamidi.so
++alleg-alsa9digi.so
++alleg-alsa9midi.so
+diff -uNr allegro-4.1.6.old/setup/setup.c allegro-4.1.6/setup/setup.c
+--- allegro-4.1.6.old/setup/setup.c	Sat Nov 30 12:13:22 2002
++++ allegro-4.1.6/setup/setup.c	Fri Dec  6 17:42:22 2002
+@@ -234,6 +234,17 @@
+    { "alsa_rawmidi_card",  param_int,     "",      "",         NULL,             "Card:",    NULL,       NULL,    "ALSA RawMIDI card number" },
+    { "alsa_rawmidi_device",param_int,     "",      "",         NULL,             "Dev:",     NULL,       NULL,    "ALSA RawMIDI device number" },
+  #endif
++
++ #ifdef DIGI_ALSA9
++   { "alsa_card",          param_int,     "",      "",         NULL,             "Card:",    NULL,       NULL,    "ALSA card number" },
++   { "alsa_pcmdevice",     param_int,     "",      "",         NULL,             "Dev:",     NULL,       NULL,    "ALSA PCM device number" },
++   { "alsa_numfrags",      param_int,     "",      "",         NULL,             "NumFr:",   NULL,       NULL,    "Number of fragments (use 2, other values make little difference)" },
++ #endif
++
++ #ifdef MIDI_ALSA9
++   { "alsa_rawmidi_card",  param_int,     "",      "",         NULL,             "Card:",    NULL,       NULL,    "ALSA RawMIDI card number" },
++   { "alsa_rawmidi_device",param_int,     "",      "",         NULL,             "Dev:",     NULL,       NULL,    "ALSA RawMIDI device number" },
++ #endif
+  
+  #ifdef MIDI_BEOS
+    { "be_midi_quality",    param_int,     "",      "1",        NULL,             "Qual:",    NULL,       NULL,    "BeOS MIDI synthetizer instruments quality (0 = low, 1 = high)" },
+@@ -432,6 +443,16 @@
+ 	 }
+        #endif
+        
++       #ifdef DIGI_ALSA9
++	 case DIGI_ALSA9:
++	 {
++	    static char *param[] = {"flip_pan", "sound_bits", "sound_stereo", "alsa_numfrags", "alsa_card", "alsa_pcmdevice", "sound_freq", "digi_volume", NULL};
++	    digi_cards[c].param = uconvert_static_string_array(param);
++	    digi_cards[c].desc = uconvert_static_string("ALSA Sound System");
++	    break;
++	 }
++       #endif
++       
+        #ifdef DIGI_BEOS
+ 	 case DIGI_BEOS:
+ 	 {
+@@ -550,6 +571,16 @@
+ 	 {
+ 	    static char *param[] = {"22", "alsa_rawmidi_card", "alsa_rawmidi_device", "", "midi_volume", NULL};
+ 	    midi_cards[c].param = uconvert_static_string_array(param);
++	    midi_cards[c].desc = uconvert_static_string("ALSA RawMIDI");
++	    break;
++	 }
++       #endif
++       
++       #ifdef MIDI_ALSA9
++	 case MIDI_ALSA9:
++	 {
++	    static char *param[] = {"22", "alsa_rawmidi_card", "alsa_rawmidi_device", "", "midi_volume", NULL};
++	    midi_cards[c].param = uconvert_static_string_array(param);
+ 	    midi_cards[c].desc = uconvert_static_string("ALSA RawMIDI");
+ 	    break;
+ 	 }
+diff -uNr allegro-4.1.6.old/src/unix/alsa9.c allegro-4.1.6/src/unix/alsa9.c
+--- allegro-4.1.6.old/src/unix/alsa9.c	Thu Jan  1 01:00:00 1970
++++ allegro-4.1.6/src/unix/alsa9.c	Mon Oct 28 21:20:48 2002
+@@ -0,0 +1,428 @@
++/*         ______   ___    ___
++ *        /\  _  \ /\_ \  /\_ \
++ *        \ \ \L\ \\//\ \ \//\ \      __     __   _ __   ___
++ *         \ \  __ \ \ \ \  \ \ \   /'__`\ /'_ `\/\`'__\/ __`\
++ *          \ \ \/\ \ \_\ \_ \_\ \_/\  __//\ \L\ \ \ \//\ \L\ \
++ *           \ \_\ \_\/\____\/\____\ \____\ \____ \ \_\\ \____/
++ *            \/_/\/_/\/____/\/____/\/____/\/___L\ \/_/ \/___/
++ *                                           /\____/
++ *                                           \_/__/
++ *
++ *      ALSA 0.9 sound driver.
++ *
++ *      By Grzegorz Godlewski based on Alsa 0.5, OSS and MPlayer 0.9
++ *
++ *      See readme.txt for copyright information.
++ */
++
++
++#include "allegro.h"
++
++#if (defined DIGI_ALSA9) && ((!defined ALLEGRO_WITH_MODULES) || (defined ALLEGRO_MODULE))
++
++#include "allegro/internal/aintern.h"
++#ifdef ALLEGRO_QNX
++#include "allegro/platform/aintqnx.h"
++#else
++#include "allegro/platform/aintunix.h"
++#endif
++
++#ifndef SCAN_DEPEND
++   #include <string.h>
++   #include <alsa/asoundlib.h>
++#endif
++
++#ifndef SND_PCM_FORMAT_S16_NE
++   #ifdef ALLEGRO_BIG_ENDIAN
++      #define SND_PCM_FORMAT_S16_NE SND_PCM_FORMAT_S16_BE
++   #else
++      #define SND_PCM_FORMAT_S16_NE SND_PCM_FORMAT_S16_LE
++   #endif
++#endif
++#ifndef SND_PCM_FORMAT_U16_NE
++   #ifdef ALLEGRO_BIG_ENDIAN
++      #define SND_PCM_FORMAT_U16_NE SND_PCM_FORMAT_U16_BE
++   #else
++      #define SND_PCM_FORMAT_U16_NE SND_PCM_FORMAT_U16_LE
++   #endif
++#endif
++
++
++#define ALSA9_DEFAULT_NUMFRAGS 2
++#define ALSA9_DEFAULT_FRAGSIZE 8192
++
++static snd_pcm_t *pcm_handle=NULL;
++static int alsa9_bufsize;
++static unsigned char *alsa9_bufdata;
++static int alsa9_bits, alsa9_signed, alsa9_rate, alsa9_stereo;
++static int periods,periodsize;
++
++static char alsa9_desc[256] = EMPTY_STRING;
++
++
++
++static int alsa9_detect(int input);
++static int alsa9_init(int input, int voices);
++static void alsa9_exit(int input);
++static int alsa9_mixer_volume(int volume);
++static int alsa9_buffer_size(void);
++
++
++
++DIGI_DRIVER digi_alsa9 =
++{
++   DIGI_ALSA9,
++   empty_string,
++   empty_string,
++   "ALSA9",
++   0,
++   0,
++   MIXER_MAX_SFX,
++   MIXER_DEF_SFX,
++
++   alsa9_detect,
++   alsa9_init,
++   alsa9_exit,
++   alsa9_mixer_volume,
++
++   NULL,
++   NULL,
++   alsa9_buffer_size,
++   _mixer_init_voice,
++   _mixer_release_voice,
++   _mixer_start_voice,
++   _mixer_stop_voice,
++   _mixer_loop_voice,
++
++   _mixer_get_position,
++   _mixer_set_position,
++
++   _mixer_get_volume,
++   _mixer_set_volume,
++   _mixer_ramp_volume,
++   _mixer_stop_volume_ramp,
++
++   _mixer_get_frequency,
++   _mixer_set_frequency,
++   _mixer_sweep_frequency,
++   _mixer_stop_frequency_sweep,
++
++   _mixer_get_pan,
++   _mixer_set_pan,
++   _mixer_sweep_pan,
++   _mixer_stop_pan_sweep,
++
++   _mixer_set_echo,
++   _mixer_set_tremolo,
++   _mixer_set_vibrato,
++   0, 0,
++   0,
++   0,
++   0,
++   0,
++   0,
++   0
++};
++
++
++
++/* alsa9_buffer_size:
++ *  Returns the current DMA buffer size, for use by the audiostream code.
++ */
++static int alsa9_buffer_size()
++{
++   return alsa9_bufsize;
++}
++
++/* alsa9_update:
++ *  Update data.
++ */
++static void alsa9_update(int threaded)
++{
++   int frames;
++
++   if (!pcm_handle) {
++      printf("alsa-play: device configuration error");
++      return;
++   }
++
++   frames = periodsize >> ((alsa9_stereo)?3:2);
++   while (snd_pcm_writei(pcm_handle, alsa9_bufdata, frames) <0)
++   {
++      snd_pcm_prepare(pcm_handle);
++   }
++   _mix_some_samples((unsigned long) alsa9_bufdata, 0, alsa9_signed);
++}
++
++
++
++/* alsa9_detect:
++ *  Detect driver presence.
++ */
++static int alsa9_detect(int input)
++{
++   snd_pcm_t *handle;
++   int card, device;
++   char tmp1[128], tmp2[128];
++   int ret = FALSE;
++   snd_pcm_hw_params_t *hwparams;
++   char pcm_name[128];
++
++   card = get_config_int(uconvert_ascii("sound", tmp1),
++			 uconvert_ascii("alsa_card", tmp2),
++			 0);
++
++   device = get_config_int(uconvert_ascii("sound", tmp1),
++			   uconvert_ascii("alsa_pcmdevice", tmp2),
++			   0);
++
++
++   sprintf(pcm_name,"plughw:%d,%d",card,device);
++   snd_pcm_hw_params_alloca(&hwparams);
++
++   if (!(snd_pcm_open(&handle, pcm_name, SND_PCM_STREAM_PLAYBACK , 0) < 0)) {
++      if (!(snd_pcm_hw_params_any(handle, hwparams) < 0)) {
++         ret = TRUE;
++      }
++      snd_pcm_close(handle);
++   }
++	
++   return ret;
++}
++
++
++
++/* alsa9_init:
++ *  ALSA9 init routine.
++ */
++static int alsa9_init(int input, int voices)
++{
++   int card, device;
++   int format, bps; //, fragsize, numfrags;
++   char tmp1[128], tmp2[128];
++   int exact_rate;
++   int dir;
++
++   snd_pcm_hw_params_t *hwparams;
++   char pcm_name[128];
++
++   if (input) {
++      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Input is not supported"));
++      return -1;
++   }
++
++   /* Load config.  */
++   card = get_config_int(uconvert_ascii("sound", tmp1),
++			 uconvert_ascii("alsadigi_card", tmp2),
++			 0); //snd_defaults_card());
++
++   device = get_config_int(uconvert_ascii("sound", tmp1),
++			   uconvert_ascii("alsadigi_pcmdevice", tmp2),
++			   0); //snd_defaults_pcm_device());
++
++   periodsize = get_config_int(uconvert_ascii("sound", tmp1),
++			     uconvert_ascii("alsa_fragsize", tmp2),
++			     ALSA9_DEFAULT_FRAGSIZE);
++
++   periods = get_config_int(uconvert_ascii("sound", tmp1),
++			     uconvert_ascii("alsa_numfrags", tmp2),
++			     ALSA9_DEFAULT_NUMFRAGS);
++
++   sprintf(pcm_name,"plughw:%d,%d",card,device);
++   snd_pcm_hw_params_alloca(&hwparams);
++
++   /* Open PCM device.  */
++   if (snd_pcm_open(&pcm_handle, pcm_name, (SND_PCM_STREAM_PLAYBACK), 0) < 0) {
++      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Can not open card/pcm device"));
++      goto error;
++   }
++
++   /* Init hwparams with full configuration space */
++   if (snd_pcm_hw_params_any(pcm_handle, hwparams) < 0) {
++      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Can not configure this PCM device"));
++      goto error;
++   }
++
++   if (snd_pcm_hw_params_set_access(pcm_handle, hwparams, SND_PCM_ACCESS_RW_INTERLEAVED) < 0) {
++      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Error setting access"));
++      goto error;
++   }
++
++   /* Set format variables.  */
++   alsa9_bits = (_sound_bits == 8) ? 8 : 16;
++   alsa9_stereo = (_sound_stereo) ? 1 : 0;
++   alsa9_rate = (_sound_freq > 0) ? _sound_freq : 44100;
++
++   format = ((alsa9_bits == 16) ? SND_PCM_FORMAT_S16_NE : SND_PCM_FORMAT_S8);
++
++   alsa9_signed = 0;
++   bps = alsa9_rate * (alsa9_stereo ? 2 : 1);
++   switch (format) {
++      case SND_PCM_FORMAT_S8:
++	 alsa9_signed = 1;
++      case SND_PCM_FORMAT_U8:
++	 alsa9_bits = 8;
++	 break;
++      case SND_PCM_FORMAT_S16_NE:
++	 alsa9_signed = 1;
++      case SND_PCM_FORMAT_U16_NE:
++	 alsa9_bits = 16;
++	 bps <<= 1;
++	 if (sizeof(short) != 2) {
++	    ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Unsupported sample format"));
++	    goto error;
++	 }
++	 break;
++      default:
++	 ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Unsupported sample format"));
++	 goto error;
++   }
++
++   /* Set sample format */
++   if (snd_pcm_hw_params_set_format(pcm_handle, hwparams, format) < 0) {
++      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Error setting format"));
++      goto error;
++   }
++
++
++   /* Set sample rate. If the exact rate is not supported */
++   /* by the hardware, use nearest possible rate.         */
++   exact_rate=snd_pcm_hw_params_set_rate_near(pcm_handle, hwparams, alsa9_rate, &dir);
++   if (dir!=0)
++   {
++      //fprintf(stderr, "The rate %d Hz is not supported by your hardware.\n
++      // ==> Using %d Hz instead.\n", rate, exact_rate);
++//      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("The rate is not supported by your hardware"));
++//      goto error;
++   }
++
++   /* Set number of channels */
++   if (snd_pcm_hw_params_set_channels(pcm_handle, hwparams, (alsa9_stereo) ? 2:1) < 0) {
++      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Error setting channels"));
++      goto error;
++   }
++
++   /* Set number of numfrags. numfrags used to be called fragments. */
++   if (snd_pcm_hw_params_set_periods(pcm_handle, hwparams, periods, 0) < 0) {
++      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Error setting numfrags"));
++      goto error;
++   }
++   
++   alsa9_bufsize=(periodsize * periods)>>2;
++   /* Set buffer size (in frames). The resulting latency is given by */
++   /* latency = fragsize * numfrags / (rate * bytes_per_frame)     */
++   if (snd_pcm_hw_params_set_buffer_size(pcm_handle, hwparams, alsa9_bufsize) < 0) {
++      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Error setting buffersize"));
++      goto error;
++   }
++
++   /* Apply HW parameter settings to */
++   /* PCM device and prepare device  */
++   if (snd_pcm_hw_params(pcm_handle, hwparams) < 0) {
++      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Error setting HW params"));
++      goto error;
++   }
++
++   alsa9_bufdata = malloc(alsa9_bufsize);
++
++   if (!alsa9_bufdata) {
++      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Can not allocate audio buffer"));
++      goto error;
++   }
++
++   /* Initialise mixer.  */
++   digi_alsa9.voices = voices;
++
++   if (_mixer_init(alsa9_bufsize / (alsa9_bits / 8), alsa9_rate,
++		   alsa9_stereo, ((alsa9_bits == 16) ? 1 : 0),
++		   &digi_alsa9.voices) != 0) {
++      ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text("Can not init software mixer"));
++      goto error;
++   }
++
++   _mix_some_samples((unsigned long) alsa9_bufdata, 0, alsa9_signed);
++
++   /* Add audio interrupt.  */
++   _unix_bg_man->register_func(alsa9_update);
++
++   uszprintf(alsa9_desc, sizeof(alsa9_desc),
++	    get_config_text("Card #%d, device #%d: %d bits, %s, %d bps, %s"),
++	    card, device, alsa9_bits,
++	    uconvert_ascii((alsa9_signed ? "signed" : "unsigned"), tmp1),
++	    alsa9_rate,
++	    uconvert_ascii((alsa9_stereo ? "stereo" : "mono"), tmp2));
++
++   digi_driver->desc = alsa9_desc;
++   return 0;
++
++  error:
++
++   if (pcm_handle) {
++      snd_pcm_close(pcm_handle);
++      pcm_handle = NULL;
++   }
++   
++   return -1;
++}
++
++
++
++/* alsa9_exit:
++ *  Shutdown ALSA9 driver.
++ */
++static void alsa9_exit(int input)
++{
++   if (input) {
++      return;
++   }
++
++   _unix_bg_man->unregister_func(alsa9_update);
++
++   free(alsa9_bufdata);
++   alsa9_bufdata = NULL;
++
++   _mixer_exit();
++
++   snd_pcm_close(pcm_handle);
++}
++
++
++
++/* alsa9_mixer_volume:
++ *  Set mixer volume (0-255)
++ */
++static int alsa9_mixer_volume(int volume)
++{
++   /* TODO */ 
++#if 0
++   snd_mixer_t *handle;
++   int card, device;
++
++   if (snd_mixer_open(&handle, card, device) == 0) {
++      /* do something special */
++      snd_mixer_close(handle);
++      return 0;
++   }
++
++   return -1;
++#else
++   return 0;
++#endif
++}
++
++
++
++#ifdef ALLEGRO_MODULE
++
++/* _module_init:
++ *  Called when loaded as a dynamically linked module.
++ */
++void _module_init(int system_driver)
++{
++   _unix_register_digi_driver(DIGI_ALSA9, &digi_alsa9, TRUE, TRUE);
++}
++
++#endif
++
++#endif
++
+diff -uNr allegro-4.1.6.old/src/unix/alsa9midi.c allegro-4.1.6/src/unix/alsa9midi.c
+--- allegro-4.1.6.old/src/unix/alsa9midi.c	Thu Jan  1 01:00:00 1970
++++ allegro-4.1.6/src/unix/alsa9midi.c	Mon Oct 28 20:51:06 2002
+@@ -0,0 +1,251 @@
++/*         ______   ___    ___ 
++ *        /\  _  \ /\_ \  /\_ \ 
++ *        \ \ \L\ \\//\ \ \//\ \      __     __   _ __   ___ 
++ *         \ \  __ \ \ \ \  \ \ \   /'__`\ /'_ `\/\`'__\/ __`\
++ *          \ \ \/\ \ \_\ \_ \_\ \_/\  __//\ \L\ \ \ \//\ \L\ \
++ *           \ \_\ \_\/\____\/\____\ \____\ \____ \ \_\\ \____/
++ *            \/_/\/_/\/____/\/____/\/____/\/___L\ \/_/ \/___/
++ *                                           /\____/
++ *                                           \_/__/
++ *
++ *      ALSA 0.9 RawMIDI Sound driver.
++ *
++ *      By Grzegorz Godlewski based on 0.5 version
++ *
++ *      See readme.txt for copyright information.
++ */
++
++#include "allegro.h"
++
++#if (defined MIDI_ALSA9) && ((!defined ALLEGRO_WITH_MODULES) || (defined ALLEGRO_MODULE))
++
++#include "allegro/internal/aintern.h"
++#ifdef ALLEGRO_QNX
++#include "allegro/platform/aintqnx.h"
++#else
++#include "allegro/platform/aintunix.h"
++#endif
++
++#ifndef SCAN_DEPEND
++   #include <stdlib.h>
++   #include <stdio.h>
++   #include <string.h>
++   #include <errno.h>
++   #include <sys/asoundlib.h>
++#endif
++
++/* external interface to the ALSA9 rawmidi driver */
++static int alsa9_rawmidi_detect(int input);
++static int alsa9_rawmidi_init(int input, int voices);
++static void alsa9_rawmidi_exit(int input);
++static void alsa9_rawmidi_output(int data);
++
++static char alsa9_rawmidi_desc[256];
++
++static snd_rawmidi_t *rawmidi_handle = NULL;
++
++MIDI_DRIVER midi_alsa9 =
++{
++   MIDI_ALSA9,						/* id */
++   empty_string,					/* name */
++   empty_string,					/* desc */
++   "ALSA9 RawMIDI",				/* ASCII name */
++   0, 0, 0xFFFF, 0, -1, -1,	/* voices, basevoice, max_voices, def_voices, xmin, xmax */
++   alsa9_rawmidi_detect,			/* detect */
++   alsa9_rawmidi_init,			/* init */
++   alsa9_rawmidi_exit,			/* exit */
++   NULL,								/* mixer_volume */
++   alsa9_rawmidi_output,			/* raw_midi */
++   _dummy_load_patches,			/* load_patches */
++   _dummy_adjust_patches,		/* adjust_patches */
++   _dummy_key_on,					/* key_on */
++   _dummy_noop1,					/* key_off */
++   _dummy_noop2,					/* set_volume */
++   _dummy_noop3,					/* set_pitch */
++   _dummy_noop2,					/* set_pan */
++   _dummy_noop2					/* set_vibrato */
++};
++
++/* alsa9_rawmidi_detect:
++ *		ALSA9 RawMIDI detection.
++ */
++static int alsa9_rawmidi_detect(int input)
++{
++	int card = -1;
++	int device = -1;
++	int ret = FALSE, err;
++	char tmp1[128], tmp2[128], temp[256];
++	snd_rawmidi_t *handle = NULL;
++	char pcm_name[128];
++
++	if(input) {
++		/* Input not supported.
++		card = get_config_int(uconvert_ascii("sound", tmp1),
++				uconvert_ascii("alsa_rawmidi_input_card", tmp2),
++				0); // snd_defaults_rawmidi_card());
++
++		device = get_config_int(uconvert_ascii("sound", tmp1),
++				uconvert_ascii("alsa_rawmidi_input_device", tmp2),
++				0); // snd_defaults_rawmidi_device());
++
++               sprintf(pcm_name,"plughw:%d,%d",card,device);
++		if ((err = snd_rawmidi_open(&handle, NULL,pcm_name, SND_RAWMIDI_OPEN_INPUT)) < 0) {
++			snprintf(temp, sizeof(temp), "Could not open card/rawmidi device: %s", snd_strerror(err));
++			ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text(temp));
++			ret = FALSE;
++		}
++
++		snd_rawmidi_close(handle);
++		*/
++		ret = FALSE;
++
++	}
++	else {
++
++		card = get_config_int(uconvert_ascii("sound", tmp1),
++				uconvert_ascii("alsa_rawmidi_card", tmp2),
++				0); // snd_defaults_rawmidi_card());
++
++		device = get_config_int(uconvert_ascii("sound", tmp1),
++				uconvert_ascii("alsa_rawmidi_device", tmp2),
++				0); // snd_defaults_rawmidi_device());
++
++               sprintf(pcm_name,"plughw:%d,%d",card,device);
++//		if ((err = snd_rawmidi_open(NULL,&handle, pcm_name, SND_RAWMIDI_APPEND)) < 0) {
++		if ((err = snd_rawmidi_open(NULL,&handle, "default", SND_RAWMIDI_APPEND)) < 0) {
++			snprintf(temp, sizeof(temp), "Could not open card/rawmidi device: %s", snd_strerror(err));
++			ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text(temp));
++			ret = FALSE;
++		}
++      
++		snd_rawmidi_close(handle);
++
++		ret = TRUE;
++	}
++
++	return ret;	
++}
++
++/* alsa9_rawmidi_init:
++ *		Setup the ALSA RawMIDI interface.
++ */
++static int alsa9_rawmidi_init(int input, int voices)
++{
++	int card = -1;
++	int device = -1;
++	int ret = -1, err;
++	char tmp1[128], tmp2[128], temp[256];
++//	snd_rawmidi_info_t info;
++	char pcm_name[128];
++
++	if(input) {
++		/* Input not supported
++		card = get_config_int(uconvert_ascii("sound", tmp1),
++				uconvert_ascii("alsa_rawmidi_input_card", tmp2),
++				0); // snd_defaults_rawmidi_card());
++
++		device = get_config_int(uconvert_ascii("sound", tmp1),
++				uconvert_ascii("alsa_rawmidi_input_device", tmp2),
++				0); // snd_defaults_rawmidi_device());
++
++               sprintf(pcm_name,"plughw:%d,%d",card,device);
++		if ((err = snd_rawmidi_open(&rawmidi_handle, NULL,pcm_name, SND_RAWMIDI_OPEN_INPUT)) < 0) {
++			snprintf(temp, sizeof(temp), "Could not open card/rawmidi device: %s", snd_strerror(err));
++			ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text(temp));
++			ret = -1;
++		}
++		*/
++		ret = -1;
++
++	}
++	else {
++
++		card = get_config_int(uconvert_ascii("sound", tmp1),
++				uconvert_ascii("alsa_rawmidi_card", tmp2),
++				0); // snd_defaults_rawmidi_card());
++
++		device = get_config_int(uconvert_ascii("sound", tmp1),
++				uconvert_ascii("alsa_rawmidi_device", tmp2),
++				0); // snd_defaults_rawmidi_device());
++
++               sprintf(pcm_name,"plughw:%d,%d",card,device);
++
++//		if ((err = snd_rawmidi_open(NULL,&rawmidi_handle, pcm_name, SND_RAWMIDI_APPEND)) < 0) {
++		if ((err = snd_rawmidi_open(NULL,&rawmidi_handle, "default", SND_RAWMIDI_APPEND)) < 0) {
++			snprintf(temp, sizeof(temp), "Could not open card/rawmidi device: %s", snd_strerror(err));
++			ustrzcpy(allegro_error, ALLEGRO_ERROR_SIZE, get_config_text(temp));
++			ret = -1;
++		}
++
++		ret = 0;
++	}
++
++	if(rawmidi_handle) {
++		snd_rawmidi_block_mode(rawmidi_handle, 1);
++//		snd_rawmidi_info(rawmidi_handle, &info);
++
++//		strcpy(alsa9_rawmidi_desc, info.name);
++//		midi_alsa9.desc = alsa9_rawmidi_desc;
++		
++		LOCK_VARIABLE(alsa9_rawmidi_desc);
++		LOCK_VARIABLE(rawmidi_handle);
++		LOCK_VARIABLE(midi_alsa9);
++		LOCK_FUNCTION(alsa9_rawmidi_output);
++	}
++	
++	return ret;	
++}
++
++/* alsa9_rawmidi_exit:
++ *		Clean up.
++ */
++static void alsa9_rawmidi_exit(int input)
++{
++	if(rawmidi_handle) {
++		snd_rawmidi_output_drain(rawmidi_handle);
++		snd_rawmidi_close(rawmidi_handle);
++	}
++	
++	rawmidi_handle = NULL;
++}
++
++/* alsa9_rawmidi_output:
++ *		Outputs MIDI data.
++ */
++static void alsa9_rawmidi_output(int data)
++{
++	int err;
++	
++	err = snd_rawmidi_write(rawmidi_handle, &data, sizeof(char));
++
++}
++END_OF_STATIC_FUNCTION(alsa9_rawmidi_output);
++
++/* alsa9_rawmidi_input:
++ *		Reads MIDI data.
++ * not supported...
++static INLINE int alsa9_rawmidi_input(void)
++{
++	char data = 0;
++
++	if(snd_rawmidi_read(rawmidi_handle, &data, sizeof(char)) > 0)
++		return data;
++	else
++		return 0;
++}
++*/
++
++#ifdef ALLEGRO_MODULE
++
++/* _module_init:
++ *		Called when loaded as a dynamically linked module.
++ */
++void _module_init(int system_driver)
++{
++   _unix_register_midi_driver(MIDI_ALSA9, &midi_alsa9, TRUE, TRUE);
++}
++
++#endif /* ALLEGRO_MODULE */
++
++#endif /* MIDI_ALSA9 */
++

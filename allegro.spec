@@ -212,7 +212,7 @@ Ten pakiet zawiera narzêdzia.
 	
 %{__make} \
 	MAKEINFO=makeinfo \
-	CFLAGS="%{optflags} -I/usr/X11R6/include/artsc -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall \
+	CFLAGS="%{rpmcflags} -I/usr/X11R6/include/artsc -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall \
 %ifnarch %{ix86}
 	-DALLEGRO_USE_C \
 %endif

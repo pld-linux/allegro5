@@ -1,6 +1,15 @@
---- allegro-4.0.1/makefile.in.orig	Fri Mar 29 17:34:51 2002
-+++ allegro-4.0.1/makefile.in	Fri Mar 29 18:02:08 2002
-@@ -300,90 +300,90 @@
+--- allegro-4.0.1/makefile.in.orig	Sun Jun 16 21:43:10 2002
++++ allegro-4.0.1/makefile.in	Fri Jun 21 11:48:38 2002
+@@ -26,7 +26,7 @@
+ OBJ = .o
+ OBJDIR = obj/unix
+ LIBDIR = lib/unix
+-INFO_DIR = $(infodir)/dir
++INFO_DIR = $(DESTDIR)$(infodir)/dir
+ 
+ ACLOCAL = aclocal
+ ACLOCAL_M4 = $(srcdir)/aclocal.m4
+@@ -324,90 +324,90 @@
  	@echo "and/or make install-gzipped-info"
  
  install-lib: lib
@@ -41,10 +50,10 @@
 +	@echo Installing allegro-config to $(DESTDIR)$(bindir)
 +	@$(INSTALL_PROGRAM) allegro-config $(DESTDIR)$(bindir)
  	@if test -n "$(LIBDIR)/liball*-$(shared_version).so"; then \
--		(grep -q $(libdir) /etc/ld.so.conf || \
+-		(echo $(libdir) | grep /etc/ld.so.conf >/dev/null || \
 -		 test $(libdir) = /lib || test $(libdir) = /usr/lib) \
 -		&& ($(LDCONFIG) $(libdir) || true) || (\
-+		(grep -q $(DESTDIR)$(libdir) /etc/ld.so.conf || \
++		(echo $(DESTDIR)$(libdir) | grep /etc/ld.so.conf >/dev/null || \
 +		 test $(DESTDIR)$(libdir) = /lib || test $(DESTDIR)$(libdir) = /usr/lib) \
 +		&& ($(LDCONFIG) $(DESTDIR)$(libdir) || true) || (\
  			echo "" ; \
@@ -124,7 +133,7 @@
 +	$(mkinstalldirs) $(DESTDIR)$(infodir)
 +	@$(INSTALL_DATA) docs/info/allegro.info $(DESTDIR)$(infodir)
  	-@if $(SHELL) -c "$(INSTALL_INFO) --version" >/dev/null 2>&1; then \
- 	  if $(INSTALL_INFO) --version 2>&1 | grep -q "Debian"; then \
+ 	  if $(INSTALL_INFO) --version 2>&1 | grep "Debian" >/dev/null; then \
 -	    $(INSTALL_INFO) --section Development -- $(infodir)/allegro.info; \
 +	    $(INSTALL_INFO) --section Development -- $(DESTDIR)$(infodir)/allegro.info; \
  	  else \
@@ -133,7 +142,7 @@
  	  fi; \
  	else \
  	  true; \
-@@ -391,21 +391,21 @@
+@@ -415,21 +415,21 @@
  
  install-gzipped-info: install-info
  	@echo Compressing documentation...
@@ -163,7 +172,7 @@
  	done
  
  uninstall: uninstall-lib uninstall-modules uninstall-headers uninstall-programs uninstall-info uninstall-man
-@@ -418,57 +418,57 @@
+@@ -442,57 +442,57 @@
  uninstall-lib:
  	@echo "Uninstalling libraries..."
  	@for l in alleg alld allp; do \
@@ -219,7 +228,7 @@
 +	  gunzip $(DESTDIR)$(infodir)/allegro.info.gz; \
  	fi;
  	-@if $(SHELL) -c "$(INSTALL_INFO) --version" >/dev/null 2>&1; then \
- 	  if $(INSTALL_INFO) --version 2>&1 | grep -q "Debian"; then \
+ 	  if $(INSTALL_INFO) --version 2>&1 | grep "Debian" >/dev/null; then \
 -	    $(INSTALL_INFO) --remove $(infodir)/allegro.info; \
 +	    $(INSTALL_INFO) --remove $(DESTDIR)$(infodir)/allegro.info; \
  	  else \

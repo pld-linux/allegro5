@@ -1,13 +1,15 @@
 Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.0.1
-Release:	2
+Version:	4.0.2
+Release:	0.1
 License:	Giftware
 Group:		X11/Libraries
-Source0:	http://prdownloads.sourceforge.net/alleg/%{name}-%{version}.tar.gz
+Source0:	http://belnet.dl.sourceforge.net/sourceforge/alleg/%{name}-%{version}-rc2.tar.gz
 Patch0:		%{name}-makefile.patch
 Patch1:		%{name}-info.patch
+#Patch2:	%{name}-alsa9.patch
+Patch3:		%{name}-examples.patch
 URL:		http://alleg.sourceforge.net
 BuildRequires:	XFree86-devel
 BuildRequires:	esound-devel
@@ -50,6 +52,31 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera pliki nag³ówkowe niezbêdne do kompilowania
 aplikacji wykorzystuj±cych bibliotekê allegro.
+
+%package tests
+Summary:	A game programming library - test programs
+Summary(pl):	Biblioteka do programowania gier - programy testuj±ce
+Group:		X11/Development/Libraries
+Requires:	%{name} = %{version}
+
+%description tests
+This package contains programs for testing allegro library.
+
+%description tests -l pl
+Pakiet zawiera programy testuj±ce bibliotekê allegro.
+
+%package examples
+Summary:	A game programming library - examples
+Summary(pl):	Biblioteka do programowania gier - programy przyk³adowe
+Group:		X11/Development/Libraries
+Requires:	%{name} = %{version}
+
+%description examples
+This package contains example programs which are showing
+allegro features.
+
+%description examples -l pl
+Pakiet zawiera programy przyk³adowe demonstruj±ce mo?liwo¶ci biblioteki allegro.
 
 %package static
 Summary:	A game programming library - static libraries
@@ -148,6 +175,8 @@ ALSA.
 %setup  -q
 %patch0 -p1
 %patch1 -p1
+#%patch2 -p1
+%patch3 -p1
 
 %build
 aclocal
@@ -224,3 +253,56 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/allegro/4.0/alleg-alsadigi.so
 %{_libdir}/allegro/4.0/alleg-alsamidi.so
 %endif
+
+%files tests
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/afinfo
+%attr(755,root,root) %{_bindir}/akaitest
+%attr(755,root,root) %{_bindir}/digitest
+%attr(755,root,root) %{_bindir}/filetest
+%attr(755,root,root) %{_bindir}/gfxinfo
+%attr(755,root,root) %{_bindir}/mathtest
+%attr(755,root,root) %{_bindir}/miditest
+%attr(755,root,root) %{_bindir}/play
+%attr(755,root,root) %{_bindir}/playfli
+%attr(755,root,root) %{_bindir}/test
+%attr(755,root,root) %{_bindir}/vesainfo
+
+%files examples
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/ex12bit
+%attr(755,root,root) %{_bindir}/ex3buf
+%attr(755,root,root) %{_bindir}/ex3d
+%attr(755,root,root) %{_bindir}/exalpha
+%attr(755,root,root) %{_bindir}/exbitmap
+%attr(755,root,root) %{_bindir}/exblend
+%attr(755,root,root) %{_bindir}/exdata
+%attr(755,root,root) %{_bindir}/exdbuf
+%attr(755,root,root) %{_bindir}/exdodgy
+%attr(755,root,root) %{_bindir}/exexedat
+%attr(755,root,root) %{_bindir}/exfixed
+%attr(755,root,root) %{_bindir}/exflame
+%attr(755,root,root) %{_bindir}/exflip
+%attr(755,root,root) %{_bindir}/exgui
+%attr(755,root,root) %{_bindir}/exhello
+%attr(755,root,root) %{_bindir}/exjoy
+%attr(755,root,root) %{_bindir}/exkeys
+%attr(755,root,root) %{_bindir}/exlights
+%attr(755,root,root) %{_bindir}/exmem
+%attr(755,root,root) %{_bindir}/exmidi
+%attr(755,root,root) %{_bindir}/exmouse
+%attr(755,root,root) %{_bindir}/expal
+%attr(755,root,root) %{_bindir}/expat
+%attr(755,root,root) %{_bindir}/exquat
+%attr(755,root,root) %{_bindir}/exrgbhsv
+%attr(755,root,root) %{_bindir}/exsample
+%attr(755,root,root) %{_bindir}/exshade
+%attr(755,root,root) %{_bindir}/exspline
+%attr(755,root,root) %{_bindir}/exsprite
+%attr(755,root,root) %{_bindir}/exstars
+%attr(755,root,root) %{_bindir}/exstream
+%attr(755,root,root) %{_bindir}/extimer
+%attr(755,root,root) %{_bindir}/extrans
+%attr(755,root,root) %{_bindir}/exupdate
+%attr(755,root,root) %{_bindir}/exxfade
+%attr(755,root,root) %{_bindir}/exzbuf

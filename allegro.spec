@@ -22,7 +22,7 @@ Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
 Version:	4.1.11
-Release:	1
+Release:	2
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
@@ -32,6 +32,7 @@ Patch1:		%{name}-examples.patch
 Patch2:		%{name}-alsa9.patch
 Patch3:		%{name}-opt.patch
 Patch4:		%{name}-ldflags.patch
+Patch5:		%{name}-frame-pointer.patch
 URL:		http://alleg.sourceforge.net/
 BuildRequires:	XFree86-devel
 %{!?_without_alsa:BuildRequires:	alsa-lib-devel}
@@ -408,6 +409,7 @@ biblioteki allegro.
 %{!?_without_alsa:%patch2 -p1}
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__aclocal}

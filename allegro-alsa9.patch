@@ -38,22 +38,6 @@
  
  
  /************************************/
-diff -uNr allegro-4.1.6.old/acconfig.h allegro-4.1.6/acconfig.h
---- allegro-4.1.6.old/acconfig.h	Sat Nov 30 12:13:21 2002
-+++ allegro-4.1.6/acconfig.h	Fri Dec  6 17:40:10 2002
-@@ -79,6 +79,12 @@
- /* Define if ALSA MIDI driver is supported.  */
- #undef ALLEGRO_WITH_ALSAMIDI
- 
-+/* Define if ALSA9 DIGI driver is supported.  */
-+#undef ALLEGRO_WITH_ALSA9DIGI
-+
-+/* Define if ALSA9 MIDI driver is supported.  */
-+#undef ALLEGRO_WITH_ALSA9MIDI
-+
- /* Define if ESD DIGI driver is supported.  */
- #undef ALLEGRO_WITH_ESDDIGI
- 
 diff -uNr allegro-4.1.6.old/aclocal.m4 allegro-4.1.6/aclocal.m4
 --- allegro-4.1.6.old/aclocal.m4	Sat Nov 30 12:13:21 2002
 +++ allegro-4.1.6/aclocal.m4	Fri Dec  6 17:40:10 2002
@@ -130,28 +114,33 @@ diff -uNr allegro-4.1.6.old/allegro.mft allegro-4.1.6/allegro.mft
  allegro/src/unix/arts.c
  allegro/src/unix/sgial.c
  allegro/src/unix/udjgpp.c
-diff -uNr allegro-4.1.6.old/configure.in allegro-4.1.6/configure.in
---- allegro-4.1.6.old/configure.in	Sat Nov 30 12:13:21 2002
-+++ allegro-4.1.6/configure.in	Fri Dec  6 17:40:10 2002
-@@ -304,6 +304,17 @@
-   AC_DEFINE(ALLEGRO_WITH_ALSAMIDI)
+--- allegro-4.1.11/configure.in.orig	2003-06-30 01:27:00.000000000 +0200
++++ allegro-4.1.11/configure.in	2003-08-28 22:06:21.582127920 +0200
+@@ -313,6 +313,23 @@
+   _disabled_modules="alsamidi $_disabled_modules"
  fi
  
 +dnl Test for ALSA9 drivers.
 +ALLEGRO_ACTEST_ALSA9DIGI
 +if test "$allegro_cv_support_alsa9digi" = yes; then
-+  AC_DEFINE(ALLEGRO_WITH_ALSA9DIGI)
++  AC_DEFINE(ALLEGRO_WITH_ALSA9DIGI,1,[Define if ALSA9 DIGI driver is supported.])
++  _enabled_modules="alsa9digi $_enabled_modules"
++else
++  _disabled_modules="alsa9digi $_disabled_modules"
 +fi
 +
 +ALLEGRO_ACTEST_ALSA9MIDI
 +if test "$allegro_cv_support_alsa9midi" = yes; then
-+  AC_DEFINE(ALLEGRO_WITH_ALSA9MIDI)
++  AC_DEFINE(ALLEGRO_WITH_ALSA9MIDI,1,[Define if ALSA9 MIDI driver is supported.])
++  _enabled_modules="alsa9midi $_enabled_modules"
++else
++  _disabled_modules="alsa9midi $_disabled_modules"
 +fi
 +
  dnl Test for ESD drivers.
  ALLEGRO_ACTEST_ESDDIGI
  if test -n "$allegro_support_esddigi"; then
-@@ -478,6 +489,16 @@
+@@ -558,6 +575,16 @@
      ALLEGRO_MODULE_TARGETS="$ALLEGRO_MODULE_TARGETS lib/unix/alleg-alsamidi.so"
    fi
  

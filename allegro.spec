@@ -5,16 +5,14 @@
 # _without_dbglib	- don't build debug versions of library
 # _without_proflib	- don't debug profiling versions of library
 # _without_svgalib      - without svgalib module
-# _with_alsa9	- use alsa 0.9 not 0.5
+# _with_alsa5		- use alsa 0.5 not 0.9
 #
-
-%define	_without_alsa	1
 %define	_without_arts	1
 
 %ifarch sparc sparc64
 %define	_without_alsa	1
 %endif
-%{!?_without_alsa:%{!?_with_alsa9:%define _with_alsa5 1}}
+%{!?_without_alsa:%{!?_with_alsa5:%define _with_alsa9 1}}
 Summary:	A game programming library
 Summary(de):	Eine Bibliothek zur Programmierung von Spielen
 Summary(es):	Una libreria de programacion de juegos
@@ -395,17 +393,18 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}
 
 %description examples
-This package contains example programs which are showing
-allegro features.
+This package contains example programs which demonstrate allegro
+features.
 
 %description examples -l pl
-Pakiet zawiera programy przyk³adowe demonstruj±ce mo?liwo¶ci biblioteki allegro.
+Pakiet zawiera programy przyk³adowe demonstruj±ce mo¿liwo¶ci
+biblioteki allegro.
 
 %prep
 %setup  -q
 %patch0 -p1
 %patch1 -p1
-#%patch2 -p1	# you want it, you do it
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 
@@ -580,6 +579,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/exblend
 %attr(755,root,root) %{_bindir}/excamera
 %attr(755,root,root) %{_bindir}/excolmap
+%attr(755,root,root) %{_bindir}/exconfig
 %attr(755,root,root) %{_bindir}/excustom
 %attr(755,root,root) %{_bindir}/exdata
 %attr(755,root,root) %{_bindir}/exdbuf

@@ -1,28 +1,54 @@
---- allegro-4.1.9/configure.in.orig	Thu Jan 30 00:04:22 2003
-+++ allegro-4.1.9/configure.in	Thu Jan 30 00:04:47 2003
-@@ -177,6 +177,7 @@
-   else
-     WFLAGS="-Wall"
+diff -ruN allegro-4.1.11./configure.in allegro-4.1.11/configure.in
+--- allegro-4.1.11./configure.in	2003-06-30 01:27:00.000000000 +0200
++++ allegro-4.1.11/configure.in	2003-08-25 00:23:10.000000000 +0200
+@@ -613,43 +613,20 @@
+ AC_CHECK_FUNCS(memcmp mkstemp stricmp strlwr strupr)
+ 
+ dnl Tweak header files for library build
+-CFLAGS="$CFLAGS -DALLEGRO_LIB_BUILD"
++CFLAGS="$TARGET_ARCH -DALLEGRO_LIB_BUILD"
+ 
+ dnl How to compile C and asm files.
+ if test -n "GCC"; then
+-  if test "X$allegro_strict_warnings" = "Xyes"; then
+-    WFLAGS="-Wall -W -Wstrict-prototypes -Wno-unused -Werror"
+-  else
+-    WFLAGS="-Wall -Wno-unused"
+-  fi
+-  if test "$allegro_cv_support_asm" = i386; then
+-    if test "$allegro_exclusive_optimizations" != none; then
+-      TARGET_ARCH="-march=$allegro_exclusive_optimizations"
+-    else
+-      TARGET_ARCH="-mcpu=$allegro_optimizations"
+-    fi
+-  else
+-    TARGET_ARCH=
+-  fi
+-  if test "X$allegro_cv_can_use_pipe" = "Xyes"; then
+-    CFLAGS="$CFLAGS -pipe"
+-  fi
++  WFLAGS="-Wall -Wno-unused"
++
+   if test "$allegro_cv_support_asm" != i386; then
+     CFLAGS="$CFLAGS -DALLEGRO_USE_C"
    fi
-+  if test "$TARGET_ARCH" = "" ; then
-   if test "$allegro_cv_support_asm" = i386; then
-     if test "$allegro_exclusive_optimizations" != none; then
-       TARGET_ARCH="-march=$allegro_exclusive_optimizations"
-@@ -186,13 +187,14 @@
-   else
-     TARGET_ARCH=
+-  dnl Allow to specify additional flags.
+-  CFLAGS="$CFLAGS $XCFLAGS"
+-  WFLAGS="$WFLAGS $WCFLAGS"
+-  dnl In this order...
+-  ALLEGRO_DEBUG_CFLAGS="$CFLAGS -g $WFLAGS -DDEBUGMODE"
++
++  ALLEGRO_DEBUG_CFLAGS="-g $WFLAGS -DDEBUGMODE"
+   if test "X$allegro_debug_with_fortify" = "Xyes"; then
+      ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DFORTIFY"
    fi
-+  fi
-   if test "X$allegro_cv_support_fomit_frame_pointer" = "Xyes"; then
--    CFLAGS="$TARGET_ARCH -O2 -funroll-loops -ffast-math -fomit-frame-pointer $WFLAGS"
-+    CFLAGS="$TARGET_ARCH -funroll-loops -ffast-math -fomit-frame-pointer $WFLAGS"
-   else
--    CFLAGS="$TARGET_ARCH -O2 -funroll-loops -ffast-math $WFLAGS"
-+    CFLAGS="$TARGET_ARCH -funroll-loops -ffast-math $WFLAGS"
-   fi
-   ALLEGRO_DEBUG_CFLAGS="-g $WFLAGS -DDEBUGMODE"
--  ALLEGRO_PROFILE_CFLAGS="-pg $TARGET_ARCH -O2 -funroll-loops -ffast-math $WFLAGS"
-+  ALLEGRO_PROFILE_CFLAGS="-pg $TARGET_ARCH -funroll-loops -ffast-math $WFLAGS"
-   if test "X$allegro_cv_can_use_pipe" = "Xyes"; then
-     CFLAGS="-pipe $CFLAGS"
-     ALLEGRO_DEBUG_CFLAGS="-pipe $ALLEGRO_DEBUG_CFLAGS"
+-  ALLEGRO_PROFILE_CFLAGS="$CFLAGS -pg $TARGET_ARCH -O2 -funroll-loops -ffast-math $WFLAGS"
+-  if test "X$allegro_cv_support_fomit_frame_pointer" = "Xyes"; then
+-    CFLAGS="$CFLAGS $TARGET_ARCH -O2 -funroll-loops -ffast-math -fomit-frame-pointer $WFLAGS"
+-  else
+-    CFLAGS="$CFLAGS $TARGET_ARCH -O2 -funroll-loops -ffast-math $WFLAGS"
+-  fi
++  ALLEGRO_PROFILE_CFLAGS="$CFLAGS -pg $WFLAGS"
+   ALLEGRO_SFLAGS="-x assembler-with-cpp"
+   ALLEGRO_SHAREDLIB_CFLAGS="-fPIC -DALLEGRO_SHARED"
+ else

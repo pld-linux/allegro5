@@ -256,7 +256,6 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera modu³ do wykorzystania z aRts.
 
-%if 0
 %package fbcon
 Summary:	A game programming library - framebuffer module
 Summary(pl):	Biblioteka do programowania gier - modu³ dla framebuffera
@@ -274,7 +273,6 @@ Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera modu³ do wykorzystania z framebufferem.
-%endif
 
 %package vga
 Summary:	A game programming library - vga module
@@ -523,9 +521,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-artsdigi.so
 %endif
 
-#%files fbcon
-#%defattr(644,root,root,755)
-#%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-fbcon.so
+%files fbcon
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-fbcon.so
 
 %files vga
 %defattr(644,root,root,755)

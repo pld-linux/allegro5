@@ -6,6 +6,7 @@
 # _without_proflib	- don't debug profiling versions of library
 # _without_svgalib      - without svgalib module
 # _with_alsa5		- use alsa 0.5 not 0.9
+# _without_sse		- build without sse (valgrind doesn't support it yet)
 #
 %define	_without_arts	1
 
@@ -424,6 +425,7 @@ TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 %endif
 	%{!?_without_proflib:--enable-proflib} \
 	%{?_without_arts:--disable-artsdigi} \
+	%{?_without_sse:--disable-sse} \
 %ifnarch %{ix86}
 	--disable-asm \
 	--disable-mmx \

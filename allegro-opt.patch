@@ -1,6 +1,7 @@
---- allegro-4.1.12/configure.in.orig	2003-11-11 21:59:10.385928944 +0100
-+++ allegro-4.1.12/configure.in	2003-11-11 22:02:54.074923048 +0100
-@@ -649,39 +649,13 @@
+diff -urN aa/allegro-4.1.14/configure.in allegro-4.1.14/configure.in
+--- aa/allegro-4.1.14/configure.in	2004-04-27 13:53:02.000000000 +0200
++++ allegro-4.1.14/configure.in	2004-05-23 21:18:36.478313632 +0200
+@@ -662,29 +662,7 @@
  
  dnl How to compile C and asm files.
  if test -n "GCC"; then
@@ -31,6 +32,9 @@
    ALLEGRO_DEBUG_CFLAGS="$CFLAGS -g $WFLAGS -DDEBUGMODE"
    if test "X$allegro_debug_with_fortify" = "Xyes"; then
       ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DFORTIFY"
+@@ -692,12 +670,8 @@
+   if test "X$allegro_debug_with_dmalloc" = "Xyes"; then
+      ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DDMALLOC"
    fi
 -  ALLEGRO_PROFILE_CFLAGS="$CFLAGS -pg $TARGET_ARCH -O2 -funroll-loops -ffast-math $WFLAGS"
 -  if test "X$allegro_cv_support_fomit_frame_pointer" = "Xyes"; then
@@ -39,7 +43,7 @@
 -    CFLAGS="$CFLAGS $TARGET_ARCH -O2 -funroll-loops -ffast-math $WFLAGS"
 -  fi
 +  CFLAGS="$CFLAGS $TARGET_ARCH"
-+  ALLEGRO_PROFILE_CFLAGS="$CFLAGS -pg $WFLAGS"
++	ALLEGRO_PROFILE_CFLAGS="$CFLAGS -pg $WFLAGS"
    ALLEGRO_SFLAGS="-x assembler-with-cpp"
    ALLEGRO_SHAREDLIB_CFLAGS="-fPIC -DALLEGRO_SHARED"
  else

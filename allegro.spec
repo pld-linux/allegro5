@@ -426,6 +426,7 @@ TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 	%{!?_without_proflib:--enable-proflib} \
 	%{?_without_arts:--disable-artsdigi} \
 	%{?_without_sse:--disable-sse} \
+	%{?_without_sse:--disable-asm} \
 %ifnarch %{ix86}
 	--disable-asm \
 	--disable-mmx \

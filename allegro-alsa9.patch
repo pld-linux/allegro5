@@ -79,17 +79,17 @@ diff -ur allegro-4.0.2/aclocal.m4 allegro-4.0.2.new/aclocal.m4
  dnl
  dnl Variables:
 diff -ur allegro-4.0.2/allegro.mft allegro-4.0.2.new/allegro.mft
---- allegro-4.0.2/allegro.mft	Sun Jun 16 21:49:13 2002
-+++ allegro-4.0.2.new/allegro.mft	Fri Jun 21 12:48:18 2002
-@@ -647,6 +647,8 @@
+--- allegro/allegro.mft.orig	Sat Nov 30 12:18:28 2002
++++ allegro/allegro.mft	Fri Dec  6 16:55:06 2002
+@@ -685,6 +685,8 @@
  allegro/src/unix/
  allegro/src/unix/alsa.c
  allegro/src/unix/alsamidi.c
 +allegro/src/unix/alsa9.c
 +allegro/src/unix/alsa9midi.c
+ allegro/src/unix/arts.c
+ allegro/src/unix/sgial.c
  allegro/src/unix/udjgpp.c
- allegro/src/unix/udrvlist.c
- allegro/src/unix/uesd.c
 diff -ur allegro-4.0.2/configure.in allegro-4.0.2.new/configure.in
 --- allegro-4.0.2/configure.in	Sun Jun 16 21:22:15 2002
 +++ allegro-4.0.2.new/configure.in	Fri Jun 21 12:39:47 2002

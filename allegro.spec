@@ -308,7 +308,7 @@ ALSA.
 
 %package jack
 Summary:	A game programming library - JACK module
-Summary(pl):	Biblioteka do programowania gier - modu³ dla JACK
+Summary(pl):	Biblioteka do programowania gier - modu³ dla JACK-a
 Group:		Libraries
 PreReq:		%{name} = %{version}-%{release}
 

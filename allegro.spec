@@ -83,7 +83,6 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 Ten pakiet zawiera pliki nag³ówkowe niezbêdne do kompilowania
 aplikacji wykorzystuj±cych bibliotekê allegro.
 
-<<<<<<< allegro.spec
 %description devel -l es
 Allegro es una librería multi-plataforma creada para ser usada en la
 programación de juegos u otro tipo de programación multimedia. Este
@@ -371,7 +370,6 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera narzêdzia.
 
-<<<<<<< allegro.spec
 %description tools -l es
 Allegro es una librería multi-plataforma creada para ser usada en la
 programación de juegos u otro tipo de programación multimedia. Este

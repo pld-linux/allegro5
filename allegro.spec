@@ -1,12 +1,13 @@
 Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.0
-Release:	0.1
+Version:	4.1.1
+Release:	1
 License:	Giftware
 Group:		X11/Libraries
 Source0:	http://belnet.dl.sourceforge.net/sourceforge/alleg/%{name}-%{version}.tar.gz
-Patch0:		%{name}-makefile.patch
+# already there
+#Patch0:		%{name}-makefile.patch
 Patch1:		%{name}-info.patch
 #Patch2:	%{name}-alsa9.patch
 Patch3:		%{name}-examples.patch
@@ -152,24 +153,24 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera modu³ do wykorzystania z demonem ESound.
 
-%package alsa
-Summary:	A game programming library - ALSA modules
-Summary(pl):	Biblioteka do programowania gier - modu³y dla ALSA
-Group:		X11/Libraries
-PreReq:		%{name} = %{version}
+#%package alsa
+#Summary:	A game programming library - ALSA modules
+#Summary(pl):	Biblioteka do programowania gier - modu³y dla ALSA
+#Group:		X11/Libraries
+#PreReq:		%{name} = %{version}
 
-%description alsa
-Allegro is a cross-platform library intended for use in computer games
-and other types of multimedia programming.
+#%description alsa
+#Allegro is a cross-platform library intended for use in computer games
+#and other types of multimedia programming.
 
-This package contains modules for use with ALSA sound library.
+#This package contains modules for use with ALSA sound library.
 
-%description alsa -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
-grach komputerowych i innych rodzajach oprogramowania multimedialnego.
+#%description alsa -l pl
+#Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+#grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera modu³y do wykorzystania z bibliotek± d¼wiêkow±
-ALSA.
+#Ten pakiet zawiera modu³y do wykorzystania z bibliotek± d¼wiêkow±
+#ALSA.
 
 %package tools
 Summary:	A game programming library - tools
@@ -191,9 +192,9 @@ Ten pakiet zawiera narzêdzia.
 
 %prep
 %setup  -q
-%patch3 -p1
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
+%patch3 -p1
 #%patch2 -p1
 
 %build
@@ -208,7 +209,9 @@ aclocal
 	--disable-linux
 %endif
 	
-%{__make} MAKEINFO=makeinfo
+%{__make} \
+	MAKEINFO=makeinfo \
+	CFLAGS="%{optflags} -I/usr/X11R6/include/artsc -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall -DALLEGRO_LIB_BUILD"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -218,6 +221,14 @@ rm -rf $RPM_BUILD_ROOT
 
 echo -e "# List of modules to be loaded by the Unix version of Allegro.\n" \
 	> $RPM_BUILD_ROOT%{_libdir}/allegro/4.1/modules.lst
+
+mv $RPM_BUILD_ROOT%{_bindir}/demo{,-allegro}
+mv $RPM_BUILD_ROOT%{_bindir}/play{,-allegro}
+mv $RPM_BUILD_ROOT%{_bindir}/setup{,-allegro}
+mv $RPM_BUILD_ROOT%{_bindir}/test{,-allegro}
+
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -247,9 +258,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/rgbmap
 %attr(755,root,root) %{_bindir}/textconv
 %attr(755,root,root) %{_bindir}/dat
+%attr(755,root,root) %{_bindir}/dat2c
 %attr(755,root,root) %{_bindir}/dat2s
 %attr(755,root,root) %{_bindir}/grabber
 %attr(755,root,root) %{_bindir}/pat2dat
+%attr(755,root,root) %{_bindir}/setup-allegro
+%attr(755,root,root) %{_bindir}/keyconf
 
 %files static
 %defattr(644,root,root,755)
@@ -271,27 +285,28 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/allegro/4.1/alleg-esddigi.so
 
-%if %{?_without_alsa:0}%{!?_without_alsa:1}
-%ifnarch sparc sparc64
-%files alsa
-%defattr(644,root,root,755)
-%{_libdir}/allegro/4.1/alleg-alsadigi.so
-%{_libdir}/allegro/4.1/alleg-alsamidi.so
-%endif
-%endif
+#%if %{?_without_alsa:0}%{!?_without_alsa:1}
+#%ifnarch sparc sparc64
+#%files alsa
+#%defattr(644,root,root,755)
+#%{_libdir}/allegro/4.1/alleg-alsadigi.so
+#%{_libdir}/allegro/4.1/alleg-alsamidi.so
+#%endif
+#%endif
 
 %files tests
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/afinfo
 %attr(755,root,root) %{_bindir}/akaitest
+%attr(755,root,root) %{_bindir}/demo-allegro
 %attr(755,root,root) %{_bindir}/digitest
 %attr(755,root,root) %{_bindir}/filetest
 %attr(755,root,root) %{_bindir}/gfxinfo
 %attr(755,root,root) %{_bindir}/mathtest
 %attr(755,root,root) %{_bindir}/miditest
-%attr(755,root,root) %{_bindir}/play
+%attr(755,root,root) %{_bindir}/play-allegro
 %attr(755,root,root) %{_bindir}/playfli
-%attr(755,root,root) %{_bindir}/test
+%attr(755,root,root) %{_bindir}/test-allegro
 %attr(755,root,root) %{_bindir}/vesainfo
 
 %files examples
@@ -299,9 +314,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex12bit
 %attr(755,root,root) %{_bindir}/ex3buf
 %attr(755,root,root) %{_bindir}/ex3d
+%attr(755,root,root) %{_bindir}/exaccel
 %attr(755,root,root) %{_bindir}/exalpha
 %attr(755,root,root) %{_bindir}/exbitmap
 %attr(755,root,root) %{_bindir}/exblend
+%attr(755,root,root) %{_bindir}/excamera
+%attr(755,root,root) %{_bindir}/excolmap
+%attr(755,root,root) %{_bindir}/excustom
 %attr(755,root,root) %{_bindir}/exdata
 %attr(755,root,root) %{_bindir}/exdbuf
 %attr(755,root,root) %{_bindir}/exdodgy
@@ -322,13 +341,19 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/exquat
 %attr(755,root,root) %{_bindir}/exrgbhsv
 %attr(755,root,root) %{_bindir}/exsample
+%attr(755,root,root) %{_bindir}/exscale
+%attr(755,root,root) %{_bindir}/exscn3d
+%attr(755,root,root) %{_bindir}/exscroll
 %attr(755,root,root) %{_bindir}/exshade
 %attr(755,root,root) %{_bindir}/exspline
 %attr(755,root,root) %{_bindir}/exsprite
 %attr(755,root,root) %{_bindir}/exstars
 %attr(755,root,root) %{_bindir}/exstream
+%attr(755,root,root) %{_bindir}/exswitch
 %attr(755,root,root) %{_bindir}/extimer
 %attr(755,root,root) %{_bindir}/extrans
+%attr(755,root,root) %{_bindir}/extruec
+%attr(755,root,root) %{_bindir}/exunicod
 %attr(755,root,root) %{_bindir}/exupdate
 %attr(755,root,root) %{_bindir}/exxfade
 %attr(755,root,root) %{_bindir}/exzbuf

@@ -4,7 +4,7 @@
 # _without_arts		- without arts module
 # _without_dbglib	- don't build debug versions of library
 # _without_proflib	- don't debug profiling versions of library
-# _without_svgalib      - without svgalib module
+# _without_svga		- without svgalib module
 # _with_alsa5		- use alsa 0.5 not 0.9
 # _without_sse		- build without sse (valgrind doesn't support it yet)
 #
@@ -41,7 +41,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel
 %ifarch %{ix86} alpha
-%{!?_without_svgalib:BuildRequires:	svgalib-devel}
+%{!?_without_svga:BuildRequires:	svgalib-devel}
 %endif
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -405,7 +405,7 @@ Pakiet zawiera programy przyk³adowe demonstruj±ce mo¿liwo¶ci
 biblioteki allegro.
 
 %prep
-%setup  -q
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %{!?_without_alsa:%patch2 -p1}
@@ -421,10 +421,10 @@ TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
 %configure \
 	--enable-static \
-	%{?_without_svgalib:--disable-svgalib} \
+	%{?_without_svga:--disable-svgalib} \
 	%{!?_without_dbglib:--enable-dbglib} \
 %ifnarch %{ix86} alpha
-    	--disable-vga \
+	--disable-vga \
 	--disable-linux \
 %endif
 	%{!?_without_proflib:--enable-proflib} \
@@ -501,7 +501,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/liballp.a
 %endif
 
-%if %{!?_without_svgalib:1}0
+%if %{!?_without_svga:1}0
 %ifarch %{ix86} alpha
 %files svgalib
 %defattr(644,root,root,755)

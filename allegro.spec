@@ -6,11 +6,9 @@ Release:	2
 License:	Giftware
 Group:		X11/Libraries
 Source0:	http://belnet.dl.sourceforge.net/sourceforge/alleg/%{name}-%{version}.tar.gz
-# already there
-#Patch0:		%{name}-makefile.patch
-Patch1:		%{name}-info.patch
-#Patch2:	%{name}-alsa9.patch
-Patch3:		%{name}-examples.patch
+Patch0:		%{name}-info.patch
+#Patch1:	%{name}-alsa9.patch
+Patch2:		%{name}-examples.patch
 URL:		http://alleg.sourceforge.net
 BuildRequires:	XFree86-devel
 BuildRequires:	esound-devel
@@ -192,10 +190,9 @@ Ten pakiet zawiera narzêdzia.
 
 %prep
 %setup  -q
-#%patch0 -p1
-%patch1 -p1
-%patch3 -p1
-#%patch2 -p1
+%patch0 -p1
+%patch2 -p1
+#%patch1 -p1
 
 %build
 aclocal
@@ -215,7 +212,7 @@ aclocal
 	
 %{__make} \
 	MAKEINFO=makeinfo \
-	CFLAGS="%{optflags} -I/usr/X11R6/include/artsc -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall 
+	CFLAGS="%{optflags} -I/usr/X11R6/include/artsc -pipe %{?!debug:-funroll-loops -ffast-math -fomit-frame-pointer} -Wall \
 %ifnarch %{ix86}
 	-DALLEGRO_USE_C \
 %endif

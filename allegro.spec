@@ -5,13 +5,6 @@ Version:	3.9.40
 Release:	1
 License:	giftware
 Group:		X11/Libraries
-Group(de):	X11/Libraries
-Group(es):	X11/Bibliotecas
-Group(fr):	X11/Librairies
-Group(pl):	X11/Biblioteki
-Group(pt_BR):	X11/Bibliotecas
-Group(ru):	X11/Библиотеки
-Group(uk):	X11/Б╕бл╕отеки
 Source0:	http://prdownloads.sourceforge.net/alleg/%{name}-%{version}.tar.gz
 Patch0:		%{name}-makefile.patch
 Patch1:		%{name}-info.patch
@@ -40,13 +33,6 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 Summary:	A game programming library - header files
 Summary(pl):	Biblioteka do programowania gier - pliki nagЁСwkowe
 Group:		X11/Development/Libraries
-Group(de):	X11/Entwicklung/Libraries
-Group(es):	X11/Desarrollo/Bibliotecas
-Group(fr):	X11/Development/Librairies
-Group(pl):	X11/Programowanie/Biblioteki
-Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
-Group(ru):	X11/Разработка/Библиотеки
-Group(uk):	X11/Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}
 
 %description devel
@@ -67,13 +53,6 @@ aplikacji wykorzystuj╠cych bibliotekЙ allegro.
 Summary:	A game programming library - static libraries
 Summary(pl):	Biblioteka do programowania gier - biblioteki statyczne
 Group:		X11/Development/Libraries
-Group(de):	X11/Entwicklung/Libraries
-Group(es):	X11/Desarrollo/Bibliotecas
-Group(fr):	X11/Development/Librairies
-Group(pl):	X11/Programowanie/Biblioteki
-Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
-Group(ru):	X11/Разработка/Библиотеки
-Group(uk):	X11/Розробка/Б╕бл╕отеки
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -94,13 +73,6 @@ wykorzystuj╠cymi allegro.
 Summary:	A game programming library - svgalib module
 Summary(pl):	Biblioteka do programowania gier - moduЁ dla svgalib
 Group:		X11/Libraries
-Group(de):	X11/Libraries
-Group(es):	X11/Bibliotecas
-Group(fr):	X11/Librairies
-Group(pl):	X11/Biblioteki
-Group(pt_BR):	X11/Bibliotecas
-Group(ru):	X11/Библиотеки
-Group(uk):	X11/Б╕бл╕отеки
 PreReq:		%{name} = %{version}
 
 %description svgalib
@@ -119,13 +91,6 @@ Ten pakiet zawiera moduЁ do wykorzystania allegro z svgalibem.
 Summary:	A game programming library - DGA2 module
 Summary(pl):	Biblioteka do programowania gier - moduЁ dla DGA2
 Group:		X11/Libraries
-Group(de):	X11/Libraries
-Group(es):	X11/Bibliotecas
-Group(fr):	X11/Librairies
-Group(pl):	X11/Biblioteki
-Group(pt_BR):	X11/Bibliotecas
-Group(ru):	X11/Библиотеки
-Group(uk):	X11/Б╕бл╕отеки
 PreReq:		%{name} = %{version}
 
 %description dga2
@@ -144,13 +109,6 @@ Ten pakiet zawiera moduЁ do wykorzystania z DGA.
 Summary:	A game programming library - esound module
 Summary(pl):	Biblioteka do programowania gier - moduЁ dla esound
 Group:		X11/Libraries
-Group(de):	X11/Libraries
-Group(es):	X11/Bibliotecas
-Group(fr):	X11/Librairies
-Group(pl):	X11/Biblioteki
-Group(pt_BR):	X11/Bibliotecas
-Group(ru):	X11/Библиотеки
-Group(uk):	X11/Б╕бл╕отеки
 PreReq:		%{name} = %{version}
 
 %description esd
@@ -169,13 +127,6 @@ Ten pakiet zawiera moduЁ do wykorzystania z demonem ESound.
 Summary:	A game programming library - ALSA modules
 Summary(pl):	Biblioteka do programowania gier - moduЁy dla ALSA
 Group:		X11/Libraries
-Group(de):	X11/Libraries
-Group(es):	X11/Bibliotecas
-Group(fr):	X11/Librairies
-Group(pl):	X11/Biblioteki
-Group(pt_BR):	X11/Bibliotecas
-Group(ru):	X11/Библиотеки
-Group(uk):	X11/Б╕бл╕отеки
 PreReq:		%{name} = %{version}
 
 %description alsa

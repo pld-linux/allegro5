@@ -11,6 +11,8 @@ Patch0:		%{name}-info.patch
 Patch2:		%{name}-examples.patch
 URL:		http://alleg.sourceforge.net
 BuildRequires:	XFree86-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	esound-devel
 %ifnarch sparc sparc64
 BuildRequires:	alsa-lib-devel
@@ -192,7 +194,7 @@ Ten pakiet zawiera narzêdzia.
 #%patch1 -p1
 
 %build
-aclocal
+%{__aclocal}
 %{__autoconf}
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
 %configure \

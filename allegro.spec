@@ -2,7 +2,7 @@ Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
 Version:	4.0.1
-Release:	0.1
+Release:	1
 License:	Giftware
 Group:		X11/Libraries
 Source0:	http://prdownloads.sourceforge.net/alleg/%{name}-%{version}.tar.gz
@@ -169,8 +169,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install install-man install-info \
 	DESTDIR=$RPM_BUILD_ROOT
 
-gzip -9nf AUTHORS CHANGES THANKS
-
 echo -e "# List of modules to be loaded by the Unix version of Allegro.\n" \
 	> $RPM_BUILD_ROOT%{_libdir}/allegro/4.0/modules.lst
 
@@ -179,6 +177,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc AUTHORS CHANGES THANKS
 %attr(755,root,root) %{_libdir}/liballeg-%{version}.so
 %dir %{_libdir}/allegro/
 %{_libdir}/allegro/4.0/modules.lst

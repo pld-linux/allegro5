@@ -1,14 +1,14 @@
 Summary:	A game programming library
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	3.9.40
-Release:	1
+Version:	4.0.1
+Release:	%{_rel}
 License:	Giftware
 Group:		X11/Libraries
 Source0:	http://prdownloads.sourceforge.net/alleg/%{name}-%{version}.tar.gz
 Patch0:		%{name}-makefile.patch
 Patch1:		%{name}-info.patch
-URL:		http://www.talula.demon.co.uk/allegro/
+URL:		http://alleg.sourceforge.net
 BuildRequires:	XFree86-devel
 BuildRequires:	esound-devel
 %ifnarch sparc sparc64
@@ -151,7 +151,10 @@ ALSA.
 aclocal
 autoconf
 %configure \
-	--enable-static
+	--enable-static \
+	--enable-dbglib \
+	--enable-proflib
+	
 %{__make} MAKEINFO=makeinfo
 
 %install
@@ -163,13 +166,23 @@ rm -rf $RPM_BUILD_ROOT
 gzip -9nf AUTHORS CHANGES THANKS
 
 echo -e "# List of modules to be loaded by the Unix version of Allegro.\n" \
-	> $RPM_BUILD_ROOT%{_libdir}/allegro/modules.lst
+	> $RPM_BUILD_ROOT%{_libdir}/allegro/4.0/modules.lst
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/liballeg-%{version}.so
+%dir %{_libdir}/allegro/
+%{_libdir}/allegro/4.0/modules.lst
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/liballd-%{version}.so
+%attr(755,root,root) %{_libdir}/liballp-%{version}.so
+%{_includedir}/*
+%attr(755,root,root) %{_bindir}/allegro-config
 %attr(755,root,root) %{_bindir}/colormap
 %attr(755,root,root) %{_bindir}/exedat
 %attr(755,root,root) %{_bindir}/pack
@@ -179,14 +192,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/dat2s
 %attr(755,root,root) %{_bindir}/grabber
 %attr(755,root,root) %{_bindir}/pat2dat
-%attr(755,root,root) %{_libdir}/*.so
-%dir %{_libdir}/allegro
-%{_libdir}/allegro/modules.lst
-
-%files devel
-%defattr(644,root,root,755)
-%{_includedir}/*
-%attr(755,root,root) %{_bindir}/allegro-config
 %{_mandir}/man3/*
 %{_infodir}/*
 
@@ -196,19 +201,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files svgalib
 %defattr(644,root,root,755)
-%{_libdir}/allegro/alleg-svgalib-%{version}.so
+%{_libdir}/allegro/4.0/alleg-svgalib.so
 
 %files dga2
 %defattr(644,root,root,755)
-%{_libdir}/allegro/alleg-dga2-%{version}.so
+%{_libdir}/allegro/4.0/alleg-dga2.so
 
 %files esd
 %defattr(644,root,root,755)
-%{_libdir}/allegro/alleg-esddigi-%{version}.so
+%{_libdir}/allegro/4.0/alleg-esddigi.so
 
 %ifnarch sparc sparc64
 %files alsa
 %defattr(644,root,root,755)
-%{_libdir}/allegro/alleg-alsadigi-%{version}.so
-%{_libdir}/allegro/alleg-alsamidi-%{version}.so
+%{_libdir}/allegro/4.0/alleg-alsadigi.so
+%{_libdir}/allegro/4.0/alleg-alsamidi.so
 %endif

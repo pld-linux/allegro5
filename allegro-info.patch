@@ -1,5 +1,5 @@
---- allegro-3.9.40/docs/allegro._tx~	Fri Nov 23 07:03:08 2001
-+++ allegro-3.9.40/docs/allegro._tx	Fri Nov 23 07:03:08 2001
+--- allegro-4.0.1/docs/src/allegro._tx~	Fri Nov 23 07:03:08 2001
++++ allegro-4.0.1/docs/src/allegro._tx	Fri Nov 23 07:03:08 2001
 @@ -24,7 +24,8 @@
  @$
  @$@ifinfo

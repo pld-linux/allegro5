@@ -1,16 +1,17 @@
 #
 # Conditional build:
-# _without_alsa		- without alsa modules
-# _without_arts		- without arts module
-# _without_dbglib	- don't build debug versions of library
-# _without_proflib	- don't debug profiling versions of library
-# _without_svga		- without svgalib module
-# _with_alsa5		- use alsa 0.5 not 0.9
-# _without_sse		- build without sse (valgrind doesn't support it yet)
+%bcond_without	alsa	# without ALSA modules
+%bcond_without	arts	# without aRts module
+%bcond_without	dbglib	# don't build debug versions of library
+%bcond_without	proflib	# don't debug profiling versions of library
+%bcond_without	svga	# without svgalib module
+%bcond_without	sse	# build without sse (valgrind doesn't support it yet)
 #
-%define	_without_arts	1
-
-%{!?_without_alsa:%{!?_with_alsa5:%define _with_alsa9 1}}
+# still needed??? let's check...
+#%%undefine	with_arts
+%ifnarch %{ix86} alpha
+%undefine	with_svga
+%endif
 Summary:	A game programming library
 Summary(de):	Eine Bibliothek zur Programmierung von Spielen
 Summary(es):	Una libreria de programacion de juegos
@@ -18,28 +19,26 @@ Summary(fr):	Une librairie de programmation de jeux
 Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.11
-Release:	2
+Version:	4.1.12
+Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	61568ff088fd074eaad8b5cc23ac40ff
+# Source0-md5:	93c215aab32b086dcfd8a74c1d383abc
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
-Patch2:		%{name}-alsa9.patch
-Patch3:		%{name}-opt.patch
-Patch4:		%{name}-ldflags.patch
-Patch5:		%{name}-frame-pointer.patch
+#Patch2:		%{name}-alsa9.patch
+Patch2:		%{name}-opt.patch
+Patch3:		%{name}-ldflags.patch
+Patch4:		%{name}-frame-pointer.patch
 URL:		http://alleg.sourceforge.net/
 BuildRequires:	XFree86-devel
-%{!?_without_alsa:BuildRequires:	alsa-lib-devel}
-%{!?_without_arts:BuildRequires:	arts-devel}
+%{?with_alsa:BuildRequires:	alsa-lib-devel}
+%{?with_arts:BuildRequires:	arts-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel
-%ifarch %{ix86} alpha
-%{!?_without_svga:BuildRequires:	svgalib-devel}
-%endif
+%{?with_svga:BuildRequires:	svgalib-devel}
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -289,30 +288,12 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera modu³ do wykorzystania z vga.
 
-%package alsa9
-Summary:	A game programming library - ALSA 0.9 modules
-Summary(pl):	Biblioteka do programowania gier - modu³y dla ALSA 0.9
-Group:		Libraries
-PreReq:		%{name} = %{version}
-
-%description alsa9
-Allegro is a cross-platform library intended for use in computer games
-and other types of multimedia programming.
-
-This package contains modules for use with ALSA 0.9 sound library.
-
-%description alsa9 -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
-grach komputerowych i innych rodzajach oprogramowania multimedialnego.
-
-Ten pakiet zawiera modu³y do wykorzystania z bibliotek± d¼wiêkow±
-ALSA 0.9.
-
 %package alsa
 Summary:	A game programming library - ALSA modules
 Summary(pl):	Biblioteka do programowania gier - modu³y dla ALSA
 Group:		Libraries
 PreReq:		%{name} = %{version}
+Obsoletes:	allegro-alsa9
 
 %description alsa
 Allegro is a cross-platform library intended for use in computer games
@@ -403,10 +384,9 @@ biblioteki allegro.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%{!?_without_alsa:%patch2 -p1}
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %build
 %{__aclocal}
@@ -416,21 +396,22 @@ TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
 %configure \
 	--enable-static \
-	%{?_without_svga:--disable-svgalib} \
-	%{!?_without_dbglib:--enable-dbglib} \
-%ifnarch %{ix86} alpha
-	--disable-vga \
-	--disable-linux \
-%endif
-	%{!?_without_proflib:--enable-proflib} \
-	%{?_without_arts:--disable-artsdigi} \
-	%{?_without_sse:--disable-sse} \
-	%{?_without_sse:--disable-asm} \
+	%{!?with_svga:--disable-svgalib} \
+	%{?with_dbglib:--enable-dbglib} \
+	%{?with_proflib:--enable-proflib} \
+	%{!?with_arts:--disable-artsdigi} \
+	%{!?with_sse:--disable-sse} \
+	%{!?with_sse:--disable-asm} \
 %ifnarch %{ix86}
 	--disable-asm \
 	--disable-mmx \
 	--disable-sse
 %endif
+# shouldn't be needed, let's check
+#%ifnarch %{ix86}
+#	--disable-vga \
+#	--disable-linux
+#%endif
 
 %{__make} \
 	MAKEINFO=makeinfo
@@ -447,6 +428,9 @@ mv $RPM_BUILD_ROOT%{_bindir}/demo{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/play{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/setup{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/test{,-allegro}
+
+# help rpm to find reqs for ELF objects
+chmod 755 $RPM_BUILD_ROOT%{_libdir}/{*.so,allegro/*/*.so}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -474,7 +458,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/liballeg.a
 
-%if 0%{!?_without_dbglib:1}
+%if %{with dbglib}
 %files debug
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballd-%{version}.so
@@ -485,7 +469,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/liballd.a
 %endif
 
-%if 0%{!?_without_proflib:1}
+%if %{with proflib}
 %files profile
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballp-%{version}.so
@@ -496,12 +480,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/liballp.a
 %endif
 
-%if %{!?_without_svga:1}0
-%ifarch %{ix86} alpha
+%if %{with svga}
 %files svgalib
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-svgalib.so
-%endif
 %endif
 
 %files dga2
@@ -512,7 +494,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-esddigi.so
 
-%if 0%{!?_without_arts:1}
+%if %{with arts}
 %files arts
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-artsdigi.so
@@ -526,18 +508,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-vga.so
 
-%if 0%{?_with_alsa5:1}
+%if %{with alsa}
 %files alsa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsadigi.so
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsamidi.so
-%endif
-
-%if 0%{?_with_alsa9:1}
-%files alsa9
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsa9digi.so
-%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsa9midi.so
 %endif
 
 %files tools

@@ -1,7 +1,6 @@
-diff -urN aa/allegro-4.1.14/configure.in allegro-4.1.14/configure.in
---- aa/allegro-4.1.14/configure.in	2004-04-27 13:53:02.000000000 +0200
-+++ allegro-4.1.14/configure.in	2004-05-23 21:18:36.478313632 +0200
-@@ -662,29 +662,7 @@
+--- aa/allegro-4.1.15/configure.in	2004-04-27 13:53:02.000000000 +0200
++++ allegro-4.1.15/configure.in	2004-05-23 21:18:36.478313632 +0200
+@@ -668,26 +662,7 @@
  
  dnl How to compile C and asm files.
  if test -n "GCC"; then
@@ -20,9 +19,6 @@ diff -urN aa/allegro-4.1.14/configure.in allegro-4.1.14/configure.in
 -    fi
 -  else
 -    TARGET_ARCH=
--  fi
--  if test "X$allegro_cv_can_use_pipe" = "Xyes"; then
--    CFLAGS="$CFLAGS -pipe"
 -  fi
 -  dnl Allow to specify additional flags.
 -  CFLAGS="$CFLAGS $XCFLAGS"

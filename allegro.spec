@@ -11,11 +11,11 @@
 %endif
 %{!?_without_alsa:%{!?_with_alsa9:%define _with_alsa5 1}}
 Summary:	A game programming library
+Summary(de):	Eine Bibliothek zur Programmierung von Spielen
+Summary(es):	Una libreria de programacion de juegos
+Summary(fr):	Une librairie de programmation de jeux
+Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
-Summary(es):	Una libreria de programacion de juegos.
-Summary(fr):	Une librairie de programmation de jeux.
-Summary(it):	Una libreria per la programmazione di videogiochi.
-Summary(de):	Eine Bibliothek zur Programmierung von Spielen.
 Name:		allegro
 Version:	4.1.9
 Release:	1
@@ -43,9 +43,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Allegro is a cross-platform library intended for use in computer games
 and other types of multimedia programming.
 
-%description -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
-grach komputerowych i innych rodzajach oprogramowania multimedialnego.
+%description -l de
+Allegro ist eine plattformübergreifende Bibliothek zur Verwendung in
+Computerspielen und anderen Formen von Multinediaprogrammierung.
 
 %description -l es
 Allegro es una librería multi-plataforma creada para ser usada en la
@@ -59,9 +59,9 @@ les jeux vidéo ou d'autres types de programmation multimédia.
 Allegro è una libreria multipiattaforma dedicata all'uso nei videogiochi
 ed in altri tipi di programmazione multimediale.
 
-%description -l de
-Allegro ist eine plattformübergreifende Bibliothek zur Verwendung in
-Computerspielen und anderen Formen von Multinediaprogrammierung.
+%description -l pl
+Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 %package devel
 Summary:	A game programming library - header files
@@ -76,12 +76,11 @@ and other types of multimedia programming.
 This package contains header files neccessary for compiling
 applications using allegro library.
 
-%description devel -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
-grach komputerowych i innych rodzajach oprogramowania multimedialnego.
-
-Ten pakiet zawiera pliki nag³ówkowe niezbêdne do kompilowania
-aplikacji wykorzystuj±cych bibliotekê allegro.
+%description devel -l de
+Allegro ist eine plattformübergreifende Bibliothek zur Verwendung in
+Computerspielen und anderen Formen von Multinediaprogrammierung.
+Dieses Paket wird benötigt, um Programme zu bauen, die Allegro
+verwenden.
 
 %description devel -l es
 Allegro es una librería multi-plataforma creada para ser usada en la
@@ -98,36 +97,12 @@ Allegro è una libreria multipiattaforma dedicata all'uso nei videogiochi
 ed in altri tipi di programmazione multimediale. Questo pacchetto è
 necessario per compilare programmi scritti con Allegro.
 
-%description devel -l de
-Allegro ist eine plattformübergreifende Bibliothek zur Verwendung in
-Computerspielen und anderen Formen von Multinediaprogrammierung.
-Dieses Paket wird benötigt, um Programme zu bauen, die Allegro
-verwenden.
+%description devel -l pl
+Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-%package tests
-Summary:	A game programming library - test programs
-Summary(pl):	Biblioteka do programowania gier - programy testuj±ce
-Group:		Development/Libraries
-Requires:	%{name} = %{version}
-
-%description tests
-This package contains programs for testing allegro library.
-
-%description tests -l pl
-Pakiet zawiera programy testuj±ce bibliotekê allegro.
-
-%package examples
-Summary:	A game programming library - examples
-Summary(pl):	Biblioteka do programowania gier - programy przyk³adowe
-Group:		Development/Libraries
-Requires:	%{name} = %{version}
-
-%description examples
-This package contains example programs which are showing
-allegro features.
-
-%description examples -l pl
-Pakiet zawiera programy przyk³adowe demonstruj±ce mo?liwo¶ci biblioteki allegro.
+Ten pakiet zawiera pliki nag³ówkowe niezbêdne do kompilowania
+aplikacji wykorzystuj±cych bibliotekê allegro.
 
 %package static
 Summary:	A game programming library - static libraries
@@ -350,11 +325,11 @@ ALSA.
 
 %package tools
 Summary:	A game programming library - tools
+Summary(de):	Zusätzliche Hilfprogramme für die Allegro Bibliothek
+Summary(es):	Herramientas adicionales para la librería de programación Allegro
+Summary(fr):	Outils supplémentaires pour la librairie de programmation Allegro
+Summary(it):	Programmi di utilità aggiuntivi per la libreria Allegro
 Summary(pl):	Biblioteka do programowania gier - narzêdzia
-Summary(es): Herramientas adicionales para la librería de programación Allegro.
-Summary(fr): Outils supplémentaires pour la librairie de programmation Allegro.
-Summary(it): Programmi di utilità aggiuntivi per la libreria Allegro.
-Summary(de): Zusätzliche Hilfprogramme für die Allegro Bibliothek.
 Group:		Libraries
 PreReq:		%{name} = %{version}
 
@@ -364,11 +339,11 @@ and other types of multimedia programming.
 
 This package contains tools.
 
-%description tools -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
-grach komputerowych i innych rodzajach oprogramowania multimedialnego.
-
-Ten pakiet zawiera narzêdzia.
+%description tools -l de
+Allegro ist eine plattformübergreifende Bibliothek zur Verwendung in
+Computerspielen und anderen Formen von Multinediaprogrammierung.
+Dieses Paket enthält Programme, die für die Entwicklung von
+Allegro Programmen hilfreich sind.
 
 %description tools -l es
 Allegro es una librería multi-plataforma creada para ser usada en la
@@ -388,11 +363,11 @@ ed in altri tipi di programmazione multimediale. Questo pacchetto
 contiene programmi di utilità aggiuntivi utili allo sviluppo di programmi
 con Allegro.
 
-%description tools -l de
-Allegro ist eine plattformübergreifende Bibliothek zur Verwendung in
-Computerspielen und anderen Formen von Multinediaprogrammierung.
-Dieses Paket enthält Programme, die für die Entwicklung von
-Allegro Programmen hilfreich sind.
+%description tools -l pl
+Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+grach komputerowych i innych rodzajach oprogramowania multimedialnego.
+
+Ten pakiet zawiera narzêdzia.
 
 %package tests
 Summary:	A game programming library - test programs

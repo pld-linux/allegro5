@@ -1,13 +1,12 @@
---- allegro-3.9.40/docs/allegro.texi~	Fri Nov 23 04:47:10 2001
-+++ allegro-3.9.40/docs/allegro.texi	Fri Nov 23 04:47:10 2001
-@@ -7,7 +7,9 @@
- 
- @ifinfo
- @direntry
--* Allegro: (allegro). The Allegro game programming library.
-+@dircategory Libraries:
-+@format
-+* Allegro: (allegro).			The Allegro game programming library
- @end direntry
- This is the Info version of the Allegro manual
- 
+--- allegro-3.9.40/docs/allegro._tx~	Fri Nov 23 07:03:08 2001
++++ allegro-3.9.40/docs/allegro._tx	Fri Nov 23 07:03:08 2001
+@@ -24,7 +24,8 @@
+ @$
+ @$@ifinfo
+ @$@direntry
+-@$* Allegro: (allegro). The Allegro game programming library.
++@$@dircategory Libraries:
++@$* Allegro: (allegro).			The Allegro game programming library
+ @$@end direntry
+ @$This is the Info version of the Allegro manual
+ @$

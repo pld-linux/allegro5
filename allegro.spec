@@ -23,6 +23,7 @@ Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
+# Source0-md5:	d4423486f7aed064e10071a19fd06b1e
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-alsa9.patch

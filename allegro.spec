@@ -4,6 +4,7 @@
 # _without_arts		- without arts module
 # _without_dbglib	- don't build debug versions of library
 # _without_proflib	- don't debug profiling versions of library
+# _without_svgalib      - without svgalib module
 # _with_alsa9	- use alsa 0.9 not 0.5
 #
 %ifarch sparc sparc64
@@ -34,7 +35,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel
 %ifarch %{ix86} alpha
-BuildRequires:	svgalib-devel
+%{!?_without_svgalib:BuildRequires:	svgalib-devel}
 %endif
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -409,6 +410,7 @@ TARGET_ARCH="%{rpmcflags}"; export TARGET_ARCH
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
 %configure \
 	--enable-static \
+	%{?_without_svgalib:--disable-svgalib} \
 	%{!?_without_dbglib:--enable-dbglib} \
 %ifnarch %{ix86} alpha
     	--disable-vga \
@@ -483,10 +485,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/liballp.a
 %endif
 
+%if %{!?_without_svgalib:1}0
 %ifarch %{ix86} alpha
 %files svgalib
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/allegro/4.1/alleg-svgalib.so
+%endif
 %endif
 
 %files dga2

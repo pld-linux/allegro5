@@ -1,17 +1,17 @@
---- allegro-3.9.38/makefile.in	Thu Sep 13 21:35:37 2001
-+++ allegro-3.9.38-p/makefile.in	Tue Nov 13 13:39:34 2001
-@@ -267,90 +267,73 @@
+--- allegro-3.9.40/makefile.in.orig	Fri Nov 16 00:11:22 2001
++++ allegro-3.9.40/makefile.in	Fri Nov 23 04:08:26 2001
+@@ -312,85 +312,85 @@
  	@echo "Compressed postscript documentation generated: allegro.ps.gz"
  
  install-lib: lib
 -	$(mkinstalldirs) $(libdir)
-+	$(mkinstalldirs) $(DESTDIR)/$(libdir)
++	$(mkinstalldirs) $(DESTDIR)$(libdir)
  	@for l in alleg alld allp; do \
  	  if test -f $(LIBDIR)/lib$${l}.a; then \
 -	    echo Installing $(LIBDIR)/lib$${l}.a to $(libdir); \
 -	    $(INSTALL_DATA) $(LIBDIR)/lib$${l}.a $(libdir)/; \
-+	    echo Installing $(LIBDIR)/lib$${l}.a to $(DESTDIR)/$(libdir); \
-+	    $(INSTALL_DATA) $(LIBDIR)/lib$${l}.a $(DESTDIR)/$(libdir)/; \
++	    echo Installing $(LIBDIR)/lib$${l}.a to $(DESTDIR)$(libdir); \
++	    $(INSTALL_DATA) $(LIBDIR)/lib$${l}.a $(DESTDIR)$(libdir)/; \
  	  fi; \
  	done
  	@for l in alleg alld allp; do \
@@ -19,63 +19,94 @@
 -	    echo Installing $(LIBDIR)/lib$${l}-$(shared_version).so to $(libdir); \
 -	    $(INSTALL_DATA) $(LIBDIR)/lib$${l}-$(shared_version).so $(libdir)/; \
 -	    $(INSTALL_DATA) $(LIBDIR)/lib$${l}_unsharable.a $(libdir)/; \
-+	    echo Installing $(LIBDIR)/lib$${l}-$(shared_version).so to $(DESTDIR)/$(libdir); \
-+	    $(INSTALL_DATA) $(LIBDIR)/lib$${l}-$(shared_version).so $(DESTDIR)/$(libdir)/; \
-+	    $(INSTALL_DATA) $(LIBDIR)/lib$${l}_unsharable.a $(DESTDIR)/$(libdir)/; \
++	    echo Installing $(LIBDIR)/lib$${l}-$(shared_version).so to $(DESTDIR)$(libdir); \
++	    $(INSTALL_DATA) $(LIBDIR)/lib$${l}-$(shared_version).so $(DESTDIR)$(libdir)/; \
++	    $(INSTALL_DATA) $(LIBDIR)/lib$${l}_unsharable.a $(DESTDIR)$(libdir)/; \
  	  fi; \
  	done
  	@if test -n "$(ALLEGRO_MODULE_TARGETS)"; then \
 -	  $(mkinstalldirs) $(moduledir); \
-+	  $(mkinstalldirs) $(DESTDIR)/$(moduledir); \
++	  $(mkinstalldirs) $(DESTDIR)$(moduledir); \
  	  for m in $(ALLEGRO_MODULE_TARGETS) modules.lst; do \
 -	   echo Installing $$m to $(moduledir); \
 -	   $(INSTALL_DATA) $$m $(moduledir)/; \
-+	   echo Installing $$m to $(DESTDIR)/$(moduledir); \
-+	   $(INSTALL_DATA) $$m $(DESTDIR)/$(moduledir)/; \
++	   echo Installing $$m to $(DESTDIR)$(moduledir); \
++	   $(INSTALL_DATA) $$m $(DESTDIR)$(moduledir)/; \
  	  done; \
  	fi
 -	$(mkinstalldirs) $(bindir)
 -	@echo Installing allegro-config to $(bindir)
 -	@$(INSTALL_PROGRAM) allegro-config $(bindir)
--	@if test -n "$(LIBDIR)/liball*-$(shared_version).so"; then \
--		grep -q $(libdir) /etc/ld.so.conf && ($(LDCONFIG) $(libdir) || true) || (\
--			echo "" ; \
++	$(mkinstalldirs) $(DESTDIR)$(bindir)
++	@echo Installing allegro-config to $(DESTDIR)$(bindir)
++	@$(INSTALL_PROGRAM) allegro-config $(DESTDIR)$(bindir)
+ 	@if test -n "$(LIBDIR)/liball*-$(shared_version).so"; then \
+-		(grep -q $(libdir) /etc/ld.so.conf || \
+-		 test $(libdir) = /lib || test $(libdir) = /usr/lib) \
+-		&& ($(LDCONFIG) $(libdir) || true) || (\
++		(grep -q $(DESTDIR)$(libdir) /etc/ld.so.conf || \
++		 test $(DESTDIR)$(libdir) = /lib || test $(DESTDIR)$(DESTDIR)$(libdir) = /usr/lib) \
++		&& ($(LDCONFIG) $(DESTDIR)$(libdir) || true) || (\
+ 			echo "" ; \
 -			echo "Warning: shared library destination $(libdir) is not in ldd search path." ; \
--			echo "Unless you add it to /etc/ld.so.conf, you must set LD_LIBRARY_PATH to include"; \
++			echo "Warning: shared library destination $(DESTDIR)$(libdir) is not in ldd search path." ; \
+ 			echo "Unless you add it to /etc/ld.so.conf, you must set LD_LIBRARY_PATH to include"; \
 -			echo "$(libdir) each time you want to run an Allegro program." ; \
--		) ; \
--	fi
-+	$(mkinstalldirs) $(DESTDIR)/$(bindir)
-+	@echo Installing allegro-config to $(DESTDIR)/$(bindir)
-+	@$(INSTALL_PROGRAM) allegro-config $(DESTDIR)/$(bindir)
++			echo "$(DESTDIR)$(libdir) each time you want to run an Allegro program." ; \
+ 		) ; \
+ 	fi
  
  install-headers:
 -	$(mkinstalldirs) $(includedir)/allegro
+-	$(mkinstalldirs) $(includedir)/allegro/inline
+-	$(mkinstalldirs) $(includedir)/allegro/internal
+-	$(mkinstalldirs) $(includedir)/allegro/platform
 -	$(INSTALL_DATA) $(srcdir)/include/allegro.h $(includedir)/
 -	$(INSTALL_DATA) $(srcdir)/include/xalleg.h $(includedir)/
 -	$(INSTALL_DATA) $(srcdir)/include/linalleg.h $(includedir)/
 -	$(INSTALL_DATA) $(CONFIG_H) $(includedir)/allegro/
-+	$(mkinstalldirs) $(DESTDIR)/$(includedir)/allegro
-+	$(INSTALL_DATA) $(srcdir)/include/allegro.h $(DESTDIR)/$(includedir)/
-+	$(INSTALL_DATA) $(srcdir)/include/xalleg.h $(DESTDIR)/$(includedir)/
-+	$(INSTALL_DATA) $(srcdir)/include/linalleg.h $(DESTDIR)/$(includedir)/
-+	$(INSTALL_DATA) $(CONFIG_H) $(DESTDIR)/$(includedir)/allegro/
++	$(mkinstalldirs) $(DESTDIR)$(includedir)/allegro
++	$(mkinstalldirs) $(DESTDIR)$(includedir)/allegro/inline
++	$(mkinstalldirs) $(DESTDIR)$(includedir)/allegro/internal
++	$(mkinstalldirs) $(DESTDIR)$(includedir)/allegro/platform
++	$(INSTALL_DATA) $(srcdir)/include/allegro.h $(DESTDIR)$(includedir)/
++	$(INSTALL_DATA) $(srcdir)/include/xalleg.h $(DESTDIR)$(includedir)/
++	$(INSTALL_DATA) $(srcdir)/include/linalleg.h $(DESTDIR)$(includedir)/
++	$(INSTALL_DATA) $(CONFIG_H) $(DESTDIR)$(includedir)/allegro/
  	@for file in $(srcdir)/include/allegro/*.h; do \
 -	  echo Installing $$file to $(includedir)/allegro; \
 -	  $(INSTALL_DATA) $$file $(includedir)/allegro/; \
-+	  echo Installing $$file to $(DESTDIR)/$(includedir)/allegro; \
-+	  $(INSTALL_DATA) $$file $(DESTDIR)/$(includedir)/allegro/; \
++	  echo Installing $$file to $(DESTDIR)$(includedir)/allegro; \
++	  $(INSTALL_DATA) $$file $(DESTDIR)$(includedir)/allegro/; \
+ 	done
+ 	@for file in $(srcdir)/include/allegro/inline/*.inl; do \
+-	  echo Installing $$file to $(includedir)/allegro/inline; \
+-	  $(INSTALL_DATA) $$file $(includedir)/allegro/inline/; \
++	  echo Installing $$file to $(DESTDIR)$(includedir)/allegro/inline; \
++	  $(INSTALL_DATA) $$file $(DESTDIR)$(includedir)/allegro/inline/; \
+ 	done
+ 	@for file in $(srcdir)/include/allegro/internal/*.h; do \
+-	  echo Installing $$file to $(includedir)/allegro/internal; \
+-	  $(INSTALL_DATA) $$file $(includedir)/allegro/internal/; \
++	  echo Installing $$file to $(DESTDIR)$(includedir)/allegro/internal; \
++	  $(INSTALL_DATA) $$file $(DESTDIR)$(includedir)/allegro/internal/; \
+ 	done
+ 	@for file in $(srcdir)/include/allegro/platform/*.h; do \
+-	  echo Installing $$file to $(includedir)/allegro/platform; \
+-	  $(INSTALL_DATA) $$file $(includedir)/allegro/platform/; \
++	  echo Installing $$file to $(DESTDIR)$(includedir)/allegro/platform; \
++	  $(INSTALL_DATA) $$file $(DESTDIR)$(includedir)/allegro/platform/; \
  	done
  
  install-programs: programs
 -	$(mkinstalldirs) $(bindir)
-+	$(mkinstalldirs) $(DESTDIR)/$(bindir)
++	$(mkinstalldirs) $(DESTDIR)$(bindir)
  	@for prog in $(ALLEGRO_LIB_EXES) $(ALLEGRO_DATAFILE_EXES); do \
  	  if test "X`echo $$prog | sed -e s,tools/.\*,,`" = X; then \
 -	    echo Installing $$prog to $(bindir); \
 -	    $(INSTALL_PROGRAM) $$prog $(bindir); \
-+	    echo Installing $$prog to $(DESTDIR)/$(bindir); \
-+	    $(INSTALL_PROGRAM) $$prog $(DESTDIR)/$(bindir); \
++	    echo Installing $$prog to $(DESTDIR)$(bindir); \
++	    $(INSTALL_PROGRAM) $$prog $(DESTDIR)$(bindir); \
  	  fi; \
  	done
  
@@ -83,43 +114,121 @@
  	@echo Installing Allegro info documentation...
 -	$(mkinstalldirs) $(infodir)
 -	@$(INSTALL_DATA) docs/allegro.info $(infodir)
--	-@if $(SHELL) -c "$(INSTALL_INFO) --version" >/dev/null 2>&1; then \
--	  if $(INSTALL_INFO) --version 2>&1 | grep -q "Debian"; then \
++	$(mkinstalldirs) $(DESTDIR)$(infodir)
++	@$(INSTALL_DATA) docs/allegro.info $(DESTDIR)$(infodir)
+ 	-@if $(SHELL) -c "$(INSTALL_INFO) --version" >/dev/null 2>&1; then \
+ 	  if $(INSTALL_INFO) --version 2>&1 | grep -q "Debian"; then \
 -	    $(INSTALL_INFO) --section Development -- $(infodir)/allegro.info; \
--	  else \
++	    $(INSTALL_INFO) --section Development -- $(DESTDIR)$(infodir)/allegro.info; \
+ 	  else \
 -	    $(INSTALL_INFO) $(infodir)/allegro.info $(INFO_DIR); \
--	  fi; \
--	else \
--	  true; \
--	fi
-+	$(mkinstalldirs) $(DESTDIR)/$(infodir)
-+	@$(INSTALL_DATA) docs/allegro.info $(DESTDIR)/$(infodir)
++	    $(INSTALL_INFO) $(DESTDIR)$(infodir)/allegro.info $(INFO_DIR); \
+ 	  fi; \
+ 	else \
+ 	  true; \
+@@ -398,21 +398,21 @@
  
  install-gzipped-info: install-info
  	@echo Compressing documentation...
 -	@gzip -9 -f $(infodir)/allegro.info
-+	@gzip -9 -f $(DESTDIR)/$(infodir)/allegro.info
++	@gzip -9 -f $(DESTDIR)$(infodir)/allegro.info
  
  install-man:
 -	$(mkinstalldirs) $(mandir)/man3
-+	$(mkinstalldirs) $(DESTDIR)/$(mandir)/man3
++	$(mkinstalldirs) $(DESTDIR)$(mandir)/man3
  	@for file in $(srcdir)/docs/*.3; do \
 -	  echo Installing $$file to $(mandir)/man3; \
 -	  $(INSTALL_DATA) $$file $(mandir)/man3/; \
-+	  echo Installing $$file to $(DESTDIR)/$(mandir)/man3; \
-+	  $(INSTALL_DATA) $$file $(DESTDIR)/$(mandir)/man3/; \
++	  echo Installing $$file to $(DESTDIR)$(mandir)/man3; \
++	  $(INSTALL_DATA) $$file $(DESTDIR)$(mandir)/man3/; \
  	done
  
  install-gzipped-man:
 -	$(mkinstalldirs) $(mandir)/man3
-+	$(mkinstalldirs) $(DESTDIR)/$(mandir)/man3
++	$(mkinstalldirs) $(DESTDIR)$(mandir)/man3
  	@for file in $(srcdir)/docs/*.3; do \
 -	  echo Installing $$file.gz to $(mandir)/man3; \
 -	  $(INSTALL_DATA) $$file $(mandir)/man3/; \
 -	  gzip -9 -f $(mandir)/man3/`echo $$file | sed -e "s:.*/::"`; \
-+	  echo Installing $$file.gz to $(DESTDIR)/$(mandir)/man3; \
-+	  $(INSTALL_DATA) $$file $(DESTDIR)/$(mandir)/man3/; \
-+	  gzip -9 -f $(DESTDIR)/$(mandir)/man3/`echo $$file | sed -e "s:.*/::"`; \
++	  echo Installing $$file.gz to $(DESTDIR)$(mandir)/man3; \
++	  $(INSTALL_DATA) $$file $(DESTDIR)$(mandir)/man3/; \
++	  gzip -9 -f $(DESTDIR)$(mandir)/man3/`echo $$file | sed -e "s:.*/::"`; \
  	done
  
  uninstall: uninstall-lib uninstall-modules uninstall-headers uninstall-programs uninstall-info uninstall-man
+@@ -421,56 +421,56 @@
+ uninstall-lib:
+ 	@echo "Uninstalling libraries..."
+ 	@for l in alleg alld allp; do \
+-	  rm -f $(libdir)/lib$${l}_unsharable.a; \
+-	  rm -f $(libdir)/lib$${l}.a; \
++	  rm -f $(DESTDIR)$(libdir)/lib$${l}_unsharable.a; \
++	  rm -f $(DESTDIR)$(libdir)/lib$${l}.a; \
+ 	done
+-	rm -f $(bindir)/allegro-config
+-	-$(LDCONFIG) $(libdir)
++	rm -f $(DESTDIR)$(bindir)/allegro-config
++	-$(LDCONFIG) $(DESTDIR)$(libdir)
+ 
+ uninstall-shared:
+ 	@echo "Uninstalling shared libraries..."
+ 	@for l in alleg alld allp; do \
+-	  rm -f $(libdir)/lib$${l}-${shared_version}.so; \
++	  rm -f $(DESTDIR)$(libdir)/lib$${l}-${shared_version}.so; \
+ 	done
+ 
+ uninstall-modules:
+-	rm -rf $(moduledir)
++	rm -rf $(DESTDIR)$(moduledir)
+ 
+ uninstall-headers:
+-	rm -f $(includedir)/allegro.h
+-	rm -f $(includedir)/xalleg.h
+-	rm -f $(includedir)/linalleg.h
+-	rm -rf $(includedir)/allegro
++	rm -f $(DESTDIR)$(includedir)/allegro.h
++	rm -f $(DESTDIR)$(includedir)/xalleg.h
++	rm -f $(DESTDIR)$(includedir)/linalleg.h
++	rm -rf $(DESTDIR)$(includedir)/allegro
+ 
+ uninstall-programs:
+ 	@for prog in $(ALLEGRO_LIB_EXES) $(ALLEGRO_DATAFILE_EXES); do \
+ 	  if test "X`echo $$prog | sed -e s,tools/.\*,,`" = X; then \
+ 	    p=`echo $$prog | sed -e s,tools/,,`; \
+-	    echo rm -f $(bindir)/$$p; \
+-	    rm -f $(bindir)/$$p; \
++	    echo rm -f $(DESTDIR)$(bindir)/$$p; \
++	    rm -f $(DESTDIR)$(bindir)/$$p; \
+ 	  fi; \
+ 	done
+ 
+ uninstall-info:
+-	@if test -f $(infodir)/allegro.info.gz; then \
++	@if test -f $(DESTDIR)$(infodir)/allegro.info.gz; then \
+ 	  echo Decompressing documentation...; \
+-	  gunzip $(infodir)/allegro.info.gz; \
++	  gunzip $(DESTDIR)$(infodir)/allegro.info.gz; \
+ 	fi;
+ 	@if $(SHELL) -c "$(INSTALL_INFO) --version" >/dev/null 2>&1; then \
+ 	  if $(INSTALL_INFO) --version 2>&1 | grep -q "Debian"; then \
+-	    $(INSTALL_INFO) --remove $(infodir)/allegro.info; \
++	    $(INSTALL_INFO) --remove $(DESTDIR)$(infodir)/allegro.info; \
+ 	  else \
+-	    $(INSTALL_INFO) --remove $(infodir)/allegro.info $(INFO_DIR); \
++	    $(INSTALL_INFO) --remove $(DESTDIR)$(infodir)/allegro.info $(INFO_DIR); \
+ 	  fi; \
+ 	else \
+ 	  true; \
+ 	fi
+-	rm -f $(infodir)/allegro.info
++	rm -f $(DESTDIR)$(infodir)/allegro.info
+ 
+ uninstall-man:
+-	sed -n -e "s,^@[@\\].*@\([a-zA-Z0-9_]*\)[^a-zA-Z0-9_*].*,$(mandir)/man3/\1.3,p" $(srcdir)/docs/allegro._tx \
++	sed -n -e "s,^@[@\\].*@\([a-zA-Z0-9_]*\)[^a-zA-Z0-9_*].*,$(DESTDIR)$(mandir)/man3/\1.3,p" $(srcdir)/docs/allegro._tx \
+ 	  | xargs -n 1 rm -f
+-	sed -n -e "s,^@[@\\].*@\([a-zA-Z0-9_]*\)[^a-zA-Z0-9_*].*,$(mandir)/man3/\1.3.gz,p" $(srcdir)/docs/allegro._tx \
++	sed -n -e "s,^@[@\\].*@\([a-zA-Z0-9_]*\)[^a-zA-Z0-9_*].*,$(DESTDIR)$(mandir)/man3/\1.3.gz,p" $(srcdir)/docs/allegro._tx \
+ 	  | xargs -n 1 rm -f
+ 
+ depend:

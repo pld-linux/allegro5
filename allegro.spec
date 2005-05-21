@@ -15,12 +15,12 @@ Summary(fr):	Une librairie de programmation de jeux
 Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.17
+Version:	4.1.18
 Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	46a73066105e379ec2ec18ddee8d7c63
+# Source0-md5:	215b84351f349f5998a77f99bf1218fa
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -28,6 +28,7 @@ Patch3:		%{name}-ldflags.patch
 Patch4:		%{name}-frame-pointer.patch
 Patch5:		%{name}-alsa-1_0.patch
 Patch6:		%{name}-am18.patch
+Patch7:		%{name}-asm.patch
 URL:		http://alleg.sourceforge.net/
 BuildRequires:	XFree86-devel
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
@@ -407,6 +408,7 @@ biblioteki allegro.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %{__aclocal}
@@ -452,6 +454,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
+
+%post devel
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir %{_infodir} >/dev/null 2>&1
+
+%postun devel
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir %{_infodir} >/dev/null 2>&1
 
 %files
 %defattr(644,root,root,755)

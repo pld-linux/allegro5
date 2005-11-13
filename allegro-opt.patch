@@ -1,11 +1,11 @@
 --- aa/allegro-4.1.15/configure.in	2004-04-27 13:53:02.000000000 +0200
 +++ allegro-4.1.15/configure.in	2004-05-23 21:18:36.478313632 +0200
-@@ -668,26 +662,7 @@
+@@ -720,38 +720,7 @@
  
  dnl How to compile C and asm files.
- if test -n "GCC"; then
+ if test -n "$GCC"; then
 -  if test "X$allegro_strict_warnings" = "Xyes"; then
--    WFLAGS="-Wall -W -Wstrict-prototypes -Wno-unused -Werror"
+-    WFLAGS="-Wall -W -Wstrict-prototypes -Wno-unused-parameter -Werror"
 -  else
 -    WFLAGS="-Wall -Wno-unused"
 -  fi
@@ -13,6 +13,18 @@
 -    if test "$allegro_exclusive_optimizations" != none; then
 -      TARGET_ARCH="-march=$allegro_exclusive_optimizations"
 -    elif test "X$allegro_cv_support_i386_mtune" = "Xyes"; then
+-      TARGET_ARCH="-mtune=$allegro_optimizations"
+-    else
+-      TARGET_ARCH="-mcpu=$allegro_optimizations"
+-    fi
+-  elif test "X$allegro_cv_processor_type" = "Xamd64"; then
+-    dnl Change default pentium->athlon64
+-    if test "X$allegro_optimizations" = "Xpentium"; then
+-      allegro_optimizations="k8"
+-    fi
+-    if test "$allegro_exclusive_optimizations" != none; then
+-      TARGET_ARCH="-march=$allegro_exclusive_optimizations"
+-    elif test "X$allegro_cv_support_amd64_mtune" = "Xyes"; then
 -      TARGET_ARCH="-mtune=$allegro_optimizations"
 -    else
 -      TARGET_ARCH="-mcpu=$allegro_optimizations"
@@ -28,7 +40,7 @@
    ALLEGRO_DEBUG_CFLAGS="$CFLAGS -g $WFLAGS -DDEBUGMODE"
    if test "X$allegro_debug_with_fortify" = "Xyes"; then
       ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DFORTIFY"
-@@ -692,12 +670,8 @@
+@@ -759,12 +728,8 @@
    if test "X$allegro_debug_with_dmalloc" = "Xyes"; then
       ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DDMALLOC"
    fi
@@ -39,7 +51,7 @@
 -    CFLAGS="$CFLAGS $TARGET_ARCH -O2 -funroll-loops -ffast-math $WFLAGS"
 -  fi
 +  CFLAGS="$CFLAGS $TARGET_ARCH"
-+	ALLEGRO_PROFILE_CFLAGS="$CFLAGS -pg $WFLAGS"
++  ALLEGRO_PROFILE_CFLAGS="$CFLAGS -pg $WFLAGS"
    ALLEGRO_SFLAGS="-x assembler-with-cpp"
    ALLEGRO_SHAREDLIB_CFLAGS="-fPIC -DALLEGRO_SHARED"
  else

@@ -1,7 +1,8 @@
 Don't use tabs, they are expanded at wrong moment
 --- allegro-4.1.12/docs/src/allegro._tx~	Fri Nov 23 07:03:08 2001
 +++ allegro-4.1.12/docs/src/allegro._tx	Fri Nov 23 07:03:08 2001
-@@ -24,8 +24,8 @@
+@@ -31,9 +31,9 @@
+ @# This should remain commented at the moment (dvi output) @$@finalout
  @$
  @$@ifinfo
 -@$@dircategory Libraries

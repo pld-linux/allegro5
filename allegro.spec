@@ -1,12 +1,19 @@
 #
+# TODO: Handle situations when there are no modules (most bconds turned off)
+#
 # Conditional build:
 %bcond_without	alsa	# without ALSA modules
 %bcond_without	arts	# without aRts module
-%bcond_without	jack	# without JACK module
+%bcond_without	dga2	# without DGA2 module
 %bcond_without	dbglib	# don't build debug versions of library
+%bcond_without	esd	# without esound module
+%bcond_without	fbcon	# without framebuffer module
+%bcond_without	jack	# without JACK module
 %bcond_without	proflib	# don't debug profiling versions of library
+%bcond_without	sse	# build without sse
+%bcond_without	static	# don't build static versions of library
 %bcond_without	svga	# without svgalib module
-%bcond_without	sse	# build without sse (valgrind doesn't support it yet)
+%bcond_without	vga	# without vga module
 #
 Summary:	A game programming library
 Summary(de):	Eine Bibliothek zur Programmierung von Spielen
@@ -15,28 +22,28 @@ Summary(fr):	Une librairie de programmation de jeux
 Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.1.18
+Version:	4.2.0
 Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	215b84351f349f5998a77f99bf1218fa
+# Source0-md5:	a8b2c85c58b16345fe735f72763f3a6e
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
 Patch3:		%{name}-ldflags.patch
 Patch4:		%{name}-frame-pointer.patch
-Patch5:		%{name}-alsa-1_0.patch
-Patch6:		%{name}-am18.patch
-Patch7:		%{name}-asm.patch
 URL:		http://alleg.sourceforge.net/
-BuildRequires:	XFree86-devel
+BuildRequires:	X11-devel
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
-%{?with_arts:BuildRequires:	arts-devel}
+%{?with_arts:BuildRequires:	artsc-devel}
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
-BuildRequires:	esound-devel
-%{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
+%{?with_esd:BuildRequires:	esound-devel}
+%if %{with jack}
+BuildRequires:	jack-audio-connection-kit-devel
+BuildRequires:	pkgconfig
+%endif
 %{?with_svga:BuildRequires:	svgalib-devel}
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -54,12 +61,12 @@ Allegro es una librería multi-plataforma creada para ser usada en la
 programación de juegos u otro tipo de programación multimedia.
 
 %description -l fr
-Allegro est une librairie multi-plateforme destinée à être utilisée dans
-les jeux vidéo ou d'autres types de programmation multimédia.
+Allegro est une librairie multi-plateforme destinée à être utilisée
+dans les jeux vidéo ou d'autres types de programmation multimédia.
 
 %description -l it
-Allegro è una libreria multipiattaforma dedicata all'uso nei videogiochi
-ed in altri tipi di programmazione multimediale.
+Allegro è una libreria multipiattaforma dedicata all'uso nei
+videogiochi ed in altri tipi di programmazione multimediale.
 
 %description -l pl
 Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
@@ -91,14 +98,14 @@ programación de juegos u otro tipo de programación multimedia. Este
 paquete es necesario para compilar los programas que usen Allegro.
 
 %description devel -l fr
-Allegro est une librairie multi-plateforme destinée à être utilisée dans
-les jeux vidéo ou d'autres types de programmation multimédia. Ce package
-est nécessaire pour compiler les programmes utilisant Allegro.
+Allegro est une librairie multi-plateforme destinée à être utilisée
+dans les jeux vidéo ou d'autres types de programmation multimédia. Ce
+package est nécessaire pour compiler les programmes utilisant Allegro.
 
 %description devel -l it
-Allegro è una libreria multipiattaforma dedicata all'uso nei videogiochi
-ed in altri tipi di programmazione multimediale. Questo pacchetto è
-necessario per compilare programmi scritti con Allegro.
+Allegro è una libreria multipiattaforma dedicata all'uso nei
+videogiochi ed in altri tipi di programmazione multimediale. Questo
+pacchetto è necessario per compilare programmi scritti con Allegro.
 
 %description devel -l pl
 Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
@@ -176,7 +183,7 @@ Requires:	%{name}-devel = %{version}-%{release}
 %description profile-static
 liballp - profiling version of static allegro library.
 
-%description debug-static -l pl
+%description profile-static -l pl
 liballp - wersja statycznej biblioteki allegro s³u¿±ca do
 profilowania.
 
@@ -184,7 +191,7 @@ profilowania.
 Summary:	A game programming library - svgalib module
 Summary(pl):	Biblioteka do programowania gier - modu³ dla svgalib
 Group:		Libraries
-PreReq:		%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description svgalib
 Allegro is a cross-platform library intended for use in computer games
@@ -202,7 +209,7 @@ Ten pakiet zawiera modu³ do wykorzystania allegro z svgalibem.
 Summary:	A game programming library - DGA2 module
 Summary(pl):	Biblioteka do programowania gier - modu³ dla DGA2
 Group:		Libraries
-PreReq:		%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description dga2
 Allegro is a cross-platform library intended for use in computer games
@@ -220,7 +227,7 @@ Ten pakiet zawiera modu³ do wykorzystania z DGA.
 Summary:	A game programming library - esound module
 Summary(pl):	Biblioteka do programowania gier - modu³ dla esound
 Group:		Libraries
-PreReq:		%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description esd
 Allegro is a cross-platform library intended for use in computer games
@@ -238,7 +245,7 @@ Ten pakiet zawiera modu³ do wykorzystania z demonem ESound.
 Summary:	A game programming library - aRts module
 Summary(pl):	Biblioteka do programowania gier - modu³ dla aRts
 Group:		Libraries
-PreReq:		%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description arts
 Allegro is a cross-platform library intended for use in computer games
@@ -256,7 +263,7 @@ Ten pakiet zawiera modu³ do wykorzystania z aRts.
 Summary:	A game programming library - framebuffer module
 Summary(pl):	Biblioteka do programowania gier - modu³ dla framebuffera
 Group:		Libraries
-PreReq:		%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description fbcon
 Allegro is a cross-platform library intended for use in computer games
@@ -274,7 +281,7 @@ Ten pakiet zawiera modu³ do wykorzystania z framebufferem.
 Summary:	A game programming library - vga module
 Summary(pl):	Biblioteka do programowania gier - modu³ dla vga
 Group:		Libraries
-PreReq:		%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description vga
 Allegro is a cross-platform library intended for use in computer games
@@ -292,7 +299,7 @@ Ten pakiet zawiera modu³ do wykorzystania z vga.
 Summary:	A game programming library - ALSA modules
 Summary(pl):	Biblioteka do programowania gier - modu³y dla ALSA
 Group:		Libraries
-PreReq:		%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 Obsoletes:	allegro-alsa9
 
 %description alsa
@@ -312,7 +319,7 @@ ALSA.
 Summary:	A game programming library - JACK module
 Summary(pl):	Biblioteka do programowania gier - modu³ dla JACK-a
 Group:		Libraries
-PreReq:		%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description jack
 Allegro is a cross-platform library intended for use in computer games
@@ -320,12 +327,11 @@ and other types of multimedia programming.
 
 This package contains module for use with JACK sound library.
 
-%description alsa -l pl
+%description jack -l pl
 Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera modu³ do wykorzystania z bibliotek± d¼wiêkow±
-JACK.
+Ten pakiet zawiera modu³ do wykorzystania z bibliotek± d¼wiêkow± JACK.
 
 %package tools
 Summary:	A game programming library - tools
@@ -335,7 +341,7 @@ Summary(fr):	Outils supplémentaires pour la librairie de programmation Allegro
 Summary(it):	Programmi di utilità aggiuntivi per la libreria Allegro
 Summary(pl):	Biblioteka do programowania gier - narzêdzia
 Group:		Libraries
-PreReq:		%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description tools
 Allegro is a cross-platform library intended for use in computer games
@@ -346,8 +352,8 @@ This package contains tools.
 %description tools -l de
 Allegro ist eine plattformübergreifende Bibliothek zur Verwendung in
 Computerspielen und anderen Formen von Multinediaprogrammierung.
-Dieses Paket enthält Programme, die für die Entwicklung von
-Allegro Programmen hilfreich sind.
+Dieses Paket enthält Programme, die für die Entwicklung von Allegro
+Programmen hilfreich sind.
 
 %description tools -l es
 Allegro es una librería multi-plataforma creada para ser usada en la
@@ -356,16 +362,16 @@ paquete contiene herramientas adicionales que son útiles para
 desarrollar programas que usen Allegro.
 
 %description tools -l fr
-Allegro est une librairie multi-plateforme destinée à être utilisée dans
-les jeux vidéo ou d'autres types de programmation multimédia. Ce package
-contient des outils supplémentaires qui sont utiles pour le développement
-de programmes avec Allegro.
+Allegro est une librairie multi-plateforme destinée à être utilisée
+dans les jeux vidéo ou d'autres types de programmation multimédia. Ce
+package contient des outils supplémentaires qui sont utiles pour le
+développement de programmes avec Allegro.
 
 %description tools -l it
-Allegro è una libreria multipiattaforma dedicata all'uso nei videogiochi
-ed in altri tipi di programmazione multimediale. Questo pacchetto
-contiene programmi di utilità aggiuntivi utili allo sviluppo di programmi
-con Allegro.
+Allegro è una libreria multipiattaforma dedicata all'uso nei
+videogiochi ed in altri tipi di programmazione multimediale. Questo
+pacchetto contiene programmi di utilità aggiuntivi utili allo sviluppo
+di programmi con Allegro.
 
 %description tools -l pl
 Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
@@ -406,9 +412,6 @@ biblioteki allegro.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
 
 %build
 %{__aclocal}
@@ -417,13 +420,24 @@ biblioteki allegro.
 TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
 %configure \
-	--enable-static \
-	%{!?with_svga:--disable-svgalib} \
+	%{?with_static:--enable-static} \
 	%{?with_dbglib:--enable-dbglib} \
 	%{?with_proflib:--enable-proflib} \
+%if %{without alsa}
+	--disable-alsadigi \
+	--disable-alsamidi \
+%endif
 	%{!?with_arts:--disable-artsdigi} \
-	%{!?with_sse:--disable-sse} \
-	%{!?with_sse:--disable-asm} \
+	%{!?with_dga2:--disable-xwin-dga2} \
+	%{!?with_esd:--disable-esddigi} \
+	%{!?with_fbcon:--disable-fbcon} \
+	%{!?with_jack:--disable-jackdigi} \
+	%{!?with_svga:--disable-svgalib} \
+	%{!?with_vga:--disable-vga} \
+%if %{without sse}
+	--disable-sse \
+	--disable-asm \
+%endif
 %ifnarch %{ix86}
 	--disable-asm \
 	--disable-mmx \
@@ -439,7 +453,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install install-man install-info install-lib \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/4.1
+install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/4.2
 
 mv $RPM_BUILD_ROOT%{_bindir}/demo{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/play{,-allegro}
@@ -463,11 +477,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CHANGES THANKS
+%doc AUTHORS CHANGES THANKS readme.txt
 %attr(755,root,root) %{_libdir}/liballeg-%{version}.so
 %dir %{_libdir}/allegro
-%dir %{_libdir}/allegro/4.1
-%{_libdir}/allegro/4.1/modules.lst
+%dir %{_libdir}/allegro/4.2
+%{_libdir}/allegro/4.2/modules.lst
 
 %files devel
 %defattr(644,root,root,755)
@@ -478,9 +492,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/*
 %{_infodir}/*.info*
 
+%if %{with static}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/liballeg.a
+%endif
 
 %if %{with dbglib}
 %files debug
@@ -488,9 +504,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/liballd-%{version}.so
 %{_libdir}/liballd_unsharable.a
 
+%if %{with static}
 %files debug-static
 %defattr(644,root,root,755)
 %{_libdir}/liballd.a
+%endif
 %endif
 
 %if %{with proflib}
@@ -499,52 +517,62 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/liballp-%{version}.so
 %{_libdir}/liballp_unsharable.a
 
+%if %{with static}
 %files profile-static
 %defattr(644,root,root,755)
 %{_libdir}/liballp.a
+%endif
 %endif
 
 %if %{with svga}
 %files svgalib
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-svgalib.so
+%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-svgalib.so
 %endif
 
+%if %{with dga2}
 %files dga2
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-dga2.so
+%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-dga2.so
+%endif
 
+%if %{with esd}
 %files esd
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-esddigi.so
+%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-esddigi.so
+%endif
 
 %if %{with arts}
 %files arts
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-artsdigi.so
+%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-artsdigi.so
 %endif
 
+%if %{with fbcon}
 %files fbcon
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-fbcon.so
+%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-fbcon.so
+%endif
 
 %ifarch %{ix86}
+%if %{with vga}
 %files vga
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-vga.so
+%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-vga.so
+%endif
 %endif
 
 %if %{with alsa}
 %files alsa
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsadigi.so
-%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-alsamidi.so
+%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-alsadigi.so
+%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-alsamidi.so
 %endif
 
 %if %{with jack}
 %files jack
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.1/alleg-jackdigi.so
+%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-jackdigi.so
 %endif
 
 %files tools
@@ -554,6 +582,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pack
 %attr(755,root,root) %{_bindir}/rgbmap
 %attr(755,root,root) %{_bindir}/textconv
+%attr(755,root,root) %{_bindir}/xkeymap
+%attr(755,root,root) %{_bindir}/xf2pcx
 %attr(755,root,root) %{_bindir}/dat
 %attr(755,root,root) %{_bindir}/dat2c
 %attr(755,root,root) %{_bindir}/dat2s
@@ -565,6 +595,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/afinfo
 %attr(755,root,root) %{_bindir}/akaitest
+%attr(755,root,root) %{_bindir}/cpptest
 %attr(755,root,root) %{_bindir}/demo-allegro
 %attr(755,root,root) %{_bindir}/digitest
 %attr(755,root,root) %{_bindir}/filetest
@@ -591,11 +622,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/excustom
 %attr(755,root,root) %{_bindir}/exdata
 %attr(755,root,root) %{_bindir}/exdbuf
-%attr(755,root,root) %{_bindir}/exdodgy
 %attr(755,root,root) %{_bindir}/exexedat
 %attr(755,root,root) %{_bindir}/exfixed
 %attr(755,root,root) %{_bindir}/exflame
 %attr(755,root,root) %{_bindir}/exflip
+%attr(755,root,root) %{_bindir}/exfont
 %attr(755,root,root) %{_bindir}/exgui
 %attr(755,root,root) %{_bindir}/exhello
 %attr(755,root,root) %{_bindir}/exjoy
@@ -604,11 +635,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/exmem
 %attr(755,root,root) %{_bindir}/exmidi
 %attr(755,root,root) %{_bindir}/exmouse
+%attr(755,root,root) %{_bindir}/expackf
 %attr(755,root,root) %{_bindir}/expal
 %attr(755,root,root) %{_bindir}/expat
 %attr(755,root,root) %{_bindir}/exquat
 %attr(755,root,root) %{_bindir}/exrgbhsv
 %attr(755,root,root) %{_bindir}/exsample
+%attr(755,root,root) %{_bindir}/exsyscur
 %attr(755,root,root) %{_bindir}/exscale
 %attr(755,root,root) %{_bindir}/exscn3d
 %attr(755,root,root) %{_bindir}/exscroll

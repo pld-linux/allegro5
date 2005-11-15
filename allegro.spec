@@ -34,7 +34,7 @@ Patch2:		%{name}-opt.patch
 Patch3:		%{name}-ldflags.patch
 Patch4:		%{name}-frame-pointer.patch
 URL:		http://alleg.sourceforge.net/
-BuildRequires:	X11-devel
+BuildRequires:	XFree86-devel
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_arts:BuildRequires:	artsc-devel}
 BuildRequires:	autoconf >= 2.53

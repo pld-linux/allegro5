@@ -425,7 +425,7 @@ TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 	%{?with_static:--enable-static} \
 	%{?with_dbglib:--enable-dbglib} \
 	%{?with_proflib:--enable-proflib} \
-%if %{without alsa}
+%if !%{with alsa}
 	--disable-alsadigi \
 	--disable-alsamidi \
 %endif
@@ -436,7 +436,7 @@ TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 	%{!?with_jack:--disable-jackdigi} \
 	%{!?with_svga:--disable-svgalib} \
 	%{!?with_vga:--disable-vga} \
-%if %{without sse}
+%if !%{with sse}
 	--disable-sse \
 	--disable-asm \
 %endif

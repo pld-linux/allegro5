@@ -22,12 +22,12 @@ Summary(fr):	Une librairie de programmation de jeux
 Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.2.0
+Version:	4.2.1
 Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	a8b2c85c58b16345fe735f72763f3a6e
+# Source0-md5:	0a09d0144ee8652fb8fa00f6cbb324fe
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -455,7 +455,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install install-man install-info install-lib \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/4.2
+install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/%{version}
 
 mv $RPM_BUILD_ROOT%{_bindir}/demo{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/play{,-allegro}
@@ -482,8 +482,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS CHANGES THANKS readme.txt
 %attr(755,root,root) %{_libdir}/liballeg-%{version}.so
 %dir %{_libdir}/allegro
-%dir %{_libdir}/allegro/4.2
-%{_libdir}/allegro/4.2/modules.lst
+%dir %{_libdir}/allegro/%{version}
+%{_libdir}/allegro/%{version}/modules.lst
 
 %files devel
 %defattr(644,root,root,755)
@@ -529,52 +529,52 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with svga}
 %files svgalib
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-svgalib.so
+%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-svgalib.so
 %endif
 
 %if %{with dga2}
 %files dga2
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-dga2.so
+%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-dga2.so
 %endif
 
 %if %{with esd}
 %files esd
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-esddigi.so
+%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-esddigi.so
 %endif
 
 %if %{with arts}
 %files arts
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-artsdigi.so
+%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-artsdigi.so
 %endif
 
 %if %{with fbcon}
 %files fbcon
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-fbcon.so
+%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-fbcon.so
 %endif
 
 %ifarch %{ix86}
 %if %{with vga}
 %files vga
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-vga.so
+%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-vga.so
 %endif
 %endif
 
 %if %{with alsa}
 %files alsa
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-alsadigi.so
-%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-alsamidi.so
+%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-alsadigi.so
+%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-alsamidi.so
 %endif
 
 %if %{with jack}
 %files jack
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/4.2/alleg-jackdigi.so
+%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-jackdigi.so
 %endif
 
 %files tools

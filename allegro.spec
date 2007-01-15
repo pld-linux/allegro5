@@ -22,12 +22,12 @@ Summary(fr):	Une librairie de programmation de jeux
 Summary(it):	Una libreria per la programmazione di videogiochi
 Summary(pl):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.2.1
+Version:	4.3.0
 Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	0a09d0144ee8652fb8fa00f6cbb324fe
+# Source0-md5:	0746b948ecd63cab806026cf3b452e20
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -459,7 +459,7 @@ install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/%{version}
 
 mv $RPM_BUILD_ROOT%{_bindir}/demo{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/play{,-allegro}
-mv $RPM_BUILD_ROOT%{_bindir}/setup{,-allegro}
+#mv $RPM_BUILD_ROOT%{_bindir}/setup{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/test{,-allegro}
 
 # help rpm to find reqs for ELF objects
@@ -584,14 +584,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pack
 %attr(755,root,root) %{_bindir}/rgbmap
 %attr(755,root,root) %{_bindir}/textconv
-%attr(755,root,root) %{_bindir}/xkeymap
+#%%attr(755,root,root) %{_bindir}/xkeymap
 %attr(755,root,root) %{_bindir}/xf2pcx
 %attr(755,root,root) %{_bindir}/dat
 %attr(755,root,root) %{_bindir}/dat2c
 %attr(755,root,root) %{_bindir}/dat2s
 %attr(755,root,root) %{_bindir}/grabber
 %attr(755,root,root) %{_bindir}/pat2dat
-%attr(755,root,root) %{_bindir}/setup-allegro
+#%%attr(755,root,root) %{_bindir}/setup-allegro
 
 %files tests
 %defattr(644,root,root,755)

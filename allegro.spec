@@ -16,11 +16,11 @@
 %bcond_without	vga	# without vga module
 #
 Summary:	A game programming library
-Summary(de):	Eine Bibliothek zur Programmierung von Spielen
-Summary(es):	Una biblioteca de programación de juegos
-Summary(fr):	Une librairie de programmation de jeux
-Summary(it):	Una libreria per la programmazione di videogiochi
-Summary(pl):	Biblioteka do programowania gier
+Summary(de.UTF-8):   Eine Bibliothek zur Programmierung von Spielen
+Summary(es.UTF-8):   Una biblioteca de programaciÃ³n de juegos
+Summary(fr.UTF-8):   Une librairie de programmation de jeux
+Summary(it.UTF-8):   Una libreria per la programmazione di videogiochi
+Summary(pl.UTF-8):   Biblioteka do programowania gier
 Name:		allegro
 Version:	4.2.1
 Release:	1
@@ -53,30 +53,30 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Allegro is a cross-platform library intended for use in computer games
 and other types of multimedia programming.
 
-%description -l de
-Allegro ist eine plattformübergreifende Bibliothek zur Verwendung in
+%description -l de.UTF-8
+Allegro ist eine plattformÃ¼bergreifende Bibliothek zur Verwendung in
 Computerspielen und anderen Formen von Multinediaprogrammierung.
 
-%description -l es
-Allegro es una librería multi-plataforma creada para ser usada en la
-programación de juegos u otro tipo de programación multimedia.
+%description -l es.UTF-8
+Allegro es una librerÃ­a multi-plataforma creada para ser usada en la
+programaciÃ³n de juegos u otro tipo de programaciÃ³n multimedia.
 
-%description -l fr
-Allegro est une librairie multi-plateforme destinée à être utilisée
-dans les jeux vidéo ou d'autres types de programmation multimédia.
+%description -l fr.UTF-8
+Allegro est une librairie multi-plateforme destinÃ©e Ã  Ãªtre utilisÃ©e
+dans les jeux vidÃ©o ou d'autres types de programmation multimÃ©dia.
 
-%description -l it
-Allegro è una libreria multipiattaforma dedicata all'uso nei
+%description -l it.UTF-8
+Allegro Ã¨ una libreria multipiattaforma dedicata all'uso nei
 videogiochi ed in altri tipi di programmazione multimediale.
 
-%description -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 %package devel
 Summary:	A game programming library - header files
-Summary(es):	Archivos de inclusión
-Summary(pl):	Biblioteka do programowania gier - pliki nag³ówkowe
+Summary(es.UTF-8):   Archivos de inclusiÃ³n
+Summary(pl.UTF-8):   Biblioteka do programowania gier - pliki nagÅ‚Ã³wkowe
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -87,37 +87,37 @@ and other types of multimedia programming.
 This package contains header files neccessary for compiling
 applications using allegro library.
 
-%description devel -l de
-Allegro ist eine plattformübergreifende Bibliothek zur Verwendung in
+%description devel -l de.UTF-8
+Allegro ist eine plattformÃ¼bergreifende Bibliothek zur Verwendung in
 Computerspielen und anderen Formen von Multinediaprogrammierung.
-Dieses Paket wird benötigt, um Programme zu bauen, die Allegro
+Dieses Paket wird benÃ¶tigt, um Programme zu bauen, die Allegro
 verwenden.
 
-%description devel -l es
-Allegro es una librería multi-plataforma creada para ser usada en la
-programación de juegos u otro tipo de programación multimedia. Este
+%description devel -l es.UTF-8
+Allegro es una librerÃ­a multi-plataforma creada para ser usada en la
+programaciÃ³n de juegos u otro tipo de programaciÃ³n multimedia. Este
 paquete es necesario para compilar los programas que usen Allegro.
 
-%description devel -l fr
-Allegro est une librairie multi-plateforme destinée à être utilisée
-dans les jeux vidéo ou d'autres types de programmation multimédia. Ce
-package est nécessaire pour compiler les programmes utilisant Allegro.
+%description devel -l fr.UTF-8
+Allegro est une librairie multi-plateforme destinÃ©e Ã  Ãªtre utilisÃ©e
+dans les jeux vidÃ©o ou d'autres types de programmation multimÃ©dia. Ce
+package est nÃ©cessaire pour compiler les programmes utilisant Allegro.
 
-%description devel -l it
-Allegro è una libreria multipiattaforma dedicata all'uso nei
+%description devel -l it.UTF-8
+Allegro Ã¨ una libreria multipiattaforma dedicata all'uso nei
 videogiochi ed in altri tipi di programmazione multimediale. Questo
-pacchetto è necessario per compilare programmi scritti con Allegro.
+pacchetto Ã¨ necessario per compilare programmi scritti con Allegro.
 
-%description devel -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description devel -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera pliki nag³ówkowe niezbêdne do kompilowania
-aplikacji wykorzystuj±cych bibliotekê allegro.
+Ten pakiet zawiera pliki nagÅ‚Ã³wkowe niezbÄ™dne do kompilowania
+aplikacji wykorzystujÄ…cych bibliotekÄ™ allegro.
 
 %package static
 Summary:	A game programming library - static libraries
-Summary(pl):	Biblioteka do programowania gier - biblioteki statyczne
+Summary(pl.UTF-8):   Biblioteka do programowania gier - biblioteki statyczne
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -128,16 +128,16 @@ and other types of multimedia programming.
 This package contains static libraries for linking with allegro
 applications.
 
-%description static -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description static -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera biblioteki statyczne do konsolidacji z aplikacjami
-wykorzystuj±cymi allegro.
+wykorzystujÄ…cymi allegro.
 
 %package debug
 Summary:	liballd - debug version of shared allegro library
-Summary(pl):	liballd - wersja debug dzielonej biblioteki allegro
+Summary(pl.UTF-8):   liballd - wersja debug dzielonej biblioteki allegro
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -145,13 +145,13 @@ Requires:	%{name}-devel = %{version}-%{release}
 liballd - debug version of shared allegro library (contains debugging
 symbols and other information).
 
-%description debug -l pl
-liballd - wersja debug dzielonej biblioteki allegro (zawieraj±ca
+%description debug -l pl.UTF-8
+liballd - wersja debug dzielonej biblioteki allegro (zawierajÄ…ca
 symbole i inne informacje potrzebne przy odpluskwianiu).
 
 %package debug-static
 Summary:	liballd - debug version of static allegro library
-Summary(pl):	liballd - wersja debug statycznej biblioteki allegro
+Summary(pl.UTF-8):   liballd - wersja debug statycznej biblioteki allegro
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -159,38 +159,38 @@ Requires:	%{name}-devel = %{version}-%{release}
 liballd - debug version of static allegro library (contains debugging
 symbols and other information).
 
-%description debug-static -l pl
-liballd - wersja debug statycznej biblioteki allegro (zawieraj±ca
+%description debug-static -l pl.UTF-8
+liballd - wersja debug statycznej biblioteki allegro (zawierajÄ…ca
 symbole i inne informacje potrzebne przy odpluskwianiu).
 
 %package profile
 Summary:	liballp - profiling version of shared allegro library
-Summary(pl):	liballp - wersja dzielonej biblioteki allegro s³u¿±ca do profilowania
+Summary(pl.UTF-8):   liballp - wersja dzielonej biblioteki allegro sÅ‚uÅ¼Ä…ca do profilowania
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description profile
 liballp - profiling version of shared allegro library.
 
-%description profile -l pl
-liballp - wersja dzielonej biblioteki allegro s³u¿±ca do profilowania.
+%description profile -l pl.UTF-8
+liballp - wersja dzielonej biblioteki allegro sÅ‚uÅ¼Ä…ca do profilowania.
 
 %package profile-static
 Summary:	liballp - profiling version of static allegro library
-Summary(pl):	liballp - wersja statycznej biblioteki allegro s³u¿±ca do profilowania
+Summary(pl.UTF-8):   liballp - wersja statycznej biblioteki allegro sÅ‚uÅ¼Ä…ca do profilowania
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description profile-static
 liballp - profiling version of static allegro library.
 
-%description profile-static -l pl
-liballp - wersja statycznej biblioteki allegro s³u¿±ca do
+%description profile-static -l pl.UTF-8
+liballp - wersja statycznej biblioteki allegro sÅ‚uÅ¼Ä…ca do
 profilowania.
 
 %package svgalib
 Summary:	A game programming library - svgalib module
-Summary(pl):	Biblioteka do programowania gier - modu³ dla svgalib
+Summary(pl.UTF-8):   Biblioteka do programowania gier - moduÅ‚ dla svgalib
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -200,15 +200,15 @@ and other types of multimedia programming.
 
 This package contains module for use with allegro and svgalib.
 
-%description svgalib -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description svgalib -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera modu³ do wykorzystania allegro z svgalibem.
+Ten pakiet zawiera moduÅ‚ do wykorzystania allegro z svgalibem.
 
 %package dga2
 Summary:	A game programming library - DGA2 module
-Summary(pl):	Biblioteka do programowania gier - modu³ dla DGA2
+Summary(pl.UTF-8):   Biblioteka do programowania gier - moduÅ‚ dla DGA2
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -218,15 +218,15 @@ and other types of multimedia programming.
 
 This package contains module for use with DGA.
 
-%description dga2 -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description dga2 -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera modu³ do wykorzystania z DGA.
+Ten pakiet zawiera moduÅ‚ do wykorzystania z DGA.
 
 %package esd
 Summary:	A game programming library - esound module
-Summary(pl):	Biblioteka do programowania gier - modu³ dla esound
+Summary(pl.UTF-8):   Biblioteka do programowania gier - moduÅ‚ dla esound
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -236,15 +236,15 @@ and other types of multimedia programming.
 
 This package contains a esound module for use with ESound daemon.
 
-%description esd -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description esd -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera modu³ do wykorzystania z demonem ESound.
+Ten pakiet zawiera moduÅ‚ do wykorzystania z demonem ESound.
 
 %package arts
 Summary:	A game programming library - aRts module
-Summary(pl):	Biblioteka do programowania gier - modu³ dla aRts
+Summary(pl.UTF-8):   Biblioteka do programowania gier - moduÅ‚ dla aRts
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -254,15 +254,15 @@ and other types of multimedia programming.
 
 This package contains a esound module for use with aRts.
 
-%description arts -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description arts -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera modu³ do wykorzystania z aRts.
+Ten pakiet zawiera moduÅ‚ do wykorzystania z aRts.
 
 %package fbcon
 Summary:	A game programming library - framebuffer module
-Summary(pl):	Biblioteka do programowania gier - modu³ dla framebuffera
+Summary(pl.UTF-8):   Biblioteka do programowania gier - moduÅ‚ dla framebuffera
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -272,15 +272,15 @@ and other types of multimedia programming.
 
 This package contains a esound module for use with framebuffer.
 
-%description fbcon -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description fbcon -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera modu³ do wykorzystania z framebufferem.
+Ten pakiet zawiera moduÅ‚ do wykorzystania z framebufferem.
 
 %package vga
 Summary:	A game programming library - vga module
-Summary(pl):	Biblioteka do programowania gier - modu³ dla vga
+Summary(pl.UTF-8):   Biblioteka do programowania gier - moduÅ‚ dla vga
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -290,15 +290,15 @@ and other types of multimedia programming.
 
 This package contains a esound module for use with vga.
 
-%description vga -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description vga -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera modu³ do wykorzystania z vga.
+Ten pakiet zawiera moduÅ‚ do wykorzystania z vga.
 
 %package alsa
 Summary:	A game programming library - ALSA modules
-Summary(pl):	Biblioteka do programowania gier - modu³y dla ALSA
+Summary(pl.UTF-8):   Biblioteka do programowania gier - moduÅ‚y dla ALSA
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	allegro-alsa9
@@ -309,16 +309,16 @@ and other types of multimedia programming.
 
 This package contains modules for use with ALSA sound library.
 
-%description alsa -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description alsa -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera modu³y do wykorzystania z bibliotek± d¼wiêkow±
+Ten pakiet zawiera moduÅ‚y do wykorzystania z bibliotekÄ… dÅºwiÄ™kowÄ…
 ALSA.
 
 %package jack
 Summary:	A game programming library - JACK module
-Summary(pl):	Biblioteka do programowania gier - modu³ dla JACK-a
+Summary(pl.UTF-8):   Biblioteka do programowania gier - moduÅ‚ dla JACK-a
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -328,19 +328,19 @@ and other types of multimedia programming.
 
 This package contains module for use with JACK sound library.
 
-%description jack -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description jack -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera modu³ do wykorzystania z bibliotek± d¼wiêkow± JACK.
+Ten pakiet zawiera moduÅ‚ do wykorzystania z bibliotekÄ… dÅºwiÄ™kowÄ… JACK.
 
 %package tools
 Summary:	A game programming library - tools
-Summary(de):	Zusätzliche Hilfprogramme für die Allegro Bibliothek
-Summary(es):	Herramientas adicionales para la librería de programación Allegro
-Summary(fr):	Outils supplémentaires pour la librairie de programmation Allegro
-Summary(it):	Programmi di utilità aggiuntivi per la libreria Allegro
-Summary(pl):	Biblioteka do programowania gier - narzêdzia
+Summary(de.UTF-8):   ZusÃ¤tzliche Hilfprogramme fÃ¼r die Allegro Bibliothek
+Summary(es.UTF-8):   Herramientas adicionales para la librerÃ­a de programaciÃ³n Allegro
+Summary(fr.UTF-8):   Outils supplÃ©mentaires pour la librairie de programmation Allegro
+Summary(it.UTF-8):   Programmi di utilitÃ  aggiuntivi per la libreria Allegro
+Summary(pl.UTF-8):   Biblioteka do programowania gier - narzÄ™dzia
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -350,51 +350,51 @@ and other types of multimedia programming.
 
 This package contains tools.
 
-%description tools -l de
-Allegro ist eine plattformübergreifende Bibliothek zur Verwendung in
+%description tools -l de.UTF-8
+Allegro ist eine plattformÃ¼bergreifende Bibliothek zur Verwendung in
 Computerspielen und anderen Formen von Multinediaprogrammierung.
-Dieses Paket enthält Programme, die für die Entwicklung von Allegro
+Dieses Paket enthÃ¤lt Programme, die fÃ¼r die Entwicklung von Allegro
 Programmen hilfreich sind.
 
-%description tools -l es
-Allegro es una librería multi-plataforma creada para ser usada en la
-programación de juegos u otro tipo de programación multimedia. Este
-paquete contiene herramientas adicionales que son útiles para
+%description tools -l es.UTF-8
+Allegro es una librerÃ­a multi-plataforma creada para ser usada en la
+programaciÃ³n de juegos u otro tipo de programaciÃ³n multimedia. Este
+paquete contiene herramientas adicionales que son Ãºtiles para
 desarrollar programas que usen Allegro.
 
-%description tools -l fr
-Allegro est une librairie multi-plateforme destinée à être utilisée
-dans les jeux vidéo ou d'autres types de programmation multimédia. Ce
-package contient des outils supplémentaires qui sont utiles pour le
-développement de programmes avec Allegro.
+%description tools -l fr.UTF-8
+Allegro est une librairie multi-plateforme destinÃ©e Ã  Ãªtre utilisÃ©e
+dans les jeux vidÃ©o ou d'autres types de programmation multimÃ©dia. Ce
+package contient des outils supplÃ©mentaires qui sont utiles pour le
+dÃ©veloppement de programmes avec Allegro.
 
-%description tools -l it
-Allegro è una libreria multipiattaforma dedicata all'uso nei
+%description tools -l it.UTF-8
+Allegro Ã¨ una libreria multipiattaforma dedicata all'uso nei
 videogiochi ed in altri tipi di programmazione multimediale. Questo
-pacchetto contiene programmi di utilità aggiuntivi utili allo sviluppo
+pacchetto contiene programmi di utilitÃ  aggiuntivi utili allo sviluppo
 di programmi con Allegro.
 
-%description tools -l pl
-Allegro jest przeno¶n± bibliotek± przeznaczon± do wykorzystania w
+%description tools -l pl.UTF-8
+Allegro jest przenoÅ›nÄ… bibliotekÄ… przeznaczonÄ… do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
-Ten pakiet zawiera narzêdzia.
+Ten pakiet zawiera narzÄ™dzia.
 
 %package tests
 Summary:	A game programming library - test programs
-Summary(pl):	Biblioteka do programowania gier - programy testuj±ce
+Summary(pl.UTF-8):   Biblioteka do programowania gier - programy testujÄ…ce
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description tests
 This package contains programs for testing allegro library.
 
-%description tests -l pl
-Pakiet zawiera programy testuj±ce bibliotekê allegro.
+%description tests -l pl.UTF-8
+Pakiet zawiera programy testujÄ…ce bibliotekÄ™ allegro.
 
 %package examples
 Summary:	A game programming library - examples
-Summary(pl):	Biblioteka do programowania gier - programy przyk³adowe
+Summary(pl.UTF-8):   Biblioteka do programowania gier - programy przykÅ‚adowe
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -402,8 +402,8 @@ Requires:	%{name} = %{version}-%{release}
 This package contains example programs which demonstrate allegro
 features.
 
-%description examples -l pl
-Pakiet zawiera programy przyk³adowe demonstruj±ce mo¿liwo¶ci
+%description examples -l pl.UTF-8
+Pakiet zawiera programy przykÅ‚adowe demonstrujÄ…ce moÅ¼liwoÅ›ci
 biblioteki allegro.
 
 %prep

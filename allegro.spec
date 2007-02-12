@@ -16,11 +16,11 @@
 %bcond_without	vga	# without vga module
 #
 Summary:	A game programming library
-Summary(de.UTF-8):   Eine Bibliothek zur Programmierung von Spielen
-Summary(es.UTF-8):   Una biblioteca de programación de juegos
-Summary(fr.UTF-8):   Une librairie de programmation de jeux
-Summary(it.UTF-8):   Una libreria per la programmazione di videogiochi
-Summary(pl.UTF-8):   Biblioteka do programowania gier
+Summary(de.UTF-8):	Eine Bibliothek zur Programmierung von Spielen
+Summary(es.UTF-8):	Una biblioteca de programación de juegos
+Summary(fr.UTF-8):	Une librairie de programmation de jeux
+Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
+Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro
 Version:	4.2.1
 Release:	1
@@ -75,8 +75,8 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 %package devel
 Summary:	A game programming library - header files
-Summary(es.UTF-8):   Archivos de inclusión
-Summary(pl.UTF-8):   Biblioteka do programowania gier - pliki nagłówkowe
+Summary(es.UTF-8):	Archivos de inclusión
+Summary(pl.UTF-8):	Biblioteka do programowania gier - pliki nagłówkowe
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -117,7 +117,7 @@ aplikacji wykorzystujących bibliotekę allegro.
 
 %package static
 Summary:	A game programming library - static libraries
-Summary(pl.UTF-8):   Biblioteka do programowania gier - biblioteki statyczne
+Summary(pl.UTF-8):	Biblioteka do programowania gier - biblioteki statyczne
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -137,7 +137,7 @@ wykorzystującymi allegro.
 
 %package debug
 Summary:	liballd - debug version of shared allegro library
-Summary(pl.UTF-8):   liballd - wersja debug dzielonej biblioteki allegro
+Summary(pl.UTF-8):	liballd - wersja debug dzielonej biblioteki allegro
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -151,7 +151,7 @@ symbole i inne informacje potrzebne przy odpluskwianiu).
 
 %package debug-static
 Summary:	liballd - debug version of static allegro library
-Summary(pl.UTF-8):   liballd - wersja debug statycznej biblioteki allegro
+Summary(pl.UTF-8):	liballd - wersja debug statycznej biblioteki allegro
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -165,7 +165,7 @@ symbole i inne informacje potrzebne przy odpluskwianiu).
 
 %package profile
 Summary:	liballp - profiling version of shared allegro library
-Summary(pl.UTF-8):   liballp - wersja dzielonej biblioteki allegro służąca do profilowania
+Summary(pl.UTF-8):	liballp - wersja dzielonej biblioteki allegro służąca do profilowania
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -177,7 +177,7 @@ liballp - wersja dzielonej biblioteki allegro służąca do profilowania.
 
 %package profile-static
 Summary:	liballp - profiling version of static allegro library
-Summary(pl.UTF-8):   liballp - wersja statycznej biblioteki allegro służąca do profilowania
+Summary(pl.UTF-8):	liballp - wersja statycznej biblioteki allegro służąca do profilowania
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -190,7 +190,7 @@ profilowania.
 
 %package svgalib
 Summary:	A game programming library - svgalib module
-Summary(pl.UTF-8):   Biblioteka do programowania gier - moduł dla svgalib
+Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla svgalib
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -208,7 +208,7 @@ Ten pakiet zawiera moduł do wykorzystania allegro z svgalibem.
 
 %package dga2
 Summary:	A game programming library - DGA2 module
-Summary(pl.UTF-8):   Biblioteka do programowania gier - moduł dla DGA2
+Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla DGA2
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -226,7 +226,7 @@ Ten pakiet zawiera moduł do wykorzystania z DGA.
 
 %package esd
 Summary:	A game programming library - esound module
-Summary(pl.UTF-8):   Biblioteka do programowania gier - moduł dla esound
+Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla esound
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -244,7 +244,7 @@ Ten pakiet zawiera moduł do wykorzystania z demonem ESound.
 
 %package arts
 Summary:	A game programming library - aRts module
-Summary(pl.UTF-8):   Biblioteka do programowania gier - moduł dla aRts
+Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla aRts
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -262,7 +262,7 @@ Ten pakiet zawiera moduł do wykorzystania z aRts.
 
 %package fbcon
 Summary:	A game programming library - framebuffer module
-Summary(pl.UTF-8):   Biblioteka do programowania gier - moduł dla framebuffera
+Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla framebuffera
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -280,7 +280,7 @@ Ten pakiet zawiera moduł do wykorzystania z framebufferem.
 
 %package vga
 Summary:	A game programming library - vga module
-Summary(pl.UTF-8):   Biblioteka do programowania gier - moduł dla vga
+Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla vga
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -298,7 +298,7 @@ Ten pakiet zawiera moduł do wykorzystania z vga.
 
 %package alsa
 Summary:	A game programming library - ALSA modules
-Summary(pl.UTF-8):   Biblioteka do programowania gier - moduły dla ALSA
+Summary(pl.UTF-8):	Biblioteka do programowania gier - moduły dla ALSA
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	allegro-alsa9
@@ -318,7 +318,7 @@ ALSA.
 
 %package jack
 Summary:	A game programming library - JACK module
-Summary(pl.UTF-8):   Biblioteka do programowania gier - moduł dla JACK-a
+Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla JACK-a
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -336,11 +336,11 @@ Ten pakiet zawiera moduł do wykorzystania z biblioteką dźwiękową JACK.
 
 %package tools
 Summary:	A game programming library - tools
-Summary(de.UTF-8):   Zusätzliche Hilfprogramme für die Allegro Bibliothek
-Summary(es.UTF-8):   Herramientas adicionales para la librería de programación Allegro
-Summary(fr.UTF-8):   Outils supplémentaires pour la librairie de programmation Allegro
-Summary(it.UTF-8):   Programmi di utilità aggiuntivi per la libreria Allegro
-Summary(pl.UTF-8):   Biblioteka do programowania gier - narzędzia
+Summary(de.UTF-8):	Zusätzliche Hilfprogramme für die Allegro Bibliothek
+Summary(es.UTF-8):	Herramientas adicionales para la librería de programación Allegro
+Summary(fr.UTF-8):	Outils supplémentaires pour la librairie de programmation Allegro
+Summary(it.UTF-8):	Programmi di utilità aggiuntivi per la libreria Allegro
+Summary(pl.UTF-8):	Biblioteka do programowania gier - narzędzia
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -382,7 +382,7 @@ Ten pakiet zawiera narzędzia.
 
 %package tests
 Summary:	A game programming library - test programs
-Summary(pl.UTF-8):   Biblioteka do programowania gier - programy testujące
+Summary(pl.UTF-8):	Biblioteka do programowania gier - programy testujące
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -394,7 +394,7 @@ Pakiet zawiera programy testujące bibliotekę allegro.
 
 %package examples
 Summary:	A game programming library - examples
-Summary(pl.UTF-8):   Biblioteka do programowania gier - programy przykładowe
+Summary(pl.UTF-8):	Biblioteka do programowania gier - programy przykładowe
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 

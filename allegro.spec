@@ -46,6 +46,12 @@ BuildRequires:	pkgconfig
 %endif
 %{?with_svga:BuildRequires:	svgalib-devel}
 BuildRequires:	texinfo
+BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXcursor-devel
+BuildRequires:	xorg-lib-libXext-devel
+BuildRequires:	xorg-lib-libXpm-devel
+BuildRequires:	xorg-lib-libXxf86dga-devel
+BuildRequires:	xorg-lib-libXxf86vm-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -119,6 +125,11 @@ Summary:	A game programming library - static libraries
 Summary(pl.UTF-8):	Biblioteka do programowania gier - biblioteki statyczne
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Requires:	xorg-lib-libX11-devel
+Requires:	xorg-lib-libXcursor-devel
+Requires:	xorg-lib-libXext-devel
+Requires:	xorg-lib-libXpm-devel
+Requires:	xorg-lib-libXxf86vm-devel
 
 %description static
 Allegro is a cross-platform library intended for use in computer games

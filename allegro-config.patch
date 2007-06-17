@@ -1,23 +1,8 @@
---- allegro-4.2.0/misc/allegro-config.in.orig	2006-04-16 21:20:38.000000000 +0200
-+++ allegro-4.2.0/misc/allegro-config.in	2006-04-16 21:38:38.000000000 +0200
-@@ -13,6 +13,7 @@
- 
- prefix=@prefix@
- exec_prefix=$prefix
-+libdir=@libdir@
- exec_prefix_set=no
- include_prefix=@INCLUDE_PREFIX@
- 
-@@ -178,11 +179,15 @@
- fi
- 
+--- allegro-4.3.1/misc/allegro-config.in~	2007-06-17 02:44:32.000000000 +0200
++++ allegro-4.3.1/misc/allegro-config.in	2007-06-17 02:45:48.000000000 +0200
+@@ -183,9 +183,9 @@
  if test "$echo_libs" = "yes"; then
--   libdirs=-L${exec_prefix}/lib
-+   if test "$exec_prefix" = "/usr"; then
-+      libdirs=
-+   else
-+      libdirs="-L${libdir}"
-+   fi
+    libdirs=-L${lib_path}
     if test "$static_libs" = "yes"; then
 -      echo $libdirs $allegro_ldflags -l${lib_type} $allegro_libs
 +      echo $libdirs$allegro_ldflags -l${lib_type} $allegro_libs

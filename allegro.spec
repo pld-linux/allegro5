@@ -22,12 +22,12 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.3.0
+Version:	4.3.1
 Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	0746b948ecd63cab806026cf3b452e20
+# Source0-md5:	672fbeffb6a5d42600f2ba32b864fe73
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -670,3 +670,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/exupdate
 %attr(755,root,root) %{_bindir}/exxfade
 %attr(755,root,root) %{_bindir}/exzbuf
+%attr(755,root,root) %{_bindir}/exnew_events

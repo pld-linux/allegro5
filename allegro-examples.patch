@@ -1,26 +1,22 @@
---- allegro-4.0.2/makefile.in.orig	Fri Jul  5 17:48:43 2002
-+++ allegro-4.0.2/makefile.in	Fri Jul  5 17:52:29 2002
-@@ -392,8 +392,9 @@
+--- allegro-4.1.17/makefile.in.orig	2004-12-02 02:02:14.000000000 +0100
++++ allegro-4.1.17/makefile.in	2005-01-16 22:24:04.277495544 +0100
+@@ -527,7 +527,7 @@
+ 	  $(INSTALL_DATA) $$file $(DESTDIR)$(includedir)/allegro/platform/; \
+ 	done
  
- install-programs: programs
- 	$(mkinstalldirs) $(bindir)
--	@for prog in $(ALLEGRO_LIB_EXES) $(ALLEGRO_DATAFILE_EXES); do \
--	  if test "X`echo $$prog | sed -e s,tools/.\*,,`" = X; then \
-+	@for prog in $(ALLEGRO_LIB_EXES) $(ALLEGRO_DATAFILE_EXES) \
-+	  $(ALLEGRO_EXAMPLE_EXES) ; do \
-+	  if test "X`echo $$prog | sed -e s,.*/.\*,,`" = X; then \
- 	    echo Installing $$prog to $(bindir); \
- 	    $(INSTALL_PROGRAM) $$prog $(bindir); \
- 	  fi; \
-@@ -465,9 +466,10 @@
+-INSTALL_EXES = $(filter tools/%, $(ALLEGRO_LIB_EXES) $(ALLEGRO_DATAFILE_EXES))
++INSTALL_EXES = $(filter tools/% demo/% setup/% tests/% examples/%, $(ALLEGRO_EXE_TARGETS))
+ 
+ install-programs: $(INSTALL_EXES)
+ 	$(mkinstalldirs) $(DESTDIR)$(bindir)
+@@ -618,9 +618,9 @@
  	rm -rf $(includedir)/allegro
  
  uninstall-programs:
 -	@for prog in $(ALLEGRO_LIB_EXES) $(ALLEGRO_DATAFILE_EXES); do \
 -	  if test "X`echo $$prog | sed -e s,tools/.\*,,`" = X; then \
 -	    p=`echo $$prog | sed -e s,tools/,,`; \
-+	@for prog in $(ALLEGRO_LIB_EXES) $(ALLEGRO_DATAFILE_EXES) \
-+	  $(ALLEGRO_EXAMPLE_EXES) ; do \
++	@for prog in $(ALLEGRO_EXE_TARGETS); do \
 +	  if test "X`echo $$prog | sed -e s,.*/.\*,,`" = X; then \
 +	    p=`echo $$prog | sed -e s,,,`; \
  	    echo rm -f $(bindir)/$$p; \

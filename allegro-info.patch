@@ -1,15 +1,11 @@
-Don't use tabs, they are expanded at wrong moment
---- allegro-4.1.12/docs/src/allegro._tx~	Fri Nov 23 07:03:08 2001
-+++ allegro-4.1.12/docs/src/allegro._tx	Fri Nov 23 07:03:08 2001
-@@ -31,9 +31,9 @@
+--- allegro-4.9.2/docs/src/allegro._tx~	2008-03-24 20:21:49.962436955 +0100
++++ allegro-4.9.2/docs/src/allegro._tx	2008-03-24 20:22:11.686808839 +0100
+@@ -31,7 +31,7 @@
  @# This should remain commented at the moment (dvi output) @$@finalout
  @$
  @$@ifinfo
 -@$@dircategory Libraries
 +@$@dircategory Libraries:
  @$@direntry
--@$* Allegro: (allegro).			The Allegro game programming library.
-+@$* Allegro: (allegro).                   The Allegro game programming library
+ @$* Allegro: (allegro).			The Allegro game programming library.
  @$@end direntry
- @$This is the Info version of the Allegro manual
- @$

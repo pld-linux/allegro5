@@ -1,6 +1,6 @@
---- aa/allegro-4.1.15/configure.in	2004-04-27 13:53:02.000000000 +0200
-+++ allegro-4.1.15/configure.in	2004-05-23 21:18:36.478313632 +0200
-@@ -720,38 +720,7 @@
+--- allegro-4.9.2/configure.in~	2008-03-25 13:41:52.555649102 +0100
++++ allegro-4.9.2/configure.in	2008-03-25 13:45:51.993762276 +0100
+@@ -815,38 +815,7 @@
  
  dnl How to compile C and asm files.
  if test -n "$GCC"; then
@@ -40,7 +40,7 @@
    ALLEGRO_DEBUG_CFLAGS="$CFLAGS -g $WFLAGS -DDEBUGMODE"
    if test "X$allegro_debug_with_fortify" = "Xyes"; then
       ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DFORTIFY"
-@@ -759,12 +728,8 @@
+@@ -854,12 +823,8 @@
    if test "X$allegro_debug_with_dmalloc" = "Xyes"; then
       ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DDMALLOC"
    fi

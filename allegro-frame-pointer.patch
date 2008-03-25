@@ -1,16 +1,15 @@
-diff -urN aa/allegro-4.1.14/configure.in allegro-4.1.14/configure.in
---- aa/allegro-4.1.14/configure.in	2004-05-23 21:23:07.930046696 +0200
-+++ allegro-4.1.14/configure.in	2004-05-23 21:21:51.225707528 +0200
-@@ -271,7 +271,7 @@
-   COMPILE_PROGRAM=COMPILE_PROFILE
-   COMPILE_CXX_PROGRAM=COMPILE_CXX_PROFILE
-   COMPILE_S_PROGRAM=COMPILE_S_PROFILE
--  PROG_LDFLAGS="-pg \$(LDFLAGS)"
+--- allegro-4.9.2/configure.in~	2008-03-25 13:48:59.559395652 +0100
++++ allegro-4.9.2/configure.in	2008-03-25 13:58:36.726987554 +0100
+@@ -275,7 +275,7 @@
+   COMPILE_PROGRAM=COMPILE_DEBUG
+   COMPILE_CXX_PROGRAM=COMPILE_CXX_DEBUG
+   COMPILE_S_PROGRAM=COMPILE_S_DEBUG
+-  PROG_LDFLAGS="-g \$(LDFLAGS)"
 +  PROG_LDFLAGS="-fno-omit-frame-pointer -pg \$(LDFLAGS)"
-   LIB_TO_LINK=allp
-   PLUGIN_LIB=lib/unix/libapdat.a
-   allegro_build_profiling_library=yes
-@@ -730,7 +730,7 @@
+   LIB_TO_LINK=alld
+   PLUGIN_LIB=lib/unix/libaddat.a
+   allegro_build_debugging_library=yes
+@@ -824,7 +824,7 @@
       ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DDMALLOC"
    fi
    CFLAGS="$CFLAGS $TARGET_ARCH"

@@ -1,13 +1,13 @@
---- allegro-4.3.1/misc/allegro-config.in~	2007-06-17 02:44:32.000000000 +0200
-+++ allegro-4.3.1/misc/allegro-config.in	2007-06-17 02:45:48.000000000 +0200
-@@ -183,9 +183,9 @@
+--- allegro-4.9.2/misc/allegro5-config.in~	2008-03-25 13:59:19.972388263 +0100
++++ allegro-4.9.2/misc/allegro5-config.in	2008-03-25 14:00:44.783109368 +0100
+@@ -185,9 +185,9 @@
  if test "$echo_libs" = "yes"; then
-    libdirs=-L${lib_path}
+    libdirs=-L$lib_path
     if test "$static_libs" = "yes"; then
--      echo $libdirs $allegro_ldflags -l${lib_type} $allegro_libs
+-      echo $libdirs $allegro_ldflags -l$lib_type $allegro_libs
 +      echo $libdirs$allegro_ldflags -l${lib_type} $allegro_libs
     else
--      echo $libdirs $allegro_ldflags -l${lib_type}-${version} -l${lib_type}_unsharable
+-      echo $libdirs $allegro_ldflags -l$lib_type-$version
 +      echo $libdirs$allegro_ldflags -l${lib_type}-${version} -l${lib_type}_unsharable
     fi
  fi

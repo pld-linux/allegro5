@@ -22,12 +22,12 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.3.1
-Release:	1
+Version:	4.9.2
+Release:	0.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	672fbeffb6a5d42600f2ba32b864fe73
+# Source0-md5:	814124183e117e21e0a97ca4222bbbc8
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -427,7 +427,7 @@ biblioteki allegro.
 
 %build
 %{__aclocal}
-%{__autoheader} configure.in > include/allegro/platform/alunixac.hin
+#%%{__autoheader} configure.in > include/allegro5/platform/alunixac.hin
 %{__autoconf}
 #TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here

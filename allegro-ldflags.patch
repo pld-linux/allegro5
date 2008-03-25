@@ -1,7 +1,6 @@
-diff -ruN allegro-4.1.11./misc/allegro-config.in allegro-4.1.11/misc/allegro-config.in
---- allegro-4.1.11./misc/allegro-config.in	2003-06-30 01:27:31.000000000 +0200
-+++ allegro-4.1.11/misc/allegro-config.in	2003-08-25 00:50:30.000000000 +0200
-@@ -21,7 +21,7 @@
+--- allegro-4.9.2/misc/allegro5-config.in~	2008-01-18 23:45:23.000000000 +0100
++++ allegro-4.9.2/misc/allegro5-config.in	2008-03-25 13:48:06.266847963 +0100
+@@ -26,7 +26,7 @@
  
  accepts_frameworks=no
  

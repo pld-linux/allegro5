@@ -1,5 +1,6 @@
 #
 # TODO: Handle situations when there are no modules (most bconds turned off)
+# TODO: Check and fix headers paths in sources
 #
 # Conditional build:
 %bcond_without	alsa	# without ALSA modules
@@ -22,18 +23,19 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.9.2
+Version:	4.9.3
 Release:	0.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	814124183e117e21e0a97ca4222bbbc8
+# Source0-md5:	f532bd5b64d52a99ed8d03a03c46e6d0
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
 Patch3:		%{name}-ldflags.patch
 Patch4:		%{name}-frame-pointer.patch
 Patch5:		%{name}-config.patch
+Patch6:		%{name}-headers.patch
 URL:		http://alleg.sourceforge.net/
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 %{?with_arts:BuildRequires:	artsc-devel}
@@ -44,6 +46,7 @@ BuildRequires:	automake
 BuildRequires:	jack-audio-connection-kit-devel
 BuildRequires:	pkgconfig
 %endif
+BuildRequires:	sed >= 4.0
 %{?with_svga:BuildRequires:	svgalib-devel}
 BuildRequires:	texinfo
 BuildRequires:	xorg-lib-libX11-devel
@@ -424,6 +427,10 @@ biblioteki allegro.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+
+#find include/allegro5 -name '*.h' -print0 | xargs -0 %{__sed} -i -e 's@allegro5/@%{_headers_dir}/include/allegro5@'
+#%%{__sed} -i -e 's@allegro5/@../@' include/allegro5/internal/alconfig.h
 
 %build
 %{__aclocal}

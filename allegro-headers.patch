@@ -1,0 +1,11 @@
+--- allegro-4.9.3/makefile.in~	2008-05-09 21:10:49.143252185 +0200
++++ allegro-4.9.3/makefile.in	2008-05-09 21:11:29.581852047 +0200
+@@ -56,7 +56,7 @@
+ CONFIGURE_IN = configure.in
+ ACLOCAL_M4 = aclocal.m4
+ 
+-INCLUDES = -I. -Iinclude -Iinclude/allegro -I$(srcdir)/include -I$(srcdir)/include/allegro
++INCLUDES = -I. -Iinclude -Iinclude/allegro5 -I$(srcdir)/include -I$(srcdir)/include/allegro5
+ DEFS = -DALLEGRO_MODULES_PATH=\"$(libdir)/allegro\" @DEFS@
+ CPPFLAGS = @CPPFLAGS@
+ override LDFLAGS += @LDFLAGS@

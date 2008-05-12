@@ -1,5 +1,5 @@
---- allegro-4.9.2/misc/allegro5-config.in~	2008-01-18 23:45:23.000000000 +0100
-+++ allegro-4.9.2/misc/allegro5-config.in	2008-03-25 13:48:06.266847963 +0100
+--- allegro-4.9.3/misc/allegro5-config.in~	2008-05-12 13:14:13.419520397 +0200
++++ allegro-4.9.3/misc/allegro5-config.in	2008-05-12 13:14:49.567915163 +0200
 @@ -26,7 +26,7 @@
  
  accepts_frameworks=no

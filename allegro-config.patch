@@ -1,5 +1,5 @@
---- allegro-4.9.2/misc/allegro5-config.in~	2008-03-25 13:59:19.972388263 +0100
-+++ allegro-4.9.2/misc/allegro5-config.in	2008-03-25 14:00:44.783109368 +0100
+--- allegro-4.9.3/misc/allegro5-config.in~	2008-05-12 13:17:40.502753489 +0200
++++ allegro-4.9.3/misc/allegro5-config.in	2008-05-12 13:18:32.301896453 +0200
 @@ -185,9 +185,9 @@
  if test "$echo_libs" = "yes"; then
     libdirs=-L$lib_path

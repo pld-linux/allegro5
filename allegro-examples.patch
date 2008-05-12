@@ -1,6 +1,6 @@
 --- allegro-4.9.2/makefile.in~	2008-03-25 13:37:50.960766155 +0100
 +++ allegro-4.9.2/makefile.in	2008-03-25 13:40:51.949418447 +0100
-@@ -536,7 +536,7 @@
+@@ -539,7 +536,7 @@
  	  $(INSTALL_DATA) $$file $(DESTDIR)$(includedir)/allegro5/platform/; \
  	done
  
@@ -9,7 +9,7 @@
  
  install-programs: $(INSTALL_EXES)
  	$(mkinstalldirs) $(DESTDIR)$(bindir)
-@@ -624,9 +624,9 @@
+@@ -627,9 +627,9 @@
  	rm -rf $(includedir)/allegro5
  
  uninstall-programs:

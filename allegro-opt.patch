@@ -1,5 +1,5 @@
---- allegro-4.9.2/configure.in~	2008-03-25 13:41:52.555649102 +0100
-+++ allegro-4.9.2/configure.in	2008-03-25 13:45:51.993762276 +0100
+--- allegro-4.9.3/configure.in~	2008-05-12 13:00:38.307993655 +0200
++++ allegro-4.9.3/configure.in	2008-05-12 13:13:44.638144481 +0200
 @@ -815,38 +815,7 @@
  
  dnl How to compile C and asm files.

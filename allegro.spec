@@ -460,7 +460,8 @@ biblioteki allegro.
 mkdir Build
 cd Build
 %cmake .. \
-	-DCMAKE_INSTALL_PREFIX="%{_prefix}"
+	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
+	%{?with_static:-DSHARED="off"} \
 
 %{__make}
 #%%{__make} \

@@ -504,11 +504,11 @@ rm -rf $RPM_BUILD_ROOT
 #%%dir %{_libdir}/allegro/%{version}
 #%%{_libdir}/allegro/%{version}/modules.lst
 
-#%%files devel
-#%%defattr(644,root,root,755)
+%files devel
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/allegro5-config
 #%%{_libdir}/liballeg_unsharable.a
-#%%{_includedir}/*
+%{_includedir}/*
 #%%{_aclocaldir}/allegro.m4
 #%%{_mandir}/man3/*
 #%%{_infodir}/*.info*

@@ -36,7 +36,7 @@ Patch4:		%{name}-frame-pointer.patch
 Patch5:		%{name}-config.patch
 Patch6:		%{name}-headers.patch
 URL:		http://alleg.sourceforge.net/
-#%%{?with_alsa:BuildRequires:	alsa-lib-devel}
+%{?with_alsa:BuildRequires:	alsa-lib-devel}
 #%%{?with_arts:BuildRequires:	artsc-devel}
 BuildRequires:	cmake >= 2.6
 #%%{?with_esd:BuildRequires:	esound-devel}
@@ -47,12 +47,12 @@ BuildRequires:	cmake >= 2.6
 #BuildRequires:	sed >= 4.0
 #%%{?with_svga:BuildRequires:	svgalib-devel}
 #BuildRequires:	texinfo
-#BuildRequires:	xorg-lib-libX11-devel
-#BuildRequires:	xorg-lib-libXcursor-devel
-#BuildRequires:	xorg-lib-libXext-devel
-#BuildRequires:	xorg-lib-libXpm-devel
+BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXcursor-devel
+BuildRequires:	xorg-lib-libXext-devel
+BuildRequires:	xorg-lib-libXpm-devel
 #BuildRequires:	xorg-lib-libXxf86dga-devel
-#BuildRequires:	xorg-lib-libXxf86vm-devel
+BuildRequires:	xorg-lib-libXxf86vm-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description

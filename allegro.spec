@@ -434,12 +434,8 @@ biblioteki allegro.
 #TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
 #%%configure \
-#%	%{?with_static:--enable-static} \
 #%	%{?with_dbglib:--enable-dbglib} \
 #%	%{?with_proflib:--enable-proflib} \
-#%%if !%{with alsa}
-#	--disable-alsadigi \
-#	--disable-alsamidi \
 #%%endif
 #%	%{!?with_arts:--disable-artsdigi} \
 #%	%{!?with_dga2:--disable-xwin-dga2} \
@@ -462,6 +458,7 @@ cd Build
 %cmake .. \
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	%{?with_static:-DSHARED="off"} \
+	%{!?with_alsa:-DWANT_ALSA="off"}
 
 %{__make}
 #%%{__make} \

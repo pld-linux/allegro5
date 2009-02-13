@@ -459,7 +459,8 @@ biblioteki allegro.
 #%%endif
 mkdir Build
 cd Build
-%cmake ..
+%cmake .. \
+	-DCMAKE_INSTALL_PREFIX="%{_prefix}"
 
 %{__make}
 #%%{__make} \
@@ -505,7 +506,7 @@ rm -rf $RPM_BUILD_ROOT
 
 #%%files devel
 #%%defattr(644,root,root,755)
-#%%attr(755,root,root) %{_bindir}/allegro-config
+%attr(755,root,root) %{_bindir}/allegro5-config
 #%%{_libdir}/liballeg_unsharable.a
 #%%{_includedir}/*
 #%%{_aclocaldir}/allegro.m4

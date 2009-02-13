@@ -498,7 +498,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-#%%doc AUTHORS CHANGES THANKS readme.txt
+%doc CHANGES-4.9.txt docs/html/refman readme_a5.txt
 #%%attr(755,root,root) %{_libdir}/liballeg-%{version}.so
 #%%dir %{_libdir}/allegro
 #%%dir %{_libdir}/allegro/%{version}

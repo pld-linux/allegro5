@@ -1,6 +1,5 @@
 #
 # TODO: Handle situations when there are no modules (most bconds turned off)
-# TODO: Check and fix headers paths in sources
 #
 # Conditional build:
 %bcond_without	alsa	# without ALSA modules
@@ -23,12 +22,12 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.9.3
+Version:	4.9.8
 Release:	0.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	f532bd5b64d52a99ed8d03a03c46e6d0
+# Source0-md5:	98c4102dc5f5195576d9817d8ea00811
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -37,24 +36,23 @@ Patch4:		%{name}-frame-pointer.patch
 Patch5:		%{name}-config.patch
 Patch6:		%{name}-headers.patch
 URL:		http://alleg.sourceforge.net/
-%{?with_alsa:BuildRequires:	alsa-lib-devel}
-%{?with_arts:BuildRequires:	artsc-devel}
-BuildRequires:	autoconf >= 2.53
-BuildRequires:	automake
-%{?with_esd:BuildRequires:	esound-devel}
-%if %{with jack}
-BuildRequires:	jack-audio-connection-kit-devel
-BuildRequires:	pkgconfig
-%endif
-BuildRequires:	sed >= 4.0
-%{?with_svga:BuildRequires:	svgalib-devel}
-BuildRequires:	texinfo
-BuildRequires:	xorg-lib-libX11-devel
-BuildRequires:	xorg-lib-libXcursor-devel
-BuildRequires:	xorg-lib-libXext-devel
-BuildRequires:	xorg-lib-libXpm-devel
-BuildRequires:	xorg-lib-libXxf86dga-devel
-BuildRequires:	xorg-lib-libXxf86vm-devel
+#%%{?with_alsa:BuildRequires:	alsa-lib-devel}
+#%%{?with_arts:BuildRequires:	artsc-devel}
+BuildRequires:	cmake >= 2.6
+#%%{?with_esd:BuildRequires:	esound-devel}
+#%%if %{with jack}
+#BuildRequires:	jack-audio-connection-kit-devel
+#BuildRequires:	pkgconfig
+#%%endif
+#BuildRequires:	sed >= 4.0
+#%%{?with_svga:BuildRequires:	svgalib-devel}
+#BuildRequires:	texinfo
+#BuildRequires:	xorg-lib-libX11-devel
+#BuildRequires:	xorg-lib-libXcursor-devel
+#BuildRequires:	xorg-lib-libXext-devel
+#BuildRequires:	xorg-lib-libXpm-devel
+#BuildRequires:	xorg-lib-libXxf86dga-devel
+#BuildRequires:	xorg-lib-libXxf86vm-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -421,260 +419,263 @@ biblioteki allegro.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+#%%patch0 -p1
+#%%patch1 -p1
+#%%patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+#%%patch4 -p1
+#%%patch5 -p1
+#%%patch6 -p1
 
 #find include/allegro5 -name '*.h' -print0 | xargs -0 %{__sed} -i -e 's@allegro5/@%{_headers_dir}/include/allegro5@'
 #%%{__sed} -i -e 's@allegro5/@../@' include/allegro5/internal/alconfig.h
 
 %build
-%{__aclocal}
-#%%{__autoheader} configure.in > include/allegro5/platform/alunixac.hin
-%{__autoconf}
 #TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
 # dbglib & proflib are compiled besides normlib, so it's ok to have them here
-%configure \
-	%{?with_static:--enable-static} \
-	%{?with_dbglib:--enable-dbglib} \
-	%{?with_proflib:--enable-proflib} \
-%if !%{with alsa}
-	--disable-alsadigi \
-	--disable-alsamidi \
-%endif
-	%{!?with_arts:--disable-artsdigi} \
-	%{!?with_dga2:--disable-xwin-dga2} \
-	%{!?with_esd:--disable-esddigi} \
-	%{!?with_fbcon:--disable-fbcon} \
-	%{!?with_jack:--disable-jackdigi} \
-	%{!?with_svga:--disable-svgalib} \
-	%{!?with_vga:--disable-vga} \
-%if !%{with sse}
-	--disable-sse \
-	--disable-asm \
-%endif
-%ifnarch %{ix86}
-	--disable-asm \
-	--disable-mmx \
-	--disable-sse
-%endif
+#%%configure \
+#%	%{?with_static:--enable-static} \
+#%	%{?with_dbglib:--enable-dbglib} \
+#%	%{?with_proflib:--enable-proflib} \
+#%%if !%{with alsa}
+#	--disable-alsadigi \
+#	--disable-alsamidi \
+#%%endif
+#%	%{!?with_arts:--disable-artsdigi} \
+#%	%{!?with_dga2:--disable-xwin-dga2} \
+#%	%{!?with_esd:--disable-esddigi} \
+#%	%{!?with_fbcon:--disable-fbcon} \
+#%	%{!?with_jack:--disable-jackdigi} \
+#%	%{!?with_svga:--disable-svgalib} \
+#%	%{!?with_vga:--disable-vga} \
+#%%if !%{with sse}
+#	--disable-sse \
+#	--disable-asm \
+#%%endif
+#%%ifnarch %{ix86}
+#	--disable-asm \
+#	--disable-mmx \
+#	--disable-sse
+#%%endif
+mkdir Build
+cd Build
+%cmake ..
 
-%{__make} \
-	MAKEINFO=makeinfo
+%{__make}
+#%%{__make} \
+#	MAKEINFO=makeinfo
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install install-man install-info install-lib \
+#%%{__make} install install-man install-info install-lib \
+#	DESTDIR=$RPM_BUILD_ROOT
+%{__make} install -C Build \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/%{version}
+#install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/%{version}
 
-mv $RPM_BUILD_ROOT%{_bindir}/demo{,-allegro}
-mv $RPM_BUILD_ROOT%{_bindir}/play{,-allegro}
+#mv $RPM_BUILD_ROOT%{_bindir}/demo{,-allegro}
+#mv $RPM_BUILD_ROOT%{_bindir}/play{,-allegro}
 #mv $RPM_BUILD_ROOT%{_bindir}/setup{,-allegro}
-mv $RPM_BUILD_ROOT%{_bindir}/test{,-allegro}
+#mv $RPM_BUILD_ROOT%{_bindir}/test{,-allegro}
 
 # help rpm to find reqs for ELF objects
-chmod 755 $RPM_BUILD_ROOT%{_libdir}/{*.so,allegro/*/*.so}
+#chmod 755 $RPM_BUILD_ROOT%{_libdir}/{*.so,allegro/*/*.so}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+#%%post	-p /sbin/ldconfig
+#%%postun	-p /sbin/ldconfig
 
-%post devel	-p	/sbin/postshell
--/usr/sbin/fix-info-dir -c %{_infodir}
+#%%post devel	-p	/sbin/postshell
+#-/usr/sbin/fix-info-dir -c %{_infodir}
 
-%postun devel	-p	/sbin/postshell
--/usr/sbin/fix-info-dir -c %{_infodir}
+#%%postun devel	-p	/sbin/postshell
+#-/usr/sbin/fix-info-dir -c %{_infodir}
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CHANGES THANKS readme.txt
-%attr(755,root,root) %{_libdir}/liballeg-%{version}.so
-%dir %{_libdir}/allegro
-%dir %{_libdir}/allegro/%{version}
-%{_libdir}/allegro/%{version}/modules.lst
+#%%doc AUTHORS CHANGES THANKS readme.txt
+#%%attr(755,root,root) %{_libdir}/liballeg-%{version}.so
+#%%dir %{_libdir}/allegro
+#%%dir %{_libdir}/allegro/%{version}
+#%%{_libdir}/allegro/%{version}/modules.lst
 
-%files devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/allegro-config
-%{_libdir}/liballeg_unsharable.a
-%{_includedir}/*
-%{_aclocaldir}/allegro.m4
-%{_mandir}/man3/*
-%{_infodir}/*.info*
+#%%files devel
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_bindir}/allegro-config
+#%%{_libdir}/liballeg_unsharable.a
+#%%{_includedir}/*
+#%%{_aclocaldir}/allegro.m4
+#%%{_mandir}/man3/*
+#%%{_infodir}/*.info*
 
-%if %{with static}
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/liballeg.a
-%endif
+#%%if %{with static}
+#%%files static
+#%%defattr(644,root,root,755)
+#%%{_libdir}/liballeg.a
+#%%endif
 
-%if %{with dbglib}
-%files debug
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liballd-%{version}.so
-%{_libdir}/liballd_unsharable.a
+#%%if %{with dbglib}
+#%%files debug
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_libdir}/liballd-%{version}.so
+#%%{_libdir}/liballd_unsharable.a
 
-%if %{with static}
-%files debug-static
-%defattr(644,root,root,755)
-%{_libdir}/liballd.a
-%endif
-%endif
+#%%if %{with static}
+#%%files debug-static
+#%%defattr(644,root,root,755)
+#%%{_libdir}/liballd.a
+#%%endif
+#%%endif
 
-%if %{with proflib}
-%files profile
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liballp-%{version}.so
-%{_libdir}/liballp_unsharable.a
+#%%if %{with proflib}
+#%%files profile
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_libdir}/liballp-%{version}.so
+#%%{_libdir}/liballp_unsharable.a
 
-%if %{with static}
-%files profile-static
-%defattr(644,root,root,755)
-%{_libdir}/liballp.a
-%endif
-%endif
+#%%if %{with static}
+#%%files profile-static
+#%%defattr(644,root,root,755)
+#%%{_libdir}/liballp.a
+#%%endif
+#%%endif
 
-%if %{with svga}
-%files svgalib
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-svgalib.so
-%endif
+#%%if %{with svga}
+#%%files svgalib
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-svgalib.so
+#%%endif
 
-%if %{with dga2}
-%files dga2
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-dga2.so
-%endif
+#%%if %{with dga2}
+#%%files dga2
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-dga2.so
+#%%endif
 
-%if %{with esd}
-%files esd
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-esddigi.so
-%endif
+#%%if %{with esd}
+#%%files esd
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-esddigi.so
+#%%endif
 
-%if %{with arts}
-%files arts
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-artsdigi.so
-%endif
+#%%if %{with arts}
+#%%files arts
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-artsdigi.so
+#%%endif
 
-%if %{with fbcon}
-%files fbcon
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-fbcon.so
-%endif
+#%%if %{with fbcon}
+#%%files fbcon
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-fbcon.so
+#%%endif
 
-%ifarch %{ix86}
-%if %{with vga}
-%files vga
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-vga.so
-%endif
-%endif
+#%%ifarch %{ix86}
+#%%if %{with vga}
+#%%files vga
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-vga.so
+#%%endif
+#%%endif
 
-%if %{with alsa}
-%files alsa
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-alsadigi.so
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-alsamidi.so
-%endif
+#%%if %{with alsa}
+#%%files alsa
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-alsadigi.so
+#%%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-alsamidi.so
+#%%endif
 
-%if %{with jack}
-%files jack
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-jackdigi.so
-%endif
+#%%if %{with jack}
+#%%files jack
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-jackdigi.so
+#%%endif
 
-%files tools
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/colormap
-%attr(755,root,root) %{_bindir}/exedat
-%attr(755,root,root) %{_bindir}/pack
-%attr(755,root,root) %{_bindir}/rgbmap
-%attr(755,root,root) %{_bindir}/textconv
+#%%files tools
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_bindir}/colormap
+#%%attr(755,root,root) %{_bindir}/exedat
+#%%attr(755,root,root) %{_bindir}/pack
+#%%attr(755,root,root) %{_bindir}/rgbmap
+#%%attr(755,root,root) %{_bindir}/textconv
 #%attr(755,root,root) %{_bindir}/xkeymap
-%attr(755,root,root) %{_bindir}/xf2pcx
-%attr(755,root,root) %{_bindir}/dat
-%attr(755,root,root) %{_bindir}/dat2c
-%attr(755,root,root) %{_bindir}/dat2s
-%attr(755,root,root) %{_bindir}/grabber
-%attr(755,root,root) %{_bindir}/pat2dat
+#%%attr(755,root,root) %{_bindir}/xf2pcx
+#%%attr(755,root,root) %{_bindir}/dat
+#%%attr(755,root,root) %{_bindir}/dat2c
+#%%attr(755,root,root) %{_bindir}/dat2s
+#%%attr(755,root,root) %{_bindir}/grabber
+#%%attr(755,root,root) %{_bindir}/pat2dat
 #%attr(755,root,root) %{_bindir}/setup-allegro
 
-%files tests
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/afinfo
-%attr(755,root,root) %{_bindir}/akaitest
-%attr(755,root,root) %{_bindir}/cpptest
-%attr(755,root,root) %{_bindir}/demo-allegro
-%attr(755,root,root) %{_bindir}/digitest
-%attr(755,root,root) %{_bindir}/filetest
-%attr(755,root,root) %{_bindir}/gfxinfo
-%attr(755,root,root) %{_bindir}/mathtest
-%attr(755,root,root) %{_bindir}/miditest
-%attr(755,root,root) %{_bindir}/play-allegro
-%attr(755,root,root) %{_bindir}/playfli
-%attr(755,root,root) %{_bindir}/test-allegro
-%attr(755,root,root) %{_bindir}/vesainfo
+#%%files tests
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_bindir}/afinfo
+#%%attr(755,root,root) %{_bindir}/akaitest
+#%%attr(755,root,root) %{_bindir}/cpptest
+#%%attr(755,root,root) %{_bindir}/demo-allegro
+#%%attr(755,root,root) %{_bindir}/digitest
+#%%attr(755,root,root) %{_bindir}/filetest
+#%%attr(755,root,root) %{_bindir}/gfxinfo
+#%%attr(755,root,root) %{_bindir}/mathtest
+#%%attr(755,root,root) %{_bindir}/miditest
+#%%attr(755,root,root) %{_bindir}/play-allegro
+#%%attr(755,root,root) %{_bindir}/playfli
+#%%attr(755,root,root) %{_bindir}/test-allegro
+#%%attr(755,root,root) %{_bindir}/vesainfo
 
-%files examples
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/ex12bit
-%attr(755,root,root) %{_bindir}/ex3buf
-%attr(755,root,root) %{_bindir}/ex3d
-%attr(755,root,root) %{_bindir}/exaccel
-%attr(755,root,root) %{_bindir}/exalpha
-%attr(755,root,root) %{_bindir}/exbitmap
-%attr(755,root,root) %{_bindir}/exblend
-%attr(755,root,root) %{_bindir}/excamera
-%attr(755,root,root) %{_bindir}/excolmap
-%attr(755,root,root) %{_bindir}/exconfig
-%attr(755,root,root) %{_bindir}/excustom
-%attr(755,root,root) %{_bindir}/exdata
-%attr(755,root,root) %{_bindir}/exdbuf
-%attr(755,root,root) %{_bindir}/exexedat
-%attr(755,root,root) %{_bindir}/exfixed
-%attr(755,root,root) %{_bindir}/exflame
-%attr(755,root,root) %{_bindir}/exflip
-%attr(755,root,root) %{_bindir}/exfont
-%attr(755,root,root) %{_bindir}/exgui
-%attr(755,root,root) %{_bindir}/exhello
-%attr(755,root,root) %{_bindir}/exjoy
-%attr(755,root,root) %{_bindir}/exkeys
-%attr(755,root,root) %{_bindir}/exlights
-%attr(755,root,root) %{_bindir}/exmem
-%attr(755,root,root) %{_bindir}/exmidi
-%attr(755,root,root) %{_bindir}/exmouse
-%attr(755,root,root) %{_bindir}/expackf
-%attr(755,root,root) %{_bindir}/expal
-%attr(755,root,root) %{_bindir}/expat
-%attr(755,root,root) %{_bindir}/exquat
-%attr(755,root,root) %{_bindir}/exrgbhsv
-%attr(755,root,root) %{_bindir}/exsample
-%attr(755,root,root) %{_bindir}/exsyscur
-%attr(755,root,root) %{_bindir}/exscale
-%attr(755,root,root) %{_bindir}/exscn3d
-%attr(755,root,root) %{_bindir}/exscroll
-%attr(755,root,root) %{_bindir}/exshade
-%attr(755,root,root) %{_bindir}/exspline
-%attr(755,root,root) %{_bindir}/exsprite
-%attr(755,root,root) %{_bindir}/exstars
-%attr(755,root,root) %{_bindir}/exstream
-%attr(755,root,root) %{_bindir}/exswitch
-%attr(755,root,root) %{_bindir}/extimer
-%attr(755,root,root) %{_bindir}/extrans
-%attr(755,root,root) %{_bindir}/extruec
-%attr(755,root,root) %{_bindir}/exunicod
-%attr(755,root,root) %{_bindir}/exupdate
-%attr(755,root,root) %{_bindir}/exxfade
-%attr(755,root,root) %{_bindir}/exzbuf
-%attr(755,root,root) %{_bindir}/exnew_events
+#%%files examples
+#%%defattr(644,root,root,755)
+#%%attr(755,root,root) %{_bindir}/ex12bit
+#%%attr(755,root,root) %{_bindir}/ex3buf
+#%%attr(755,root,root) %{_bindir}/ex3d
+#%%attr(755,root,root) %{_bindir}/exaccel
+#%%attr(755,root,root) %{_bindir}/exalpha
+#%%attr(755,root,root) %{_bindir}/exbitmap
+#%%attr(755,root,root) %{_bindir}/exblend
+#%%attr(755,root,root) %{_bindir}/excamera
+#%%attr(755,root,root) %{_bindir}/excolmap
+#%%attr(755,root,root) %{_bindir}/exconfig
+#%%attr(755,root,root) %{_bindir}/excustom
+#%%attr(755,root,root) %{_bindir}/exdata
+#%%attr(755,root,root) %{_bindir}/exdbuf
+#%%attr(755,root,root) %{_bindir}/exexedat
+#%%attr(755,root,root) %{_bindir}/exfixed
+#%%attr(755,root,root) %{_bindir}/exflame
+#%%attr(755,root,root) %{_bindir}/exflip
+#%%attr(755,root,root) %{_bindir}/exfont
+#%%attr(755,root,root) %{_bindir}/exgui
+#%%attr(755,root,root) %{_bindir}/exhello
+#%%attr(755,root,root) %{_bindir}/exjoy
+#%%attr(755,root,root) %{_bindir}/exkeys
+#%%attr(755,root,root) %{_bindir}/exlights
+#%%attr(755,root,root) %{_bindir}/exmem
+#%%attr(755,root,root) %{_bindir}/exmidi
+#%%attr(755,root,root) %{_bindir}/exmouse
+#%%attr(755,root,root) %{_bindir}/expackf
+#%%attr(755,root,root) %{_bindir}/expal
+#%%attr(755,root,root) %{_bindir}/expat
+#%%attr(755,root,root) %{_bindir}/exquat
+#%%attr(755,root,root) %{_bindir}/exrgbhsv
+#%%attr(755,root,root) %{_bindir}/exsample
+#%%attr(755,root,root) %{_bindir}/exsyscur
+#%%attr(755,root,root) %{_bindir}/exscale
+#%%attr(755,root,root) %{_bindir}/exscn3d
+#%%attr(755,root,root) %{_bindir}/exscroll
+#%%attr(755,root,root) %{_bindir}/exshade
+#%%attr(755,root,root) %{_bindir}/exspline
+#%%attr(755,root,root) %{_bindir}/exsprite
+#%%attr(755,root,root) %{_bindir}/exstars
+#%%attr(755,root,root) %{_bindir}/exstream
+#%%attr(755,root,root) %{_bindir}/exswitch
+#%%attr(755,root,root) %{_bindir}/extimer
+#%%attr(755,root,root) %{_bindir}/extrans
+#%%attr(755,root,root) %{_bindir}/extruec
+#%%attr(755,root,root) %{_bindir}/exunicod
+#%%attr(755,root,root) %{_bindir}/exupdate
+#%%attr(755,root,root) %{_bindir}/exxfade
+#%%attr(755,root,root) %{_bindir}/exzbuf
+#%%attr(755,root,root) %{_bindir}/exnew_events

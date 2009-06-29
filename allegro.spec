@@ -1,5 +1,6 @@
 #
-# TODO: Handle situations when there are no modules (most bconds turned off)
+# TODO: - Handle situations when there are no modules (most bconds turned off)
+#	- make bconds work again or remove
 #
 # Conditional build:
 %bcond_without	alsa	# without ALSA modules
@@ -22,12 +23,12 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.9.10.1
+Version:	4.9.11
 Release:	0.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	adcf259bd7d4438444f160b3bcbb65b4
+# Source0-md5:	7cb8575e84d3be02a417871b9f4cedcb
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch

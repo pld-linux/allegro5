@@ -4,17 +4,17 @@
 #
 # Conditional build:
 %bcond_without	alsa	# without ALSA modules
-%bcond_without	arts	# without aRts module
-%bcond_without	dga2	# without DGA2 module
-%bcond_without	dbglib	# don't build debug versions of library
-%bcond_without	esd	# without esound module
-%bcond_without	fbcon	# without framebuffer module
-%bcond_without	jack	# without JACK module
-%bcond_without	proflib	# don't debug profiling versions of library
-%bcond_without	sse	# build without sse
+#%%bcond_without	arts	# without aRts module
+#%%bcond_without	dga2	# without DGA2 module
+#%%bcond_without	dbglib	# don't build debug versions of library
+#%%bcond_without	esd	# without esound module
+#%%bcond_without	fbcon	# without framebuffer module
+#%%bcond_without	jack	# without JACK module
+#%%bcond_without	proflib	# don't debug profiling versions of library
+#%%bcond_without	sse	# build without sse
 %bcond_without	static	# don't build static versions of library
-%bcond_without	svga	# without svgalib module
-%bcond_without	vga	# without vga module
+#%%bcond_without	svga	# without svgalib module
+#%%bcond_without	vga	# without vga module
 #
 Summary:	A game programming library
 Summary(de.UTF-8):	Eine Bibliothek zur Programmierung von Spielen
@@ -23,12 +23,12 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.9.12
+Version:	4.9.13
 Release:	0.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	7b750417c4c498adb70e63ffadd0b18f
+# Source0-md5:	92c7aabac119abb5d1d566597e07607c
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch

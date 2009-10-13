@@ -23,25 +23,27 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.9.14
+Version:	4.9.15.1
 Release:	0.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	1a577fbcf4753f59049e434442c5089f
+# Source0-md5:	7c99f879bb68705e823533e0d6c9682e
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
-Patch3:		%{name}-ldflags.patch
-Patch4:		%{name}-frame-pointer.patch
-Patch5:		%{name}-config.patch
+Patch3:		%{name}-frame-pointer.patch
+Patch4:		%{name}-config.patch
 URL:		http://alleg.sourceforge.net/
+BuildRequires:	OpenGL-GLU-devel
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 #%%{?with_arts:BuildRequires:	artsc-devel}
 BuildRequires:	cmake >= 2.6
+BuildRequires:	curl-devel
 #%%{?with_esd:BuildRequires:	esound-devel}
 #%%if %{with jack}
 #BuildRequires:	jack-audio-connection-kit-devel
+BuildRequires:	physfs-devel
 #BuildRequires:	pkgconfig
 #%%endif
 #BuildRequires:	sed >= 4.0
@@ -422,9 +424,8 @@ biblioteki allegro.
 #%%patch0 -p1
 #%%patch1 -p1
 #%%patch2 -p1
-%patch3 -p1
+#%%patch3 -p1
 #%%patch4 -p1
-#%%patch5 -p1
 
 #find include/allegro5 -name '*.h' -print0 | xargs -0 %{__sed} -i -e 's@allegro5/@%{_headers_dir}/include/allegro5@'
 #%%{__sed} -i -e 's@allegro5/@../@' include/allegro5/internal/alconfig.h
@@ -503,7 +504,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/allegro5-config
+#%%attr(755,root,root) %{_bindir}/allegro5-config
 #%%{_libdir}/liballeg_unsharable.a
 %{_includedir}/*
 #%%{_aclocaldir}/allegro.m4

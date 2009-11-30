@@ -27,7 +27,7 @@ Version:	4.9.16
 Release:	0.1
 License:	Giftware
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/alleg/%{name}-%{version}.tar.gz
 # Source0-md5:	c51796f4035cf9707a3d708f7d9608b4
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch

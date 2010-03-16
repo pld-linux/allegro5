@@ -362,6 +362,17 @@ mv $RPM_BUILD_ROOT%{_bindir}/test{,-allegro}
 %{_mandir}/man3/*
 %{_infodir}/*.info*
 %{_pkgconfigdir}/allegro.pc
+%{_pkgconfigdir}/allegrogl.pc
+%{_pkgconfigdir}/jpgalleg.pc
+%{_pkgconfigdir}/loadpng.pc
+%{_pkgconfigdir}/logg.pc
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/liballeggl.a
+%{_libdir}/libjpgalleg.a
+%{_libdir}/libloadpng.a
+%{_libdir}/liblogg.a
 
 %if %{with svga}
 %files svgalib

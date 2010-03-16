@@ -1,17 +1,13 @@
 #
-# TODO: Handle situations when there are no modules (most bconds turned off)
+# TODO: - check (and update if required) allegro-frame-pointer.patch
+#	- force install man pages (sometimes it just doesn't work)
+#	- check allegro-vga and allegro-svga packages if they should contains any files
+#	- unpackaged files
 #
 # Conditional build:
 %bcond_without	alsa	# without ALSA modules
-%bcond_without	arts	# without aRts module
 %bcond_without	dga2	# without DGA2 module
-%bcond_without	dbglib	# don't build debug versions of library
-%bcond_without	esd	# without esound module
-%bcond_without	fbcon	# without framebuffer module
 %bcond_without	jack	# without JACK module
-%bcond_without	proflib	# don't debug profiling versions of library
-%bcond_without	sse	# build without sse
-%bcond_without	static	# don't build static versions of library
 %bcond_without	svga	# without svgalib module
 %bcond_without	vga	# without vga module
 #
@@ -22,28 +18,18 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.3.1
-Release:	1
+Version:	4.4.1.1
+Release:	0.1
 License:	Giftware
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	672fbeffb6a5d42600f2ba32b864fe73
+Source0:	http://downloads.sourceforge.net/alleg/%{name}-%{version}.tar.gz
+# Source0-md5:	0f1cfff8f2cf88e5c91a667d9fd386ec
 Patch0:		%{name}-info.patch
-Patch1:		%{name}-examples.patch
-Patch2:		%{name}-opt.patch
-Patch3:		%{name}-ldflags.patch
-Patch4:		%{name}-frame-pointer.patch
-Patch5:		%{name}-config.patch
+#Patch1: %{name}-frame-pointer.patch
+Patch2:		%{name}-config.patch
 URL:		http://alleg.sourceforge.net/
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
-%{?with_arts:BuildRequires:	artsc-devel}
-BuildRequires:	autoconf >= 2.53
-BuildRequires:	automake
-%{?with_esd:BuildRequires:	esound-devel}
-%if %{with jack}
-BuildRequires:	jack-audio-connection-kit-devel
-BuildRequires:	pkgconfig
-%endif
+BuildRequires:	cmake >= 2.6
 %{?with_svga:BuildRequires:	svgalib-devel}
 BuildRequires:	texinfo
 BuildRequires:	xorg-lib-libX11-devel
@@ -145,59 +131,6 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 Ten pakiet zawiera biblioteki statyczne do konsolidacji z aplikacjami
 wykorzystującymi allegro.
 
-%package debug
-Summary:	liballd - debug version of shared allegro library
-Summary(pl.UTF-8):	liballd - wersja debug dzielonej biblioteki allegro
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description debug
-liballd - debug version of shared allegro library (contains debugging
-symbols and other information).
-
-%description debug -l pl.UTF-8
-liballd - wersja debug dzielonej biblioteki allegro (zawierająca
-symbole i inne informacje potrzebne przy odpluskwianiu).
-
-%package debug-static
-Summary:	liballd - debug version of static allegro library
-Summary(pl.UTF-8):	liballd - wersja debug statycznej biblioteki allegro
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description debug-static
-liballd - debug version of static allegro library (contains debugging
-symbols and other information).
-
-%description debug-static -l pl.UTF-8
-liballd - wersja debug statycznej biblioteki allegro (zawierająca
-symbole i inne informacje potrzebne przy odpluskwianiu).
-
-%package profile
-Summary:	liballp - profiling version of shared allegro library
-Summary(pl.UTF-8):	liballp - wersja dzielonej biblioteki allegro służąca do profilowania
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description profile
-liballp - profiling version of shared allegro library.
-
-%description profile -l pl.UTF-8
-liballp - wersja dzielonej biblioteki allegro służąca do profilowania.
-
-%package profile-static
-Summary:	liballp - profiling version of static allegro library
-Summary(pl.UTF-8):	liballp - wersja statycznej biblioteki allegro służąca do profilowania
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description profile-static
-liballp - profiling version of static allegro library.
-
-%description profile-static -l pl.UTF-8
-liballp - wersja statycznej biblioteki allegro służąca do
-profilowania.
-
 %package svgalib
 Summary:	A game programming library - svgalib module
 Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla svgalib
@@ -233,60 +166,6 @@ Allegro jest przenośną biblioteką przeznaczoną do wykorzystania w
 grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera moduł do wykorzystania z DGA.
-
-%package esd
-Summary:	A game programming library - esound module
-Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla esound
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description esd
-Allegro is a cross-platform library intended for use in computer games
-and other types of multimedia programming.
-
-This package contains a esound module for use with ESound daemon.
-
-%description esd -l pl.UTF-8
-Allegro jest przenośną biblioteką przeznaczoną do wykorzystania w
-grach komputerowych i innych rodzajach oprogramowania multimedialnego.
-
-Ten pakiet zawiera moduł do wykorzystania z demonem ESound.
-
-%package arts
-Summary:	A game programming library - aRts module
-Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla aRts
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description arts
-Allegro is a cross-platform library intended for use in computer games
-and other types of multimedia programming.
-
-This package contains a esound module for use with aRts.
-
-%description arts -l pl.UTF-8
-Allegro jest przenośną biblioteką przeznaczoną do wykorzystania w
-grach komputerowych i innych rodzajach oprogramowania multimedialnego.
-
-Ten pakiet zawiera moduł do wykorzystania z aRts.
-
-%package fbcon
-Summary:	A game programming library - framebuffer module
-Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla framebuffera
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description fbcon
-Allegro is a cross-platform library intended for use in computer games
-and other types of multimedia programming.
-
-This package contains a esound module for use with framebuffer.
-
-%description fbcon -l pl.UTF-8
-Allegro jest przenośną biblioteką przeznaczoną do wykorzystania w
-grach komputerowych i innych rodzajach oprogramowania multimedialnego.
-
-Ten pakiet zawiera moduł do wykorzystania z framebufferem.
 
 %package vga
 Summary:	A game programming library - vga module
@@ -419,65 +298,41 @@ biblioteki allegro.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#%%patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
-%{__aclocal}
-%{__autoheader} configure.in > include/allegro/platform/alunixac.hin
-%{__autoconf}
-#TARGET_ARCH="%{rpmcflags}" export TARGET_ARCH
-# dbglib & proflib are compiled besides normlib, so it's ok to have them here
-%configure \
-	%{?with_static:--enable-static} \
-	%{?with_dbglib:--enable-dbglib} \
-	%{?with_proflib:--enable-proflib} \
-%if !%{with alsa}
-	--disable-alsadigi \
-	--disable-alsamidi \
-%endif
-	%{!?with_arts:--disable-artsdigi} \
-	%{!?with_dga2:--disable-xwin-dga2} \
-	%{!?with_esd:--disable-esddigi} \
-	%{!?with_fbcon:--disable-fbcon} \
-	%{!?with_jack:--disable-jackdigi} \
-	%{!?with_svga:--disable-svgalib} \
-	%{!?with_vga:--disable-vga} \
-%if !%{with sse}
-	--disable-sse \
-	--disable-asm \
-%endif
-%ifnarch %{ix86}
-	--disable-asm \
-	--disable-mmx \
-	--disable-sse
+install -d build
+cd build
+%cmake .. \
+	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
+	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
+	-DMANDIR=%{_mandir} \
+	-DINFODIR=%{_infodir} \
+	%{!?with_vga:-DWANT_LINUX_VGA=off} \
+	%{!?with_svga:-DWANT_LINUX_SVGALIB=off} \
+%if "%{_lib}" == "lib64"
+	-DLIB_SUFFIX=64
 %endif
 
-%{__make} \
-	MAKEINFO=makeinfo
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install install-man install-info install-lib \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/%{version}
 
-mv $RPM_BUILD_ROOT%{_bindir}/demo{,-allegro}
+# install examples and tests
+find build/examples -perm 755 -maxdepth 1 -name "ex*" -exec install {} $RPM_BUILD_ROOT%{_bindir} \;
+find build/tests -perm 755 -maxdepth 1 ! -name CMakeFiles -exec install {} $RPM_BUILD_ROOT%{_bindir} \;
+
 mv $RPM_BUILD_ROOT%{_bindir}/play{,-allegro}
-#mv $RPM_BUILD_ROOT%{_bindir}/setup{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/test{,-allegro}
 
-# help rpm to find reqs for ELF objects
-chmod 755 $RPM_BUILD_ROOT%{_libdir}/{*.so,allegro/*/*.so}
-
 %clean
-rm -rf $RPM_BUILD_ROOT
-
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
@@ -489,102 +344,51 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CHANGES THANKS readme.txt
-%attr(755,root,root) %{_libdir}/liballeg-%{version}.so
+%doc AUTHORS CHANGES THANKS readme.txt todo.txt
+%attr(755,root,root) %{_libdir}/liballeg.so.*.*.*
+%attr(755,root,root) %{_libdir}/liballeg.so
 %dir %{_libdir}/allegro
-%dir %{_libdir}/allegro/%{version}
-%{_libdir}/allegro/%{version}/modules.lst
+%dir %{_libdir}/allegro/4.4.1
+%{_libdir}/allegro/4.4.1/modules.lst
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/allegro-config
-%{_libdir}/liballeg_unsharable.a
 %{_includedir}/*
-%{_aclocaldir}/allegro.m4
-%{_mandir}/man3/*
+#%%{_mandir}/man3/*
 %{_infodir}/*.info*
-
-%if %{with static}
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/liballeg.a
-%endif
-
-%if %{with dbglib}
-%files debug
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liballd-%{version}.so
-%{_libdir}/liballd_unsharable.a
-
-%if %{with static}
-%files debug-static
-%defattr(644,root,root,755)
-%{_libdir}/liballd.a
-%endif
-%endif
-
-%if %{with proflib}
-%files profile
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liballp-%{version}.so
-%{_libdir}/liballp_unsharable.a
-
-%if %{with static}
-%files profile-static
-%defattr(644,root,root,755)
-%{_libdir}/liballp.a
-%endif
-%endif
 
 %if %{with svga}
 %files svgalib
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-svgalib.so
+#%%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-svgalib.so
 %endif
 
 %if %{with dga2}
 %files dga2
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-dga2.so
-%endif
-
-%if %{with esd}
-%files esd
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-esddigi.so
-%endif
-
-%if %{with arts}
-%files arts
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-artsdigi.so
-%endif
-
-%if %{with fbcon}
-%files fbcon
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-fbcon.so
+%attr(755,root,root) %{_libdir}/allegro/4.4.1/alleg-dga2.so
 %endif
 
 %ifarch %{ix86}
 %if %{with vga}
 %files vga
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-vga.so
+#%%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-vga.so
 %endif
 %endif
 
 %if %{with alsa}
 %files alsa
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-alsadigi.so
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-alsamidi.so
+%attr(755,root,root) %{_libdir}/allegro/4.4.1/alleg-alsadigi.so
+%attr(755,root,root) %{_libdir}/allegro/4.4.1/alleg-alsamidi.so
 %endif
 
 %if %{with jack}
 %files jack
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/allegro/%{version}/alleg-jackdigi.so
+%attr(755,root,root) %{_libdir}/allegro/4.4.1/alleg-jack.so
 %endif
 
 %files tools
@@ -594,21 +398,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pack
 %attr(755,root,root) %{_bindir}/rgbmap
 %attr(755,root,root) %{_bindir}/textconv
-#%attr(755,root,root) %{_bindir}/xkeymap
-%attr(755,root,root) %{_bindir}/xf2pcx
 %attr(755,root,root) %{_bindir}/dat
 %attr(755,root,root) %{_bindir}/dat2c
 %attr(755,root,root) %{_bindir}/dat2s
 %attr(755,root,root) %{_bindir}/grabber
 %attr(755,root,root) %{_bindir}/pat2dat
-#%attr(755,root,root) %{_bindir}/setup-allegro
 
 %files tests
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/afinfo
 %attr(755,root,root) %{_bindir}/akaitest
-%attr(755,root,root) %{_bindir}/cpptest
-%attr(755,root,root) %{_bindir}/demo-allegro
 %attr(755,root,root) %{_bindir}/digitest
 %attr(755,root,root) %{_bindir}/filetest
 %attr(755,root,root) %{_bindir}/gfxinfo
@@ -652,6 +451,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/expat
 %attr(755,root,root) %{_bindir}/exquat
 %attr(755,root,root) %{_bindir}/exrgbhsv
+%attr(755,root,root) %{_bindir}/exrotscl
+%attr(755,root,root) %{_bindir}/extrans2
 %attr(755,root,root) %{_bindir}/exsample
 %attr(755,root,root) %{_bindir}/exsyscur
 %attr(755,root,root) %{_bindir}/exscale
@@ -670,4 +471,3 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/exupdate
 %attr(755,root,root) %{_bindir}/exxfade
 %attr(755,root,root) %{_bindir}/exzbuf
-%attr(755,root,root) %{_bindir}/exnew_events

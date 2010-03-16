@@ -1,6 +1,5 @@
 #
 # TODO: - check (and update if required) allegro-frame-pointer.patch
-#	- force install man pages (sometimes it just doesn't work)
 #	- check allegro-vga and allegro-svga packages if they should contains any files
 #	- unpackaged files
 #
@@ -319,6 +318,7 @@ cd build
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_mandir}/man3
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -328,6 +328,9 @@ install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/%{version}
 # install examples and tests
 find build/examples -perm 755 -maxdepth 1 -name "ex*" -exec install {} $RPM_BUILD_ROOT%{_bindir} \;
 find build/tests -perm 755 -maxdepth 1 ! -name CMakeFiles -exec install {} $RPM_BUILD_ROOT%{_bindir} \;
+
+# force install man pages
+cp build/docs/man/* $RPM_BUILD_ROOT%{_mandir}/man3
 
 mv $RPM_BUILD_ROOT%{_bindir}/play{,-allegro}
 mv $RPM_BUILD_ROOT%{_bindir}/test{,-allegro}
@@ -355,7 +358,7 @@ mv $RPM_BUILD_ROOT%{_bindir}/test{,-allegro}
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/allegro-config
 %{_includedir}/*
-#%%{_mandir}/man3/*
+%{_mandir}/man3/*
 %{_infodir}/*.info*
 
 %if %{with svga}

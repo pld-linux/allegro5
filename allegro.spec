@@ -2,6 +2,7 @@
 # TODO: - check (and update if required) allegro-frame-pointer.patch
 #	- check allegro-vga and allegro-svga packages if they should contains any files
 #	- unpackaged files
+#	- create bconds for gl, jpg, loadpng and logg
 #
 # Conditional build:
 %bcond_without	alsa	# without ALSA modules
@@ -360,6 +361,7 @@ mv $RPM_BUILD_ROOT%{_bindir}/test{,-allegro}
 %{_includedir}/*
 %{_mandir}/man3/*
 %{_infodir}/*.info*
+%{_pkgconfigdir}/allegro.pc
 
 %if %{with svga}
 %files svgalib

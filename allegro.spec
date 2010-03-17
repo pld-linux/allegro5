@@ -19,7 +19,7 @@ Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro
 Version:	4.4.1.1
-Release:	0.1
+Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/alleg/%{name}-%{version}.tar.gz

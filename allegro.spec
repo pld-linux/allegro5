@@ -28,9 +28,17 @@ Patch0:		%{name}-info.patch
 #Patch1: %{name}-frame-pointer.patch
 Patch2:		%{name}-config.patch
 URL:		http://alleg.sourceforge.net/
+BuildRequires:	OpenGL-GLU-devel
+BuildRequires:	OpenGL-devel
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 BuildRequires:	cmake >= 2.6
-%{?with_svga:BuildRequires:	svgalib-devel}
+BuildRequires:	jack-audio-connection-kit-devel
+BuildRequires:	libogg-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libstdc++-devel
+BuildRequires:	libvorbis-devel
+BuildRequires:	pkgconfig
+#%{?with_svga:BuildRequires:	svgalib-devel}
 BuildRequires:	texinfo
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXcursor-devel

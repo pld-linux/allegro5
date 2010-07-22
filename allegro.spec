@@ -456,9 +456,13 @@ biblioteki allegro.
 install -d build
 cd build
 %cmake .. \
-	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
-	%{?with_static:-DSHARED="off"} \
-	%{!?with_alsa:-DWANT_ALSA="off"}
+	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
+	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
+	-DMANDIR=%{_mandir} \
+	-DINFODIR=%{_infodir} \
+%if "%{_lib}" == "lib64"
+	-DLIB_SUFFIX=64
+%endif
 
 %{__make}
 

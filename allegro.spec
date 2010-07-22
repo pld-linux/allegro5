@@ -23,12 +23,12 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro
-Version:	4.9.16
+Version:	4.9.20
 Release:	0.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/alleg/%{name}-%{version}.tar.gz
-# Source0-md5:	c51796f4035cf9707a3d708f7d9608b4
+# Source0-md5:	3efd906549df2f3d96d6775f955f1be7
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -43,7 +43,7 @@ BuildRequires:	curl-devel
 #%%{?with_esd:BuildRequires:	esound-devel}
 #%%if %{with jack}
 #BuildRequires:	jack-audio-connection-kit-devel
-BuildRequires:	physfs-devel
+#BuildRequires:	physfs-devel
 #BuildRequires:	pkgconfig
 #%%endif
 #BuildRequires:	sed >= 4.0
@@ -453,26 +453,27 @@ biblioteki allegro.
 #	--disable-mmx \
 #	--disable-sse
 #%%endif
-mkdir Build
-cd Build
+install -d build
+cd build
 %cmake .. \
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	%{?with_static:-DSHARED="off"} \
 	%{!?with_alsa:-DWANT_ALSA="off"}
 
 %{__make}
-#%%{__make} \
-#	MAKEINFO=makeinfo
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_bindir}
 
-#%%{__make} install install-man install-info install-lib \
-#	DESTDIR=$RPM_BUILD_ROOT
-%{__make} install -C Build \
+%{__make} install -C build \
 	DESTDIR=$RPM_BUILD_ROOT
 
 #install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/%{version}
+
+# install examples and tests
+find build/examples -maxdepth 1 -perm 755 -name "ex*" -exec install {} $RPM_BUILD_ROOT%{_bindir} \;
+#find build/tests -maxdepth 1 -perm 755 ! -name CMakeFiles -exec install {} $RPM_BUILD_ROOT
 
 #mv $RPM_BUILD_ROOT%{_bindir}/demo{,-allegro}
 #mv $RPM_BUILD_ROOT%{_bindir}/play{,-allegro}
@@ -626,55 +627,85 @@ rm -rf $RPM_BUILD_ROOT
 #%%attr(755,root,root) %{_bindir}/test-allegro
 #%%attr(755,root,root) %{_bindir}/vesainfo
 
-#%%files examples
-#%%defattr(644,root,root,755)
-#%%attr(755,root,root) %{_bindir}/ex12bit
-#%%attr(755,root,root) %{_bindir}/ex3buf
-#%%attr(755,root,root) %{_bindir}/ex3d
-#%%attr(755,root,root) %{_bindir}/exaccel
-#%%attr(755,root,root) %{_bindir}/exalpha
-#%%attr(755,root,root) %{_bindir}/exbitmap
-#%%attr(755,root,root) %{_bindir}/exblend
-#%%attr(755,root,root) %{_bindir}/excamera
-#%%attr(755,root,root) %{_bindir}/excolmap
-#%%attr(755,root,root) %{_bindir}/exconfig
-#%%attr(755,root,root) %{_bindir}/excustom
-#%%attr(755,root,root) %{_bindir}/exdata
-#%%attr(755,root,root) %{_bindir}/exdbuf
-#%%attr(755,root,root) %{_bindir}/exexedat
-#%%attr(755,root,root) %{_bindir}/exfixed
-#%%attr(755,root,root) %{_bindir}/exflame
-#%%attr(755,root,root) %{_bindir}/exflip
-#%%attr(755,root,root) %{_bindir}/exfont
-#%%attr(755,root,root) %{_bindir}/exgui
-#%%attr(755,root,root) %{_bindir}/exhello
-#%%attr(755,root,root) %{_bindir}/exjoy
-#%%attr(755,root,root) %{_bindir}/exkeys
-#%%attr(755,root,root) %{_bindir}/exlights
-#%%attr(755,root,root) %{_bindir}/exmem
-#%%attr(755,root,root) %{_bindir}/exmidi
-#%%attr(755,root,root) %{_bindir}/exmouse
-#%%attr(755,root,root) %{_bindir}/expackf
-#%%attr(755,root,root) %{_bindir}/expal
-#%%attr(755,root,root) %{_bindir}/expat
-#%%attr(755,root,root) %{_bindir}/exquat
-#%%attr(755,root,root) %{_bindir}/exrgbhsv
-#%%attr(755,root,root) %{_bindir}/exsample
-#%%attr(755,root,root) %{_bindir}/exsyscur
-#%%attr(755,root,root) %{_bindir}/exscale
-#%%attr(755,root,root) %{_bindir}/exscn3d
-#%%attr(755,root,root) %{_bindir}/exscroll
-#%%attr(755,root,root) %{_bindir}/exshade
-#%%attr(755,root,root) %{_bindir}/exspline
-#%%attr(755,root,root) %{_bindir}/exsprite
-#%%attr(755,root,root) %{_bindir}/exstars
-#%%attr(755,root,root) %{_bindir}/exstream
-#%%attr(755,root,root) %{_bindir}/exswitch
-#%%attr(755,root,root) %{_bindir}/extimer
-#%%attr(755,root,root) %{_bindir}/extrans
-#%%attr(755,root,root) %{_bindir}/extruec
-#%%attr(755,root,root) %{_bindir}/exunicod
-#%%attr(755,root,root) %{_bindir}/exupdate
-#%%attr(755,root,root) %{_bindir}/exxfade
-#%%attr(755,root,root) %{_bindir}/exzbuf
-#%%attr(755,root,root) %{_bindir}/exnew_events
+%files examples
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/ex_acodec
+%attr(755,root,root) %{_bindir}/ex_acodec_multi
+%attr(755,root,root) %{_bindir}/ex_audio_props
+%attr(755,root,root) %{_bindir}/ex_audio_simple
+%attr(755,root,root) %{_bindir}/ex_bitmap
+%attr(755,root,root) %{_bindir}/ex_bitmap_flip
+%attr(755,root,root) %{_bindir}/ex_bitmap_target
+%attr(755,root,root) %{_bindir}/ex_blend
+%attr(755,root,root) %{_bindir}/ex_blend2
+%attr(755,root,root) %{_bindir}/ex_blend_bench
+%attr(755,root,root) %{_bindir}/ex_blend_test
+%attr(755,root,root) %{_bindir}/ex_blit
+%attr(755,root,root) %{_bindir}/ex_clip
+%attr(755,root,root) %{_bindir}/ex_color
+%attr(755,root,root) %{_bindir}/ex_config
+%attr(755,root,root) %{_bindir}/ex_convert
+%attr(755,root,root) %{_bindir}/ex_dir
+%attr(755,root,root) %{_bindir}/ex_disable_screensaver
+%attr(755,root,root) %{_bindir}/ex_display_options
+%attr(755,root,root) %{_bindir}/ex_draw
+%attr(755,root,root) %{_bindir}/ex_draw_bitmap
+%attr(755,root,root) %{_bindir}/ex_drawpixels
+%attr(755,root,root) %{_bindir}/ex_dualies
+%attr(755,root,root) %{_bindir}/ex_expose
+%attr(755,root,root) %{_bindir}/ex_font
+%attr(755,root,root) %{_bindir}/ex_font_justify
+%attr(755,root,root) %{_bindir}/ex_fs_resize
+%attr(755,root,root) %{_bindir}/ex_fs_window
+%attr(755,root,root) %{_bindir}/ex_get_path
+%attr(755,root,root) %{_bindir}/ex_gldepth
+%attr(755,root,root) %{_bindir}/ex_glext
+%attr(755,root,root) %{_bindir}/ex_icon
+%attr(755,root,root) %{_bindir}/ex_joystick_events
+%attr(755,root,root) %{_bindir}/ex_kcm_direct
+%attr(755,root,root) %{_bindir}/ex_keyboard_events
+%attr(755,root,root) %{_bindir}/ex_keyboard_focus
+%attr(755,root,root) %{_bindir}/ex_lines
+%attr(755,root,root) %{_bindir}/ex_lockbitmap
+%attr(755,root,root) %{_bindir}/ex_lockscreen
+%attr(755,root,root) %{_bindir}/ex_logo
+%attr(755,root,root) %{_bindir}/ex_membmp
+%attr(755,root,root) %{_bindir}/ex_memfile
+%attr(755,root,root) %{_bindir}/ex_mixer_chain
+%attr(755,root,root) %{_bindir}/ex_mixer_pp
+%attr(755,root,root) %{_bindir}/ex_monitorinfo
+%attr(755,root,root) %{_bindir}/ex_mouse
+%attr(755,root,root) %{_bindir}/ex_mouse_cursor
+%attr(755,root,root) %{_bindir}/ex_mouse_events
+%attr(755,root,root) %{_bindir}/ex_mouse_focus
+%attr(755,root,root) %{_bindir}/ex_multisample
+%attr(755,root,root) %{_bindir}/ex_multiwin
+%attr(755,root,root) %{_bindir}/ex_native_filechooser
+%attr(755,root,root) %{_bindir}/ex_noframe
+%attr(755,root,root) %{_bindir}/ex_opengl
+%attr(755,root,root) %{_bindir}/ex_opengl_pixel_shader
+%attr(755,root,root) %{_bindir}/ex_path
+%attr(755,root,root) %{_bindir}/ex_path_test
+%attr(755,root,root) %{_bindir}/ex_pixelformat
+%attr(755,root,root) %{_bindir}/ex_prim
+%attr(755,root,root) %{_bindir}/ex_resize
+%attr(755,root,root) %{_bindir}/ex_resize2
+%attr(755,root,root) %{_bindir}/ex_rotate
+%attr(755,root,root) %{_bindir}/ex_saw
+%attr(755,root,root) %{_bindir}/ex_scale
+%attr(755,root,root) %{_bindir}/ex_stream_file
+%attr(755,root,root) %{_bindir}/ex_stream_seek
+%attr(755,root,root) %{_bindir}/ex_subbitmap
+%attr(755,root,root) %{_bindir}/ex_synth
+%attr(755,root,root) %{_bindir}/ex_threads
+%attr(755,root,root) %{_bindir}/ex_threads2
+%attr(755,root,root) %{_bindir}/ex_timedwait
+%attr(755,root,root) %{_bindir}/ex_timer
+%attr(755,root,root) %{_bindir}/ex_transform
+%attr(755,root,root) %{_bindir}/ex_ttf
+%attr(755,root,root) %{_bindir}/ex_user_events
+%attr(755,root,root) %{_bindir}/ex_utf8
+%attr(755,root,root) %{_bindir}/ex_vsync
+%attr(755,root,root) %{_bindir}/ex_warp_mouse
+%attr(755,root,root) %{_bindir}/ex_windows
+%attr(755,root,root) %{_bindir}/ex_winfull

@@ -317,6 +317,7 @@ cd build
 	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 	-DMANDIR=%{_mandir} \
 	-DINFODIR=%{_infodir} \
+	-DPLATFORM_LIBS=-ldl \
 	%{!?with_vga:-DWANT_LINUX_VGA=off} \
 	%{!?with_svga:-DWANT_LINUX_SVGALIB=off} \
 %if "%{_lib}" == "lib64"
@@ -335,8 +336,8 @@ install -d $RPM_BUILD_ROOT%{_mandir}/man3
 install modules.lst $RPM_BUILD_ROOT%{_libdir}/allegro/%{version}
 
 # install examples and tests
-find build/examples -perm 755 -maxdepth 1 -name "ex*" -exec install {} $RPM_BUILD_ROOT%{_bindir} \;
-find build/tests -perm 755 -maxdepth 1 ! -name CMakeFiles -exec install {} $RPM_BUILD_ROOT%{_bindir} \;
+find build/examples -maxdepth 1 -perm 755 -name "ex*" -exec install {} $RPM_BUILD_ROOT%{_bindir} \;
+find build/tests -maxdepth 1 -perm 755 ! -name CMakeFiles -exec install {} $RPM_BUILD_ROOT%{_bindir} \;
 
 # force install man pages
 cp build/docs/man/* $RPM_BUILD_ROOT%{_mandir}/man3

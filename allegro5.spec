@@ -23,12 +23,12 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
-Version:	4.9.20
+Version:	4.9.21
 Release:	0.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}.tar.gz
-# Source0-md5:	3efd906549df2f3d96d6775f955f1be7
+# Source0-md5:	82cc21ee26ffc2b88f5bfcbbb17a8f0c
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -55,6 +55,7 @@ BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXpm-devel
 #BuildRequires:	xorg-lib-libXxf86dga-devel
 BuildRequires:	xorg-lib-libXxf86vm-devel
+Obsoletes:	allegro
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -87,6 +88,7 @@ Summary(es.UTF-8):	Archivos de inclusión
 Summary(pl.UTF-8):	Biblioteka do programowania gier - pliki nagłówkowe
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-devel
 
 %description devel
 Allegro is a cross-platform library intended for use in computer games
@@ -133,6 +135,7 @@ Requires:	xorg-lib-libXcursor-devel
 Requires:	xorg-lib-libXext-devel
 Requires:	xorg-lib-libXpm-devel
 Requires:	xorg-lib-libXxf86vm-devel
+Obsoletes:	allegro-static
 
 %description static
 Allegro is a cross-platform library intended for use in computer games
@@ -153,6 +156,7 @@ Summary:	liballd - debug version of shared allegro library
 Summary(pl.UTF-8):	liballd - wersja debug dzielonej biblioteki allegro
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Obsoletes:	allegro-debug
 
 %description debug
 liballd - debug version of shared allegro library (contains debugging
@@ -167,6 +171,7 @@ Summary:	liballd - debug version of static allegro library
 Summary(pl.UTF-8):	liballd - wersja debug statycznej biblioteki allegro
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Obsoletes:	allegro-debug-statix
 
 %description debug-static
 liballd - debug version of static allegro library (contains debugging
@@ -181,6 +186,7 @@ Summary:	liballp - profiling version of shared allegro library
 Summary(pl.UTF-8):	liballp - wersja dzielonej biblioteki allegro służąca do profilowania
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Obsoletes:	allegro-profile
 
 %description profile
 liballp - profiling version of shared allegro library.
@@ -193,6 +199,7 @@ Summary:	liballp - profiling version of static allegro library
 Summary(pl.UTF-8):	liballp - wersja statycznej biblioteki allegro służąca do profilowania
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Obsoletes:	allegro-static
 
 %description profile-static
 liballp - profiling version of static allegro library.
@@ -206,6 +213,7 @@ Summary:	A game programming library - svgalib module
 Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla svgalib
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-svgalib
 
 %description svgalib
 Allegro is a cross-platform library intended for use in computer games
@@ -224,6 +232,7 @@ Summary:	A game programming library - DGA2 module
 Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla DGA2
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-dga2
 
 %description dga2
 Allegro is a cross-platform library intended for use in computer games
@@ -242,6 +251,7 @@ Summary:	A game programming library - esound module
 Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla esound
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-esd
 
 %description esd
 Allegro is a cross-platform library intended for use in computer games
@@ -260,6 +270,7 @@ Summary:	A game programming library - aRts module
 Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla aRts
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-arts
 
 %description arts
 Allegro is a cross-platform library intended for use in computer games
@@ -278,6 +289,7 @@ Summary:	A game programming library - framebuffer module
 Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla framebuffera
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-fbcon
 
 %description fbcon
 Allegro is a cross-platform library intended for use in computer games
@@ -296,6 +308,7 @@ Summary:	A game programming library - vga module
 Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla vga
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-vga
 
 %description vga
 Allegro is a cross-platform library intended for use in computer games
@@ -314,6 +327,7 @@ Summary:	A game programming library - ALSA modules
 Summary(pl.UTF-8):	Biblioteka do programowania gier - moduły dla ALSA
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-alsa
 Obsoletes:	allegro-alsa9
 
 %description alsa
@@ -334,6 +348,7 @@ Summary:	A game programming library - JACK module
 Summary(pl.UTF-8):	Biblioteka do programowania gier - moduł dla JACK-a
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-jack
 
 %description jack
 Allegro is a cross-platform library intended for use in computer games
@@ -356,6 +371,7 @@ Summary(it.UTF-8):	Programmi di utilità aggiuntivi per la libreria Allegro
 Summary(pl.UTF-8):	Biblioteka do programowania gier - narzędzia
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-tools
 
 %description tools
 Allegro is a cross-platform library intended for use in computer games
@@ -398,6 +414,7 @@ Summary:	A game programming library - test programs
 Summary(pl.UTF-8):	Biblioteka do programowania gier - programy testujące
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-tests
 
 %description tests
 This package contains programs for testing allegro library.
@@ -410,6 +427,7 @@ Summary:	A game programming library - examples
 Summary(pl.UTF-8):	Biblioteka do programowania gier - programy przykładowe
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	allegro-examples
 
 %description examples
 This package contains example programs which demonstrate allegro

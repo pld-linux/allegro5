@@ -1,0 +1,57 @@
+--- allegro-4.9.3/configure.in~	2008-05-12 13:00:38.307993655 +0200
++++ allegro-4.9.3/configure.in	2008-05-12 13:13:44.638144481 +0200
+@@ -815,38 +815,7 @@
+ 
+ dnl How to compile C and asm files.
+ if test -n "$GCC"; then
+-  if test "X$allegro_strict_warnings" = "Xyes"; then
+-    WFLAGS="-Wall -W -Wstrict-prototypes -Wno-unused-parameter -Werror"
+-  else
+-    WFLAGS="-Wall -Wno-unused"
+-  fi
+-  if test "X$allegro_cv_processor_type" = "Xi386"; then
+-    if test "$allegro_exclusive_optimizations" != none; then
+-      TARGET_ARCH="-march=$allegro_exclusive_optimizations"
+-    elif test "X$allegro_cv_support_i386_mtune" = "Xyes"; then
+-      TARGET_ARCH="-mtune=$allegro_optimizations"
+-    else
+-      TARGET_ARCH="-mcpu=$allegro_optimizations"
+-    fi
+-  elif test "X$allegro_cv_processor_type" = "Xamd64"; then
+-    dnl Change default pentium->athlon64
+-    if test "X$allegro_optimizations" = "Xpentium"; then
+-      allegro_optimizations="k8"
+-    fi
+-    if test "$allegro_exclusive_optimizations" != none; then
+-      TARGET_ARCH="-march=$allegro_exclusive_optimizations"
+-    elif test "X$allegro_cv_support_amd64_mtune" = "Xyes"; then
+-      TARGET_ARCH="-mtune=$allegro_optimizations"
+-    else
+-      TARGET_ARCH="-mcpu=$allegro_optimizations"
+-    fi
+-  else
+-    TARGET_ARCH=
+-  fi
+-  dnl Allow to specify additional flags.
+-  CFLAGS="$CFLAGS $XCFLAGS"
+-  WFLAGS="$WFLAGS $WCFLAGS"
+-  dnl In this order...
++  WFLAGS="-Wall -Wno-unused"
+   ALLEGRO_DEBUG_CFLAGS="$CFLAGS -g $WFLAGS -DDEBUGMODE"
+   if test "X$allegro_debug_with_fortify" = "Xyes"; then
+      ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DFORTIFY"
+@@ -854,12 +823,8 @@
+   if test "X$allegro_debug_with_dmalloc" = "Xyes"; then
+      ALLEGRO_DEBUG_CFLAGS="$ALLEGRO_DEBUG_CFLAGS -DDMALLOC"
+   fi
+-  ALLEGRO_PROFILE_CFLAGS="$CFLAGS -pg $TARGET_ARCH -O2 -funroll-loops -ffast-math $WFLAGS"
+-  if test "X$allegro_cv_support_fomit_frame_pointer" = "Xyes"; then
+-    CFLAGS="$CFLAGS $TARGET_ARCH -O2 -funroll-loops -ffast-math -fomit-frame-pointer $WFLAGS"
+-  else
+-    CFLAGS="$CFLAGS $TARGET_ARCH -O2 -funroll-loops -ffast-math $WFLAGS"
+-  fi
++  CFLAGS="$CFLAGS $TARGET_ARCH"
++  ALLEGRO_PROFILE_CFLAGS="$CFLAGS -pg $WFLAGS"
+   ALLEGRO_SFLAGS="-x assembler-with-cpp"
+   ALLEGRO_SHAREDLIB_CFLAGS="-fPIC -DALLEGRO_SHARED"
+ else

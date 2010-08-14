@@ -1,0 +1,11 @@
+--- allegro-4.9.3/docs/src/allegro._tx~	2008-05-12 12:56:55.637348729 +0200
++++ allegro-4.9.3/docs/src/allegro._tx	2008-05-12 12:57:43.472968879 +0200
+@@ -31,7 +31,7 @@
+ @# This should remain commented at the moment (dvi output) @$@finalout
+ @$
+ @$@ifinfo
+-@$@dircategory Libraries
++@$@dircategory Libraries:
+ @$@direntry
+ @$* Allegro: (allegro).			The Allegro game programming library.
+ @$@end direntry

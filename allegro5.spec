@@ -519,7 +519,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc docs/html/refman readme_a5.txt
+%doc README.txt docs/html/refman
 #%%attr(755,root,root) %{_libdir}/liballeg-%{version}.so
 #%%dir %{_libdir}/allegro
 #%%dir %{_libdir}/allegro/%{version}
@@ -664,7 +664,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_blend_test
 %attr(755,root,root) %{_bindir}/ex_blit
 %attr(755,root,root) %{_bindir}/ex_clip
-%attr(755,root,root) %{_bindir}/ex_color
 %attr(755,root,root) %{_bindir}/ex_config
 %attr(755,root,root) %{_bindir}/ex_convert
 %attr(755,root,root) %{_bindir}/ex_dir
@@ -676,7 +675,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_dualies
 %attr(755,root,root) %{_bindir}/ex_expose
 %attr(755,root,root) %{_bindir}/ex_font
-%attr(755,root,root) %{_bindir}/ex_font_justify
 %attr(755,root,root) %{_bindir}/ex_fs_resize
 %attr(755,root,root) %{_bindir}/ex_fs_window
 %attr(755,root,root) %{_bindir}/ex_get_path
@@ -690,7 +688,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_lines
 %attr(755,root,root) %{_bindir}/ex_lockbitmap
 %attr(755,root,root) %{_bindir}/ex_lockscreen
-%attr(755,root,root) %{_bindir}/ex_logo
 %attr(755,root,root) %{_bindir}/ex_membmp
 %attr(755,root,root) %{_bindir}/ex_memfile
 %attr(755,root,root) %{_bindir}/ex_mixer_chain
@@ -702,7 +699,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_mouse_focus
 %attr(755,root,root) %{_bindir}/ex_multisample
 %attr(755,root,root) %{_bindir}/ex_multiwin
-%attr(755,root,root) %{_bindir}/ex_native_filechooser
 %attr(755,root,root) %{_bindir}/ex_noframe
 %attr(755,root,root) %{_bindir}/ex_opengl
 %attr(755,root,root) %{_bindir}/ex_opengl_pixel_shader
@@ -718,13 +714,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_stream_file
 %attr(755,root,root) %{_bindir}/ex_stream_seek
 %attr(755,root,root) %{_bindir}/ex_subbitmap
-%attr(755,root,root) %{_bindir}/ex_synth
 %attr(755,root,root) %{_bindir}/ex_threads
 %attr(755,root,root) %{_bindir}/ex_threads2
 %attr(755,root,root) %{_bindir}/ex_timedwait
 %attr(755,root,root) %{_bindir}/ex_timer
 %attr(755,root,root) %{_bindir}/ex_transform
-%attr(755,root,root) %{_bindir}/ex_ttf
 %attr(755,root,root) %{_bindir}/ex_user_events
 %attr(755,root,root) %{_bindir}/ex_utf8
 %attr(755,root,root) %{_bindir}/ex_vsync

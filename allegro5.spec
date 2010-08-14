@@ -519,7 +519,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.txt docs/html/refman
+%doc CHANGES-4.9.txt README.txt docs/html/refman
 %attr(755,root,root) %{_libdir}/liballegro.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/liballegro.so.4.9
 

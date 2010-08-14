@@ -520,15 +520,14 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.txt docs/html/refman
-#%%attr(755,root,root) %{_libdir}/liballeg-%{version}.so
-#%%dir %{_libdir}/allegro
-#%%dir %{_libdir}/allegro/%{version}
-#%%{_libdir}/allegro/%{version}/modules.lst
+%attr(755,root,root) %{_libdir}/liballegro.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liballegro.so.4.9
 
 %files devel
 %defattr(644,root,root,755)
 #%%attr(755,root,root) %{_bindir}/allegro5-config
 #%%{_libdir}/liballeg_unsharable.a
+%{_libdir}/liballegro.so
 %{_includedir}/*
 #%%{_aclocaldir}/allegro.m4
 #%%{_mandir}/man3/*
@@ -699,6 +698,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_mouse_focus
 %attr(755,root,root) %{_bindir}/ex_multisample
 %attr(755,root,root) %{_bindir}/ex_multiwin
+%attr(755,root,root) %{_bindir}/ex_nodisplay
 %attr(755,root,root) %{_bindir}/ex_noframe
 %attr(755,root,root) %{_bindir}/ex_opengl
 %attr(755,root,root) %{_bindir}/ex_opengl_pixel_shader

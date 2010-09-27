@@ -23,12 +23,12 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
-Version:	4.9.21
+Version:	4.9.22
 Release:	0.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}.tar.gz
-# Source0-md5:	82cc21ee26ffc2b88f5bfcbbb17a8f0c
+# Source0-md5:	4d427e748aef4fae9ecf34a517bc29bc
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -630,7 +630,7 @@ rm -rf $RPM_BUILD_ROOT
 #%%attr(755,root,root) %{_bindir}/dat2s
 #%%attr(755,root,root) %{_bindir}/grabber
 #%%attr(755,root,root) %{_bindir}/pat2dat
-#%attr(755,root,root) %{_bindir}/setup-allegro
+#%%attr(755,root,root) %{_bindir}/setup-allegro
 
 #%%files tests
 #%%defattr(644,root,root,755)
@@ -663,6 +663,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_blend_test
 %attr(755,root,root) %{_bindir}/ex_blit
 %attr(755,root,root) %{_bindir}/ex_clip
+%attr(755,root,root) %{_bindir}/ex_color
 %attr(755,root,root) %{_bindir}/ex_config
 %attr(755,root,root) %{_bindir}/ex_convert
 %attr(755,root,root) %{_bindir}/ex_dir
@@ -673,20 +674,24 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_drawpixels
 %attr(755,root,root) %{_bindir}/ex_dualies
 %attr(755,root,root) %{_bindir}/ex_expose
+%attr(755,root,root) %{_bindir}/ex_filter
 %attr(755,root,root) %{_bindir}/ex_font
 %attr(755,root,root) %{_bindir}/ex_fs_resize
 %attr(755,root,root) %{_bindir}/ex_fs_window
 %attr(755,root,root) %{_bindir}/ex_get_path
 %attr(755,root,root) %{_bindir}/ex_gldepth
 %attr(755,root,root) %{_bindir}/ex_glext
+%attr(755,root,root) %{_bindir}/ex_haiku
 %attr(755,root,root) %{_bindir}/ex_icon
 %attr(755,root,root) %{_bindir}/ex_joystick_events
+%attr(755,root,root) %{_bindir}/ex_joystick_hotplugging
+%attr(755,root,root) %{_bindir}/ex_font_justify
 %attr(755,root,root) %{_bindir}/ex_kcm_direct
 %attr(755,root,root) %{_bindir}/ex_keyboard_events
 %attr(755,root,root) %{_bindir}/ex_keyboard_focus
 %attr(755,root,root) %{_bindir}/ex_lines
 %attr(755,root,root) %{_bindir}/ex_lockbitmap
-%attr(755,root,root) %{_bindir}/ex_lockscreen
+%attr(755,root,root) %{_bindir}/ex_logo
 %attr(755,root,root) %{_bindir}/ex_membmp
 %attr(755,root,root) %{_bindir}/ex_memfile
 %attr(755,root,root) %{_bindir}/ex_mixer_chain
@@ -698,12 +703,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_mouse_focus
 %attr(755,root,root) %{_bindir}/ex_multisample
 %attr(755,root,root) %{_bindir}/ex_multiwin
+%attr(755,root,root) %{_bindir}/ex_native_filechooser
 %attr(755,root,root) %{_bindir}/ex_nodisplay
 %attr(755,root,root) %{_bindir}/ex_noframe
 %attr(755,root,root) %{_bindir}/ex_opengl
 %attr(755,root,root) %{_bindir}/ex_opengl_pixel_shader
 %attr(755,root,root) %{_bindir}/ex_path
 %attr(755,root,root) %{_bindir}/ex_path_test
+%attr(755,root,root) %{_bindir}/ex_physfs
 %attr(755,root,root) %{_bindir}/ex_pixelformat
 %attr(755,root,root) %{_bindir}/ex_prim
 %attr(755,root,root) %{_bindir}/ex_resize
@@ -714,11 +721,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_stream_file
 %attr(755,root,root) %{_bindir}/ex_stream_seek
 %attr(755,root,root) %{_bindir}/ex_subbitmap
+%attr(755,root,root) %{_bindir}/ex_synth
 %attr(755,root,root) %{_bindir}/ex_threads
 %attr(755,root,root) %{_bindir}/ex_threads2
 %attr(755,root,root) %{_bindir}/ex_timedwait
 %attr(755,root,root) %{_bindir}/ex_timer
 %attr(755,root,root) %{_bindir}/ex_transform
+%attr(755,root,root) %{_bindir}/ex_ttf
 %attr(755,root,root) %{_bindir}/ex_user_events
 %attr(755,root,root) %{_bindir}/ex_utf8
 %attr(755,root,root) %{_bindir}/ex_vsync

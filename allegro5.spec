@@ -16,6 +16,7 @@
 #%%bcond_without	svga	# without svgalib module
 #%%bcond_without	vga	# without vga module
 #
+%define		_rc	rc1
 Summary:	A game programming library
 Summary(de.UTF-8):	Eine Bibliothek zur Programmierung von Spielen
 Summary(es.UTF-8):	Una biblioteca de programación de juegos
@@ -23,12 +24,12 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
-Version:	4.9.22
-Release:	0.1
+Version:	5.0.0
+Release:	0.%{_rc}.1
 License:	Giftware
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}.tar.gz
-# Source0-md5:	4d427e748aef4fae9ecf34a517bc29bc
+Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}%{_rc}.tar.gz
+# Source0-md5:	a80d2955154eabdc8673461a04ebe731
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -438,7 +439,7 @@ Pakiet zawiera programy przykładowe demonstrujące możliwości
 biblioteki allegro.
 
 %prep
-%setup -q -n allegro-%{version}
+%setup -q -n allegro-%{version}%{_rc}
 #%%patch0 -p1
 #%%patch1 -p1
 #%%patch2 -p1
@@ -519,9 +520,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGES-4.9.txt README.txt docs/html/refman
+%doc CHANGES-5.0.txt README.txt docs/html/refman
 %attr(755,root,root) %{_libdir}/liballegro.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro.so.4.9
+%attr(755,root,root) %ghost %{_libdir}/liballegro.so.5.0
 
 %files devel
 %defattr(644,root,root,755)
@@ -712,6 +713,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_path_test
 %attr(755,root,root) %{_bindir}/ex_physfs
 %attr(755,root,root) %{_bindir}/ex_pixelformat
+%attr(755,root,root) %{_bindir}/ex_premulalpha
 %attr(755,root,root) %{_bindir}/ex_prim
 %attr(755,root,root) %{_bindir}/ex_resize
 %attr(755,root,root) %{_bindir}/ex_resize2

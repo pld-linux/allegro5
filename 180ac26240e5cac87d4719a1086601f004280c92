@@ -1,0 +1,2 @@
+- 5.0.0rc3
+- drop cmake options provided by cmake macro

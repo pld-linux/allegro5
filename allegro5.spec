@@ -16,7 +16,7 @@
 #%%bcond_without	svga	# without svgalib module
 #%%bcond_without	vga	# without vga module
 #
-%define		_rc	rc1
+%define		_rc	rc3
 Summary:	A game programming library
 Summary(de.UTF-8):	Eine Bibliothek zur Programmierung von Spielen
 Summary(es.UTF-8):	Una biblioteca de programación de juegos
@@ -29,7 +29,7 @@ Release:	0.%{_rc}.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}%{_rc}.tar.gz
-# Source0-md5:	a80d2955154eabdc8673461a04ebe731
+# Source0-md5:	8fc61088f933a01e9c213bede3446d34
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -47,6 +47,7 @@ BuildRequires:	curl-devel
 #BuildRequires:	physfs-devel
 #BuildRequires:	pkgconfig
 #%%endif
+BuildRequires:	rpmbuild(macros) >= 1.577
 #BuildRequires:	sed >= 4.0
 #%%{?with_svga:BuildRequires:	svgalib-devel}
 #BuildRequires:	texinfo
@@ -475,13 +476,8 @@ biblioteki allegro.
 install -d build
 cd build
 %cmake .. \
-	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
-	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 	-DMANDIR=%{_mandir} \
-	-DINFODIR=%{_infodir} \
-%if "%{_lib}" == "lib64"
-	-DLIB_SUFFIX=64
-%endif
+	-DINFODIR=%{_infodir}
 
 %{__make}
 

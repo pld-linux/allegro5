@@ -1,6 +1,7 @@
 #
 # TODO: - Handle situations when there are no modules (most bconds turned off)
 #	- make bconds work again or remove
+#	- make it usable
 #
 # Conditional build:
 %bcond_without	alsa	# without ALSA modules
@@ -16,7 +17,7 @@
 #%%bcond_without	svga	# without svgalib module
 #%%bcond_without	vga	# without vga module
 #
-%define		_rc	rc3
+%define		_rc	rc4
 Summary:	A game programming library
 Summary(de.UTF-8):	Eine Bibliothek zur Programmierung von Spielen
 Summary(es.UTF-8):	Una biblioteca de programación de juegos
@@ -29,7 +30,7 @@ Release:	0.%{_rc}.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}%{_rc}.tar.gz
-# Source0-md5:	8fc61088f933a01e9c213bede3446d34
+# Source0-md5:	e59d15562e08e1fe61748099a2bdbe7f
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -47,7 +48,7 @@ BuildRequires:	curl-devel
 #BuildRequires:	physfs-devel
 #BuildRequires:	pkgconfig
 #%%endif
-BuildRequires:	rpmbuild(macros) >= 1.577
+BuildRequires:	rpmbuild(macros) >= 1.600
 #BuildRequires:	sed >= 4.0
 #%%{?with_svga:BuildRequires:	svgalib-devel}
 #BuildRequires:	texinfo
@@ -707,7 +708,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_opengl_pixel_shader
 %attr(755,root,root) %{_bindir}/ex_path
 %attr(755,root,root) %{_bindir}/ex_path_test
-%attr(755,root,root) %{_bindir}/ex_physfs
 %attr(755,root,root) %{_bindir}/ex_pixelformat
 %attr(755,root,root) %{_bindir}/ex_premulalpha
 %attr(755,root,root) %{_bindir}/ex_prim

@@ -17,7 +17,6 @@
 #%%bcond_without	svga	# without svgalib module
 #%%bcond_without	vga	# without vga module
 #
-%define		_rc	rc4
 Summary:	A game programming library
 Summary(de.UTF-8):	Eine Bibliothek zur Programmierung von Spielen
 Summary(es.UTF-8):	Una biblioteca de programación de juegos
@@ -26,11 +25,11 @@ Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
 Version:	5.0.0
-Release:	0.%{_rc}.1
+Release:	0.1
 License:	Giftware
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}%{_rc}.tar.gz
-# Source0-md5:	e59d15562e08e1fe61748099a2bdbe7f
+Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}.tar.gz
+# Source0-md5:	99ef472e2f99972d5e833794bf2f57bf
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch
@@ -441,7 +440,7 @@ Pakiet zawiera programy przykładowe demonstrujące możliwości
 biblioteki allegro.
 
 %prep
-%setup -q -n allegro-%{version}%{_rc}
+%setup -q -n allegro-%{version}
 #%%patch0 -p1
 #%%patch1 -p1
 #%%patch2 -p1

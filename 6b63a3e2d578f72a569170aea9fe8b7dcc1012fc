@@ -1,0 +1,1 @@
+- drop static packages (not supported by cmake build)

@@ -13,7 +13,6 @@
 #%%bcond_without	jack	# without JACK module
 #%%bcond_without	proflib	# don't debug profiling versions of library
 #%%bcond_without	sse	# build without sse
-%bcond_without	static	# don't build static versions of library
 #%%bcond_without	svga	# without svgalib module
 #%%bcond_without	vga	# without vga module
 #
@@ -127,32 +126,6 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 Ten pakiet zawiera pliki nagłówkowe niezbędne do kompilowania
 aplikacji wykorzystujących bibliotekę allegro.
 
-%package static
-Summary:	A game programming library - static libraries
-Summary(pl.UTF-8):	Biblioteka do programowania gier - biblioteki statyczne
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-Requires:	xorg-lib-libX11-devel
-Requires:	xorg-lib-libXcursor-devel
-Requires:	xorg-lib-libXext-devel
-Requires:	xorg-lib-libXpm-devel
-Requires:	xorg-lib-libXxf86vm-devel
-Obsoletes:	allegro-static
-
-%description static
-Allegro is a cross-platform library intended for use in computer games
-and other types of multimedia programming.
-
-This package contains static libraries for linking with allegro
-applications.
-
-%description static -l pl.UTF-8
-Allegro jest przenośną biblioteką przeznaczoną do wykorzystania w
-grach komputerowych i innych rodzajach oprogramowania multimedialnego.
-
-Ten pakiet zawiera biblioteki statyczne do konsolidacji z aplikacjami
-wykorzystującymi allegro.
-
 %package debug
 Summary:	liballd - debug version of shared allegro library
 Summary(pl.UTF-8):	liballd - wersja debug dzielonej biblioteki allegro
@@ -168,21 +141,6 @@ symbols and other information).
 liballd - wersja debug dzielonej biblioteki allegro (zawierająca
 symbole i inne informacje potrzebne przy odpluskwianiu).
 
-%package debug-static
-Summary:	liballd - debug version of static allegro library
-Summary(pl.UTF-8):	liballd - wersja debug statycznej biblioteki allegro
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-Obsoletes:	allegro-debug-statix
-
-%description debug-static
-liballd - debug version of static allegro library (contains debugging
-symbols and other information).
-
-%description debug-static -l pl.UTF-8
-liballd - wersja debug statycznej biblioteki allegro (zawierająca
-symbole i inne informacje potrzebne przy odpluskwianiu).
-
 %package profile
 Summary:	liballp - profiling version of shared allegro library
 Summary(pl.UTF-8):	liballp - wersja dzielonej biblioteki allegro służąca do profilowania
@@ -195,20 +153,6 @@ liballp - profiling version of shared allegro library.
 
 %description profile -l pl.UTF-8
 liballp - wersja dzielonej biblioteki allegro służąca do profilowania.
-
-%package profile-static
-Summary:	liballp - profiling version of static allegro library
-Summary(pl.UTF-8):	liballp - wersja statycznej biblioteki allegro służąca do profilowania
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-Obsoletes:	allegro-static
-
-%description profile-static
-liballp - profiling version of static allegro library.
-
-%description profile-static -l pl.UTF-8
-liballp - wersja statycznej biblioteki allegro służąca do
-profilowania.
 
 %package svgalib
 Summary:	A game programming library - svgalib module
@@ -530,37 +474,17 @@ rm -rf $RPM_BUILD_ROOT
 #%%{_mandir}/man3/*
 #%%{_infodir}/*.info*
 
-#%%if %{with static}
-#%%files static
-#%%defattr(644,root,root,755)
-#%%{_libdir}/liballeg.a
-#%%endif
-
 #%%if %{with dbglib}
 #%%files debug
 #%%defattr(644,root,root,755)
 #%%attr(755,root,root) %{_libdir}/liballd-%{version}.so
 #%%{_libdir}/liballd_unsharable.a
 
-#%%if %{with static}
-#%%files debug-static
-#%%defattr(644,root,root,755)
-#%%{_libdir}/liballd.a
-#%%endif
-#%%endif
-
 #%%if %{with proflib}
 #%%files profile
 #%%defattr(644,root,root,755)
 #%%attr(755,root,root) %{_libdir}/liballp-%{version}.so
 #%%{_libdir}/liballp_unsharable.a
-
-#%%if %{with static}
-#%%files profile-static
-#%%defattr(644,root,root,755)
-#%%{_libdir}/liballp.a
-#%%endif
-#%%endif
 
 #%%if %{with svga}
 #%%files svgalib

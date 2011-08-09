@@ -23,12 +23,12 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
-Version:	5.0.2.1
+Version:	5.0.3
 Release:	0.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}.tar.gz
-# Source0-md5:	b92276fb9bf47555476d7c1ed39634a9
+# Source0-md5:	159ca85ea51c0447d951d720b06079f2
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-examples.patch
 Patch2:		%{name}-opt.patch

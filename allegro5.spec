@@ -24,12 +24,13 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
-Version:	5.0.9
+Version:	5.0.10
 Release:	0.1
 License:	Giftware
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}.tar.gz
-# Source0-md5:	59fb41dccc300be0044cfad5fff0ca81
+# Source0-md5:	bf51a90e158ff8b1cec0514ef70195cf
+Patch0:		%{name}-glx.patch
 URL:		http://alleg.sourceforge.net/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 BuildRequires:	OpenGL-GLU-devel
@@ -39,7 +40,7 @@ BuildRequires:	cmake >= 2.6
 %{?with_curl:BuildRequires:	curl-devel}
 BuildRequires:	dumb-devel
 BuildRequires:	flac-devel
-BuildRequires:	freetype-devel
+BuildRequires:	freetype-devel >= 2
 %{?with_gtk:BuildRequires:	glib2-devel >= 2.0}
 %{?with_gtk:BuildRequires:	gtk+2-devel >= 2.0}
 BuildRequires:	libjpeg-devel
@@ -64,7 +65,7 @@ BuildRequires:	python
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
 %endif
-Obsoletes:	allegro
+Obsoletes:	allegro5-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -97,7 +98,6 @@ Summary(es.UTF-8):	Archivos de inclusión
 Summary(pl.UTF-8):	Biblioteka do programowania gier - pliki nagłówkowe
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Obsoletes:	allegro-devel
 
 %description devel
 Allegro is a cross-platform library intended for use in computer games
@@ -284,59 +284,11 @@ Header files for Allegro ttf addon library.
 %description ttf-devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki dodatkowej Allegro ttf.
 
-%package tools
-Summary:	A game programming library - tools
-Summary(de.UTF-8):	Zusätzliche Hilfprogramme für die Allegro Bibliothek
-Summary(es.UTF-8):	Herramientas adicionales para la librería de programación Allegro
-Summary(fr.UTF-8):	Outils supplémentaires pour la librairie de programmation Allegro
-Summary(it.UTF-8):	Programmi di utilità aggiuntivi per la libreria Allegro
-Summary(pl.UTF-8):	Biblioteka do programowania gier - narzędzia
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-Obsoletes:	allegro-tools
-
-%description tools
-Allegro is a cross-platform library intended for use in computer games
-and other types of multimedia programming.
-
-This package contains tools.
-
-%description tools -l de.UTF-8
-Allegro ist eine plattformübergreifende Bibliothek zur Verwendung in
-Computerspielen und anderen Formen von Multinediaprogrammierung.
-Dieses Paket enthält Programme, die für die Entwicklung von Allegro
-Programmen hilfreich sind.
-
-%description tools -l es.UTF-8
-Allegro es una librería multi-plataforma creada para ser usada en la
-programación de juegos u otro tipo de programación multimedia. Este
-paquete contiene herramientas adicionales que son útiles para
-desarrollar programas que usen Allegro.
-
-%description tools -l fr.UTF-8
-Allegro est une librairie multi-plateforme destinée à être utilisée
-dans les jeux vidéo ou d'autres types de programmation multimédia. Ce
-package contient des outils supplémentaires qui sont utiles pour le
-développement de programmes avec Allegro.
-
-%description tools -l it.UTF-8
-Allegro è una libreria multipiattaforma dedicata all'uso nei
-videogiochi ed in altri tipi di programmazione multimediale. Questo
-pacchetto contiene programmi di utilità aggiuntivi utili allo sviluppo
-di programmi con Allegro.
-
-%description tools -l pl.UTF-8
-Allegro jest przenośną biblioteką przeznaczoną do wykorzystania w
-grach komputerowych i innych rodzajach oprogramowania multimedialnego.
-
-Ten pakiet zawiera narzędzia.
-
 %package examples
 Summary:	A game programming library - examples
 Summary(pl.UTF-8):	Biblioteka do programowania gier - programy przykładowe
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Obsoletes:	allegro-examples
 
 %description examples
 This package contains example programs which demonstrate allegro
@@ -361,6 +313,7 @@ Pythonowy interfejs do biblioteki Allegro.
 
 %prep
 %setup -q -n allegro-%{version}
+%patch0 -p1
 
 %build
 install -d build
@@ -553,12 +506,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/allegro_ttf-5.0.pc
 %{_pkgconfigdir}/allegro_ttf-5.pc
 
-#%files tools
-#%defattr(644,root,root,755)
-#%attr(755,root,root) %{_bindir}/xkeymap
-#%attr(755,root,root) %{_bindir}/xf2pcx
-#%attr(755,root,root) %{_bindir}/xfixicon.sh
-
 %files examples
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ex_acodec
@@ -566,6 +513,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_audio_chain
 %attr(755,root,root) %{_bindir}/ex_audio_props
 %attr(755,root,root) %{_bindir}/ex_audio_simple
+%attr(755,root,root) %{_bindir}/ex_audio_timer
 %attr(755,root,root) %{_bindir}/ex_bitmap
 %attr(755,root,root) %{_bindir}/ex_bitmap_flip
 %attr(755,root,root) %{_bindir}/ex_bitmap_target

@@ -1,0 +1,23 @@
+#--- allegro-5.0.10/include/allegro5/opengl/GLext/glx_ext_api.h.orig	2010-04-22 14:52:57.000000000 +0200
+#+++ allegro-5.0.10/include/allegro5/opengl/GLext/glx_ext_api.h	2013-12-07 10:19:27.649747540 +0100
+#@@ -61,6 +61,7 @@
+# 
+# #ifdef _ALLEGRO_GLX_EXT_import_context
+# /* GLX_EXT_import_context */
+#+typedef XID GLXContextID;
+# AGL_API(Display *, GetCurrentDisplayEXT, (void))
+# AGL_API(int, QueryContextInfoEXT, (Display *, GLXContext, int, int *))
+# AGL_API(GLXContextID, GetContextIDEXT, (const GLXContext))
+--- allegro-5.0.10/include/allegro5/opengl/gl_ext.h.orig	2013-12-07 11:15:41.336272630 +0100
++++ allegro-5.0.10/include/allegro5/opengl/gl_ext.h	2013-12-07 11:16:40.576270143 +0100
+@@ -15,6 +15,10 @@
+    #undef GL_WIN_draw_range_elements
+ #endif
+ 
++#include <X11/X.h>
++/* for GLX_EXT_import_context */
++typedef XID GLXContextID;
++
+ /* GL extension definitions. */
+ 
+ /* For example:

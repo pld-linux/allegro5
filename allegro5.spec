@@ -1,11 +1,11 @@
 #
 # TODO:
-# - texinfo docs (BR: pandoc)
 # - check if it's usable now
 #
 # Conditional build:
 %bcond_without	alsa		# ALSA support in allegro_audio library
 %bcond_with	curl		# cURL example
+%bcond_without	doc		# rebuild HTML and texinfo documentation
 %bcond_without	dumb		# MOD support in allegro_acodec library
 %bcond_without	gtk		# (GTK+ 2.x based) native dialog library
 %bcond_without	openal		# OpenAL support in allegro_audio library
@@ -25,7 +25,7 @@ Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
 Version:	5.0.10
-Release:	0.1
+Release:	1
 License:	Giftware
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}.tar.gz
@@ -51,7 +51,6 @@ BuildRequires:	libvorbis-devel
 BuildRequires:	pkgconfig
 %{?with_pulseaudio:BuildRequires:	pulseaudio-devel >= 0.9.15}
 BuildRequires:	rpmbuild(macros) >= 1.605
-#BuildRequires:	texinfo
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXext-devel
@@ -64,6 +63,12 @@ BuildRequires:	zlib-devel
 BuildRequires:	python
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
+%endif
+%if %{with doc}
+BuildRequires:	ctags
+BuildRequires:	pandoc >= 1.5
+BuildRequires:	texinfo
+BuildRequires:	texlive-latex
 %endif
 Obsoletes:	allegro5-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -377,12 +382,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	ttf -p /sbin/ldconfig
 %postun	ttf -p /sbin/ldconfig
-
-#%%post devel	-p	/sbin/postshell
-#-/usr/sbin/fix-info-dir -c %{_infodir}
-
-#%%postun devel	-p	/sbin/postshell
-#-/usr/sbin/fix-info-dir -c %{_infodir}
 
 %files
 %defattr(644,root,root,755)

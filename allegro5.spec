@@ -24,14 +24,14 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
-Version:	5.0.10
-Release:	3
+Version:	5.2.0
+Release:	1
 License:	Giftware
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/alleg/allegro-%{version}.tar.gz
-# Source0-md5:	bf51a90e158ff8b1cec0514ef70195cf
+Source0:	http://download.gna.org/allegro/allegro/5.2.0/allegro-%{version}.tar.gz
+# Source0-md5:	9cf444aae63d51de65deb57704372fec
 Patch0:		%{name}-glx.patch
-URL:		http://alleg.sourceforge.net/
+URL:		http://liballeg.org/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
@@ -317,7 +317,7 @@ Python wrapper for Allegro library.
 Pythonowy interfejs do biblioteki Allegro.
 
 %prep
-%setup -q -n allegro-%{version}
+%setup -q -n allegro-%{version}.0
 %patch0 -p1
 
 %build
@@ -326,6 +326,7 @@ cd build
 %cmake .. \
 	-DMANDIR=%{_mandir} \
 	-DINFODIR=%{_infodir} \
+	-DWANT_TTF=ON \
 	%{!?with_sse:-DWANT_ALLOW_SSE=OFF} \
 	%{!?with_alsa:-DWANT_ALSA=OFF} \
 	%{?with_curl:-DWANT_CURL_EXAMPLE=ON} \
@@ -385,19 +386,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGES-5.0.txt README.txt docs/html/refman
+%doc CHANGES-5.0.txt CHANGES-5.1.txt CHANGES-5.2.txt README.txt docs/html/refman
 %attr(755,root,root) %{_libdir}/liballegro.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro.so.5.2
 %attr(755,root,root) %{_libdir}/liballegro_color.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro_color.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro_color.so.5.2
 %attr(755,root,root) %{_libdir}/liballegro_font.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro_font.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro_font.so.5.2
 %attr(755,root,root) %{_libdir}/liballegro_main.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro_main.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro_main.so.5.2
 %attr(755,root,root) %{_libdir}/liballegro_memfile.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro_memfile.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro_memfile.so.5.2
 %attr(755,root,root) %{_libdir}/liballegro_primitives.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro_primitives.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro_primitives.so.5.2
+%attr(755,root,root) %{_libdir}/liballegro_video.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liballegro_video.so.5.2
 
 %files devel
 %defattr(644,root,root,755)
@@ -407,6 +410,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/liballegro_main.so
 %attr(755,root,root) %{_libdir}/liballegro_memfile.so
 %attr(755,root,root) %{_libdir}/liballegro_primitives.so
+%attr(755,root,root) %{_libdir}/liballegro_video.so
 %{_includedir}/allegro5
 %exclude %{_includedir}/allegro5/allegro_acodec.h
 %exclude %{_includedir}/allegro5/allegro_audio.h
@@ -414,95 +418,84 @@ rm -rf $RPM_BUILD_ROOT
 %{?with_gtk:%exclude %{_includedir}/allegro5/allegro_native_dialog.h}
 %{?with_physfs:%exclude %{_includedir}/allegro5/allegro_physfs.h}
 %exclude %{_includedir}/allegro5/allegro_ttf.h
-%{_pkgconfigdir}/allegro-5.0.pc
 %{_pkgconfigdir}/allegro-5.pc
-%{_pkgconfigdir}/allegro_color-5.0.pc
 %{_pkgconfigdir}/allegro_color-5.pc
-%{_pkgconfigdir}/allegro_font-5.0.pc
 %{_pkgconfigdir}/allegro_font-5.pc
-%{_pkgconfigdir}/allegro_main-5.0.pc
 %{_pkgconfigdir}/allegro_main-5.pc
-%{_pkgconfigdir}/allegro_memfile-5.0.pc
 %{_pkgconfigdir}/allegro_memfile-5.pc
-%{_pkgconfigdir}/allegro_primitives-5.0.pc
 %{_pkgconfigdir}/allegro_primitives-5.pc
+%{_pkgconfigdir}/allegro_video-5.pc
 %{_mandir}/man3/ALLEGRO_*.3*
 %{_mandir}/man3/al_*.3*
 
 %files acodec
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_acodec.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro_acodec.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro_acodec.so.5.2
 
 %files acodec-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_acodec.so
 %{_includedir}/allegro5/allegro_acodec.h
-%{_pkgconfigdir}/allegro_acodec-5.0.pc
 %{_pkgconfigdir}/allegro_acodec-5.pc
 
 %files audio
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_audio.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro_audio.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro_audio.so.5.2
 
 %files audio-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_audio.so
 %{_includedir}/allegro5/allegro_audio.h
-%{_pkgconfigdir}/allegro_audio-5.0.pc
 %{_pkgconfigdir}/allegro_audio-5.pc
 
 %if %{with gtk}
 %files dialog
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_dialog.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro_dialog.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro_dialog.so.5.2
 
 %files dialog-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_dialog.so
 %{_includedir}/allegro5/allegro_native_dialog.h
-%{_pkgconfigdir}/allegro_dialog-5.0.pc
 %{_pkgconfigdir}/allegro_dialog-5.pc
 %endif
 
 %files image
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_image.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro_image.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro_image.so.5.2
 
 %files image-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_image.so
 %{_includedir}/allegro5/allegro_image.h
-%{_pkgconfigdir}/allegro_image-5.0.pc
 %{_pkgconfigdir}/allegro_image-5.pc
 
 %if %{with physfs}
 %files physfs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_physfs.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro_physfs.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro_physfs.so.5.2
 
 %files physfs-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_physfs.so
 %{_includedir}/allegro5/allegro_physfs.h
-%{_pkgconfigdir}/allegro_physfs-5.0.pc
 %{_pkgconfigdir}/allegro_physfs-5.pc
 %endif
 
 %files ttf
 %defattr(644,root,root,755)
-%attr(755,root,root) %ghost %{_libdir}/liballegro_ttf.so.5.0
+%attr(755,root,root) %ghost %{_libdir}/liballegro_ttf.so.5.2
 %attr(755,root,root) %{_libdir}/liballegro_ttf.so.*.*.*
 
 %files ttf-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_ttf.so
 %{_includedir}/allegro5/allegro_ttf.h
-%{_pkgconfigdir}/allegro_ttf-5.0.pc
 %{_pkgconfigdir}/allegro_ttf-5.pc
 
 %files examples
@@ -515,17 +508,21 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_audio_timer
 %attr(755,root,root) %{_bindir}/ex_bitmap
 %attr(755,root,root) %{_bindir}/ex_bitmap_flip
-%attr(755,root,root) %{_bindir}/ex_bitmap_target
 %attr(755,root,root) %{_bindir}/ex_blend
 %attr(755,root,root) %{_bindir}/ex_blend2
 %attr(755,root,root) %{_bindir}/ex_blend_bench
 %attr(755,root,root) %{_bindir}/ex_blend_test
 %attr(755,root,root) %{_bindir}/ex_blit
+%attr(755,root,root) %{_bindir}/ex_camera
 %attr(755,root,root) %{_bindir}/ex_clip
+%attr(755,root,root) %{_bindir}/ex_clipboard
 %attr(755,root,root) %{_bindir}/ex_color
+%attr(755,root,root) %{_bindir}/ex_compressed
 %attr(755,root,root) %{_bindir}/ex_config
 %attr(755,root,root) %{_bindir}/ex_convert
+%attr(755,root,root) %{_bindir}/ex_cpu
 %{?with_curl:%attr(755,root,root) %{_bindir}/ex_curl}
+%attr(755,root,root) %{_bindir}/ex_depth_mask
 %attr(755,root,root) %{_bindir}/ex_dir
 %attr(755,root,root) %{_bindir}/ex_disable_screensaver
 %attr(755,root,root) %{_bindir}/ex_display_events
@@ -535,28 +532,35 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_drawpixels
 %attr(755,root,root) %{_bindir}/ex_dualies
 %attr(755,root,root) %{_bindir}/ex_expose
+%attr(755,root,root) %{_bindir}/ex_file
 %attr(755,root,root) %{_bindir}/ex_file_slice
 %attr(755,root,root) %{_bindir}/ex_filter
 %attr(755,root,root) %{_bindir}/ex_font
+%attr(755,root,root) %{_bindir}/ex_font_justify
+%attr(755,root,root) %{_bindir}/ex_font_multiline
 %attr(755,root,root) %{_bindir}/ex_fs_resize
 %attr(755,root,root) %{_bindir}/ex_fs_window
 %attr(755,root,root) %{_bindir}/ex_get_path
 %attr(755,root,root) %{_bindir}/ex_gldepth
 %attr(755,root,root) %{_bindir}/ex_glext
 %attr(755,root,root) %{_bindir}/ex_haiku
+%attr(755,root,root) %{_bindir}/ex_haptic
+%attr(755,root,root) %{_bindir}/ex_haptic2
 %attr(755,root,root) %{_bindir}/ex_icon
 %attr(755,root,root) %{_bindir}/ex_icon2
+%attr(755,root,root) %{_bindir}/ex_inject_events
 %attr(755,root,root) %{_bindir}/ex_joystick_events
 %attr(755,root,root) %{_bindir}/ex_joystick_hotplugging
-%attr(755,root,root) %{_bindir}/ex_font_justify
 %attr(755,root,root) %{_bindir}/ex_kcm_direct
 %attr(755,root,root) %{_bindir}/ex_keyboard_events
 %attr(755,root,root) %{_bindir}/ex_keyboard_focus
 %attr(755,root,root) %{_bindir}/ex_lines
+%attr(755,root,root) %{_bindir}/ex_loading_thread
 %attr(755,root,root) %{_bindir}/ex_lockbitmap
 %attr(755,root,root) %{_bindir}/ex_logo
 %attr(755,root,root) %{_bindir}/ex_membmp
 %attr(755,root,root) %{_bindir}/ex_memfile
+%attr(755,root,root) %{_bindir}/ex_menu
 %attr(755,root,root) %{_bindir}/ex_mixer_chain
 %attr(755,root,root) %{_bindir}/ex_mixer_pp
 %attr(755,root,root) %{_bindir}/ex_monitorinfo
@@ -564,6 +568,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_mouse_cursor
 %attr(755,root,root) %{_bindir}/ex_mouse_events
 %attr(755,root,root) %{_bindir}/ex_mouse_focus
+%attr(755,root,root) %{_bindir}/ex_mouse_warp
 %attr(755,root,root) %{_bindir}/ex_multisample
 %attr(755,root,root) %{_bindir}/ex_multiwin
 %attr(755,root,root) %{_bindir}/ex_native_filechooser
@@ -571,18 +576,29 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_noframe
 %attr(755,root,root) %{_bindir}/ex_opengl
 %attr(755,root,root) %{_bindir}/ex_opengl_pixel_shader
+%attr(755,root,root) %{_bindir}/ex_palette
 %attr(755,root,root) %{_bindir}/ex_path
 %attr(755,root,root) %{_bindir}/ex_path_test
 %{?with_physfs:%attr(755,root,root) %{_bindir}/ex_physfs}
 %attr(755,root,root) %{_bindir}/ex_pixelformat
+%attr(755,root,root) %{_bindir}/ex_polygon
 %attr(755,root,root) %{_bindir}/ex_premulalpha
 %attr(755,root,root) %{_bindir}/ex_prim
+%attr(755,root,root) %{_bindir}/ex_prim_shader
+%attr(755,root,root) %{_bindir}/ex_projection
+%attr(755,root,root) %{_bindir}/ex_projection2
+%attr(755,root,root) %{_bindir}/ex_record
+%attr(755,root,root) %{_bindir}/ex_record_name
+%attr(755,root,root) %{_bindir}/ex_reparent
 %attr(755,root,root) %{_bindir}/ex_resample_test
 %attr(755,root,root) %{_bindir}/ex_resize
 %attr(755,root,root) %{_bindir}/ex_resize2
 %attr(755,root,root) %{_bindir}/ex_rotate
 %attr(755,root,root) %{_bindir}/ex_saw
 %attr(755,root,root) %{_bindir}/ex_scale
+%attr(755,root,root) %{_bindir}/ex_shader
+%attr(755,root,root) %{_bindir}/ex_shader_multitex
+%attr(755,root,root) %{_bindir}/ex_shader_target
 %attr(755,root,root) %{_bindir}/ex_stream_file
 %attr(755,root,root) %{_bindir}/ex_stream_seek
 %attr(755,root,root) %{_bindir}/ex_subbitmap
@@ -591,13 +607,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_threads2
 %attr(755,root,root) %{_bindir}/ex_timedwait
 %attr(755,root,root) %{_bindir}/ex_timer
+%attr(755,root,root) %{_bindir}/ex_timer_pause
+%attr(755,root,root) %{_bindir}/ex_touch_input
 %attr(755,root,root) %{_bindir}/ex_transform
 %attr(755,root,root) %{_bindir}/ex_ttf
 %attr(755,root,root) %{_bindir}/ex_user_events
 %attr(755,root,root) %{_bindir}/ex_utf8
+%attr(755,root,root) %{_bindir}/ex_vertex_buffer
+%attr(755,root,root) %{_bindir}/ex_video
 %attr(755,root,root) %{_bindir}/ex_vsync
-%attr(755,root,root) %{_bindir}/ex_warp_mouse
+%attr(755,root,root) %{_bindir}/ex_window_constraints
 %attr(755,root,root) %{_bindir}/ex_windows
+%attr(755,root,root) %{_bindir}/ex_window_title
 %attr(755,root,root) %{_bindir}/ex_winfull
 
 %if %{with python}

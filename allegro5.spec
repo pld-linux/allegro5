@@ -17,6 +17,11 @@
 %ifarch pentium3 pentium4 %{x8664}
 %define	with_sse	1
 %endif
+
+# No ghc, thus no pandoc on x32
+%ifarch x32
+%undefine with_doc
+%endif
 Summary:	A game programming library
 Summary(de.UTF-8):	Eine Bibliothek zur Programmierung von Spielen
 Summary(es.UTF-8):	Una biblioteca de programación de juegos
@@ -25,7 +30,7 @@ Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
 Version:	5.2.0
-Release:	1
+Release:	2
 License:	Giftware
 Group:		Libraries
 Source0:	http://download.gna.org/allegro/allegro/5.2.0/allegro-%{version}.tar.gz

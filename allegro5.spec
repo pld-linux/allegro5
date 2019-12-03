@@ -29,14 +29,15 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
-Version:	5.2.0
-Release:	2
+Version:	5.2.5.0
+Release:	1
 License:	Giftware
 Group:		Libraries
-Source0:	http://download.gna.org/allegro/allegro/5.2.0/allegro-%{version}.tar.gz
-# Source0-md5:	9cf444aae63d51de65deb57704372fec
+#Source0Download: https://github.com/liballeg/allegro5/releases
+Source0:	https://github.com/liballeg/allegro5/releases/download/%{version}/allegro-%{version}.tar.gz
+# Source0-md5:	8bcc28c86878405bf7d069aa77008032
 Patch0:		%{name}-glx.patch
-URL:		http://liballeg.org/
+URL:		https://liballeg.org/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
@@ -322,7 +323,7 @@ Python wrapper for Allegro library.
 Pythonowy interfejs do biblioteki Allegro.
 
 %prep
-%setup -q -n allegro-%{version}.0
+%setup -q -n allegro-%{version}
 %patch0 -p1
 
 %build
@@ -507,6 +508,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ex_acodec
 %attr(755,root,root) %{_bindir}/ex_acodec_multi
+%attr(755,root,root) %{_bindir}/ex_android
 %attr(755,root,root) %{_bindir}/ex_audio_chain
 %attr(755,root,root) %{_bindir}/ex_audio_props
 %attr(755,root,root) %{_bindir}/ex_audio_simple
@@ -516,18 +518,21 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_blend
 %attr(755,root,root) %{_bindir}/ex_blend2
 %attr(755,root,root) %{_bindir}/ex_blend_bench
+%attr(755,root,root) %{_bindir}/ex_blend_target
 %attr(755,root,root) %{_bindir}/ex_blend_test
 %attr(755,root,root) %{_bindir}/ex_blit
 %attr(755,root,root) %{_bindir}/ex_camera
 %attr(755,root,root) %{_bindir}/ex_clip
 %attr(755,root,root) %{_bindir}/ex_clipboard
 %attr(755,root,root) %{_bindir}/ex_color
+%attr(755,root,root) %{_bindir}/ex_color2
 %attr(755,root,root) %{_bindir}/ex_compressed
 %attr(755,root,root) %{_bindir}/ex_config
 %attr(755,root,root) %{_bindir}/ex_convert
 %attr(755,root,root) %{_bindir}/ex_cpu
 %{?with_curl:%attr(755,root,root) %{_bindir}/ex_curl}
 %attr(755,root,root) %{_bindir}/ex_depth_mask
+%attr(755,root,root) %{_bindir}/ex_depth_target
 %attr(755,root,root) %{_bindir}/ex_dir
 %attr(755,root,root) %{_bindir}/ex_disable_screensaver
 %attr(755,root,root) %{_bindir}/ex_display_events
@@ -575,6 +580,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_mouse_focus
 %attr(755,root,root) %{_bindir}/ex_mouse_warp
 %attr(755,root,root) %{_bindir}/ex_multisample
+%attr(755,root,root) %{_bindir}/ex_multisample_target
 %attr(755,root,root) %{_bindir}/ex_multiwin
 %attr(755,root,root) %{_bindir}/ex_native_filechooser
 %attr(755,root,root) %{_bindir}/ex_nodisplay
@@ -622,6 +628,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_video
 %attr(755,root,root) %{_bindir}/ex_vsync
 %attr(755,root,root) %{_bindir}/ex_window_constraints
+%attr(755,root,root) %{_bindir}/ex_window_maximized
 %attr(755,root,root) %{_bindir}/ex_windows
 %attr(755,root,root) %{_bindir}/ex_window_title
 %attr(755,root,root) %{_bindir}/ex_winfull

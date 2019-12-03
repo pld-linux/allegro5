@@ -295,6 +295,31 @@ Header files for Allegro ttf addon library.
 %description ttf-devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki dodatkowej Allegro ttf.
 
+%package video
+Summary:	Allegro audio addon library
+Summary(pl.UTF-8):	Biblioteka dodatkowa Allegro audio
+Group:		Libraries
+Requires:	%{name}-audio = %{version}-%{release}
+
+%description video
+Allegro audio addon library.
+
+%description video -l pl.UTF-8
+Biblioteka dodatkowa Allegro audio.
+
+%package video-devel
+Summary:	Header files for Allegro video addon library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki dodatkowej Allegro video
+Group:		Libraries
+Requires:	%{name}-audio-devel = %{version}-%{release}
+Requires:	%{name}-video = %{version}-%{release}
+
+%description video-devel
+Header files for Allegro audio video library.
+
+%description video-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki dodatkowej Allegro video.
+
 %package examples
 Summary:	A game programming library - examples
 Summary(pl.UTF-8):	Biblioteka do programowania gier - programy przykładowe
@@ -390,6 +415,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	ttf -p /sbin/ldconfig
 %postun	ttf -p /sbin/ldconfig
 
+%post	video -p /sbin/ldconfig
+%postun	video -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc CHANGES-5.0.txt CHANGES-5.1.txt CHANGES-5.2.txt README.txt docs/html/refman
@@ -405,8 +433,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/liballegro_memfile.so.5.2
 %attr(755,root,root) %{_libdir}/liballegro_primitives.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/liballegro_primitives.so.5.2
-%attr(755,root,root) %{_libdir}/liballegro_video.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liballegro_video.so.5.2
 
 %files devel
 %defattr(644,root,root,755)
@@ -416,7 +442,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/liballegro_main.so
 %attr(755,root,root) %{_libdir}/liballegro_memfile.so
 %attr(755,root,root) %{_libdir}/liballegro_primitives.so
-%attr(755,root,root) %{_libdir}/liballegro_video.so
 %{_includedir}/allegro5
 %exclude %{_includedir}/allegro5/allegro_acodec.h
 %exclude %{_includedir}/allegro5/allegro_audio.h
@@ -424,13 +449,13 @@ rm -rf $RPM_BUILD_ROOT
 %{?with_gtk:%exclude %{_includedir}/allegro5/allegro_native_dialog.h}
 %{?with_physfs:%exclude %{_includedir}/allegro5/allegro_physfs.h}
 %exclude %{_includedir}/allegro5/allegro_ttf.h
+%exclude %{_includedir}/allegro5/allegro_video.h
 %{_pkgconfigdir}/allegro-5.pc
 %{_pkgconfigdir}/allegro_color-5.pc
 %{_pkgconfigdir}/allegro_font-5.pc
 %{_pkgconfigdir}/allegro_main-5.pc
 %{_pkgconfigdir}/allegro_memfile-5.pc
 %{_pkgconfigdir}/allegro_primitives-5.pc
-%{_pkgconfigdir}/allegro_video-5.pc
 %{_mandir}/man3/ALLEGRO_*.3*
 %{_mandir}/man3/al_*.3*
 
@@ -495,14 +520,25 @@ rm -rf $RPM_BUILD_ROOT
 
 %files ttf
 %defattr(644,root,root,755)
-%attr(755,root,root) %ghost %{_libdir}/liballegro_ttf.so.5.2
 %attr(755,root,root) %{_libdir}/liballegro_ttf.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liballegro_ttf.so.5.2
 
 %files ttf-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liballegro_ttf.so
 %{_includedir}/allegro5/allegro_ttf.h
 %{_pkgconfigdir}/allegro_ttf-5.pc
+
+%files video
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/liballegro_video.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liballegro_video.so.5.2
+
+%files video-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/liballegro_video.so
+%{_includedir}/allegro5/allegro_video.h
+%{_pkgconfigdir}/allegro_video-5.pc
 
 %files examples
 %defattr(644,root,root,755)

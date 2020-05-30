@@ -18,10 +18,6 @@
 %define	with_sse	1
 %endif
 
-# No ghc, thus no pandoc on x32
-%ifarch x32
-%undefine with_doc
-%endif
 Summary:	A game programming library
 Summary(de.UTF-8):	Eine Bibliothek zur Programmierung von Spielen
 Summary(es.UTF-8):	Una biblioteca de programación de juegos

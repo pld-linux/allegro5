@@ -26,7 +26,7 @@ Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
 Version:	5.2.5.0
-Release:	1
+Release:	2
 License:	Giftware
 Group:		Libraries
 #Source0Download: https://github.com/liballeg/allegro5/releases

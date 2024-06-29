@@ -25,20 +25,20 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
-Version:	5.2.5.0
-Release:	2
+Version:	5.2.9.1
+Release:	1
 License:	Giftware
 Group:		Libraries
 #Source0Download: https://github.com/liballeg/allegro5/releases
 Source0:	https://github.com/liballeg/allegro5/releases/download/%{version}/allegro-%{version}.tar.gz
-# Source0-md5:	8bcc28c86878405bf7d069aa77008032
+# Source0-md5:	fabbdd73f250869ffb831c487c24dd74
 Patch0:		%{name}-glx.patch
 URL:		https://liballeg.org/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
-BuildRequires:	cmake >= 2.6
+BuildRequires:	cmake >= 3.0
 %{?with_curl:BuildRequires:	curl-devel}
 BuildRequires:	dumb-devel
 BuildRequires:	flac-devel
@@ -72,7 +72,7 @@ BuildRequires:	pandoc >= 1.5
 BuildRequires:	texinfo
 BuildRequires:	texlive-latex
 %endif
-Obsoletes:	allegro5-tools
+Obsoletes:	allegro5-tools < 5.0.10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -452,6 +452,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/allegro_main-5.pc
 %{_pkgconfigdir}/allegro_memfile-5.pc
 %{_pkgconfigdir}/allegro_primitives-5.pc
+%{_libdir}/cmake/allegro
 %{_mandir}/man3/ALLEGRO_*.3*
 %{_mandir}/man3/al_*.3*
 
@@ -540,12 +541,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ex_acodec
 %attr(755,root,root) %{_bindir}/ex_acodec_multi
-%attr(755,root,root) %{_bindir}/ex_android
 %attr(755,root,root) %{_bindir}/ex_audio_chain
+%attr(755,root,root) %{_bindir}/ex_audio_devices
 %attr(755,root,root) %{_bindir}/ex_audio_props
 %attr(755,root,root) %{_bindir}/ex_audio_simple
 %attr(755,root,root) %{_bindir}/ex_audio_timer
 %attr(755,root,root) %{_bindir}/ex_bitmap
+%attr(755,root,root) %{_bindir}/ex_bitmap_file
 %attr(755,root,root) %{_bindir}/ex_bitmap_flip
 %attr(755,root,root) %{_bindir}/ex_blend
 %attr(755,root,root) %{_bindir}/ex_blend2
@@ -558,6 +560,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_clipboard
 %attr(755,root,root) %{_bindir}/ex_color
 %attr(755,root,root) %{_bindir}/ex_color2
+%attr(755,root,root) %{_bindir}/ex_color_gradient
 %attr(755,root,root) %{_bindir}/ex_compressed
 %attr(755,root,root) %{_bindir}/ex_config
 %attr(755,root,root) %{_bindir}/ex_convert
@@ -569,6 +572,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_disable_screensaver
 %attr(755,root,root) %{_bindir}/ex_display_events
 %attr(755,root,root) %{_bindir}/ex_display_options
+%attr(755,root,root) %{_bindir}/ex_drag_and_drop
 %attr(755,root,root) %{_bindir}/ex_draw
 %attr(755,root,root) %{_bindir}/ex_draw_bitmap
 %attr(755,root,root) %{_bindir}/ex_drawpixels
@@ -628,6 +632,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_premulalpha
 %attr(755,root,root) %{_bindir}/ex_prim
 %attr(755,root,root) %{_bindir}/ex_prim_shader
+%attr(755,root,root) %{_bindir}/ex_prim_wrap
 %attr(755,root,root) %{_bindir}/ex_projection
 %attr(755,root,root) %{_bindir}/ex_projection2
 %attr(755,root,root) %{_bindir}/ex_record

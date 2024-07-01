@@ -33,6 +33,7 @@ Group:		Libraries
 Source0:	https://github.com/liballeg/allegro5/releases/download/%{version}/allegro-%{version}.tar.gz
 # Source0-md5:	fabbdd73f250869ffb831c487c24dd74
 Patch0:		%{name}-glx.patch
+Patch1:		%{name}-libdir.patch
 URL:		https://liballeg.org/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 BuildRequires:	OpenGL-GLU-devel
@@ -41,6 +42,7 @@ BuildRequires:	OpenGL-devel
 BuildRequires:	cmake >= 3.0
 %{?with_curl:BuildRequires:	curl-devel}
 BuildRequires:	dumb-devel
+BuildRequires:	enet-devel
 BuildRequires:	flac-devel
 BuildRequires:	freetype-devel >= 2
 %{?with_gtk:BuildRequires:	glib2-devel >= 2.0}
@@ -346,6 +348,7 @@ Pythonowy interfejs do biblioteki Allegro.
 %prep
 %setup -q -n allegro-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 install -d build
@@ -577,6 +580,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ex_draw_bitmap
 %attr(755,root,root) %{_bindir}/ex_drawpixels
 %attr(755,root,root) %{_bindir}/ex_dualies
+%attr(755,root,root) %{_bindir}/ex_enet_client
+%attr(755,root,root) %{_bindir}/ex_enet_server
 %attr(755,root,root) %{_bindir}/ex_expose
 %attr(755,root,root) %{_bindir}/ex_file
 %attr(755,root,root) %{_bindir}/ex_file_slice

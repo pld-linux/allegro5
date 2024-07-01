@@ -1,0 +1,11 @@
+--- allegro-5.2.9.1/CMakeLists.txt.orig	2023-11-25 05:06:37.000000000 +0100
++++ allegro-5.2.9.1/CMakeLists.txt	2024-07-01 21:23:22.361845790 +0200
+@@ -1230,7 +1230,7 @@ include(CMakePackageConfigHelpers)
+ set(PKG_NAME "Allegro")
+ string(TOLOWER ${PKG_NAME} PKG_NAME_LOWER)
+ 
+-set(PKG_CONFIG_INSTALL_DIR "lib/cmake/${PKG_NAME_LOWER}")
++set(PKG_CONFIG_INSTALL_DIR "lib${LIB_SUFFIX}/cmake/${PKG_NAME_LOWER}")
+ set(PKG_GENERATED_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
+ set(PKG_TARGETS_NAME "${PKG_NAME}Targets")
+ set(PKG_CONFIG_FILE "${PKG_GENERATED_DIR}/${PKG_NAME}Config.cmake")

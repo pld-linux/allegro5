@@ -6,9 +6,10 @@
 %bcond_without	alsa		# ALSA support in allegro_audio library
 %bcond_with	curl		# cURL example
 %bcond_without	doc		# rebuild HTML and texinfo documentation
-%bcond_without	dumb		# MOD support in allegro_acodec library
+%bcond_with	dumb		# MOD support in allegro_acodec library via DUMB
 %bcond_without	gtk		# (GTK+ 2.x based) native dialog library
 %bcond_without	openal		# OpenAL support in allegro_audio library
+%bcond_without	openmpt		# MOD support in allegro_acodec library via OpenMPT
 %bcond_without	physfs		# PhysFS addon library
 %bcond_without	pulseaudio	# PulseAudio support in allegro_audio library
 %bcond_without	python		# Python wrapper
@@ -25,15 +26,14 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
-Version:	5.2.9.1
+Version:	5.2.10.0
 Release:	1
 License:	Giftware
 Group:		Libraries
 #Source0Download: https://github.com/liballeg/allegro5/releases
 Source0:	https://github.com/liballeg/allegro5/releases/download/%{version}/allegro-%{version}.tar.gz
-# Source0-md5:	fabbdd73f250869ffb831c487c24dd74
+# Source0-md5:	9a7ade6d7c3e4411c932c80cde188079
 Patch0:		%{name}-glx.patch
-Patch1:		%{name}-libdir.patch
 URL:		https://liballeg.org/
 %{?with_openal:BuildRequires:	OpenAL-devel}
 BuildRequires:	OpenGL-GLU-devel
@@ -41,7 +41,7 @@ BuildRequires:	OpenGL-devel
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
 BuildRequires:	cmake >= 3.0
 %{?with_curl:BuildRequires:	curl-devel}
-BuildRequires:	dumb-devel
+%{?with_dumb:BuildRequires:	dumb-devel}
 BuildRequires:	enet-devel
 BuildRequires:	flac-devel
 BuildRequires:	freetype-devel >= 2
@@ -49,11 +49,13 @@ BuildRequires:	freetype-devel >= 2
 %{?with_gtk:BuildRequires:	gtk+2-devel >= 2.0}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libogg-devel
+%{?with_openmpt:BuildRequires:	libopenmpt-devel}
 BuildRequires:	libpng-devel
 BuildRequires:	libvorbis-devel
 %{?with_physfs:BuildRequires:	physfs-devel}
 BuildRequires:	pkgconfig
 %{?with_pulseaudio:BuildRequires:	pulseaudio-devel >= 0.9.15}
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXcursor-devel
@@ -142,6 +144,18 @@ grach komputerowych i innych rodzajach oprogramowania multimedialnego.
 
 Ten pakiet zawiera pliki nagłówkowe niezbędne do kompilowania
 aplikacji wykorzystujących bibliotekę allegro.
+
+%package apidocs
+Summary:	API documentation for Allegro 5 library
+Summary(pl.UTF-8):	Dokumentacja API biblioteki Allegro 5
+Group:		Documentation
+BuildArch:	noarch
+
+%description apidocs
+API documentation for Allegro 5 library.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API biblioteki Allegro 5.
 
 %package acodec
 Summary:	Allegro acodec addon library
@@ -348,7 +362,6 @@ Pythonowy interfejs do biblioteki Allegro.
 %prep
 %setup -q -n allegro-%{version}
 %patch0 -p1
-%patch1 -p1
 
 %build
 install -d build
@@ -360,9 +373,10 @@ cd build
 	%{!?with_sse:-DWANT_ALLOW_SSE=OFF} \
 	%{!?with_alsa:-DWANT_ALSA=OFF} \
 	%{?with_curl:-DWANT_CURL_EXAMPLE=ON} \
-	%{!?with_dumb:-DWANT_MODAUDIO=OFF} \
+	%{!?with_dumb:-DWANT_DUMB=OFF} \
 	%{!?with_gtk:-DWANT_NATIVE_DIALOG=OFF} \
 	%{!?with_openal:-DWANT_OPENAL=OFF} \
+	%{!?with_openmpt:-DWANT_OPENMPT=OFF} \
 	%{!?with_physfs:-DWANT_PHYSFS=OFF} \
 	%{!?with_pulseaudio:-DWANT_PULSEAUDIO=OFF} \
 	%{?with_python:-DWANT_PYTHON_WRAPPER=ON}
@@ -419,7 +433,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGES-5.0.txt CHANGES-5.1.txt CHANGES-5.2.txt README.txt docs/html/refman
+%doc README.txt docs/src/changes-5.*.txt
 %attr(755,root,root) %{_libdir}/liballegro.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/liballegro.so.5.2
 %attr(755,root,root) %{_libdir}/liballegro_color.so.*.*.*
@@ -458,6 +472,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/cmake/allegro
 %{_mandir}/man3/ALLEGRO_*.3*
 %{_mandir}/man3/al_*.3*
+
+%files apidocs
+%defattr(644,root,root,755)
+%doc docs/html/refman/*
 
 %files acodec
 %defattr(644,root,root,755)

@@ -26,13 +26,13 @@ Summary(fr.UTF-8):	Une librairie de programmation de jeux
 Summary(it.UTF-8):	Una libreria per la programmazione di videogiochi
 Summary(pl.UTF-8):	Biblioteka do programowania gier
 Name:		allegro5
-Version:	5.2.10.0
+Version:	5.2.10.1
 Release:	1
 License:	Giftware
 Group:		Libraries
 #Source0Download: https://github.com/liballeg/allegro5/releases
 Source0:	https://github.com/liballeg/allegro5/releases/download/%{version}/allegro-%{version}.tar.gz
-# Source0-md5:	9a7ade6d7c3e4411c932c80cde188079
+# Source0-md5:	6d419519811f32b494084287c229cf39
 Patch0:		%{name}-glx.patch
 URL:		https://liballeg.org/
 %{?with_openal:BuildRequires:	OpenAL-devel}
@@ -361,7 +361,7 @@ Pythonowy interfejs do biblioteki Allegro.
 
 %prep
 %setup -q -n allegro-%{version}
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 install -d build
